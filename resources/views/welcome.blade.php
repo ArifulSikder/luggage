@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luggage Hub - Store Your Luggage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/style.css">
+</head>
+
+<body>
+<div id="loader" class="loader">
+        <div class="spinner"></div>
+    </div>
+    <div class="hero-section">
+        <input type="hidden" id="base_url" name="base_url" value="<?= base_url() ?>">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="#"><img src="{{ asset('assets') }}/img/logo.png" alt="Luggage hub"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="#">All Cities</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">How it works</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                            <li class="nav-item"><a class="nav-link p180" href="<?=base_url()?>Login">Become
+                                    a partner</a></li>
+                            <?php if ($this->session->userdata('mainuser_id') && $this->session->userdata('mainuser_id') > 0) { ?>
+                            <li class="nav-item"><a class="nav-link login" href="#">Hello !
+                                    <?=$this->session->userdata('name')?></a></li>
+                            <li class="nav-item"><a class="btn btn-primary" href="<?=base_url()?>Userregister/Logout">Logout →</a></li>
+                            <?php } else { ?>
+                            <li class="nav-item"><a class="nav-link login" href="<?=base_url()?>Userlogin">Login</a></li>
+                            <li class="nav-item"><a class="btn btn-primary" href="<?=base_url()?>Userregister">Sing up →</a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container hero-content">
+            <div class="row banner">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1>Store your <span class="text-primary">luggage hassle</span> free with us</h1>
+                    <p>Welcome to our luggage storing platform. Enjoy hassle-free travel with our secure and convenient
+                        storage solutions.</p>
+
+                    <div class="search-form">
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <input type="text" class="form-control" id="location_name"
+                                    placeholder="Enter your location" onkeyup="getCoordinates();" autocomplete="off">
+                            </div>
+                           
+                            <input type="hidden" id="latvalue"><input type="hidden" id="lonvalue">
+                            <div class="col-md">
+                                <input type="text" class="form-control" id="check-in-date" placeholder="Add dates" autocomplete="off">
+                            </div>
+                            <div class="col-md">
+                                <input type="text" class="form-control" id="check-out-date" placeholder="Add dates" autocomplete="off">
+                            </div>
+                            <div class="col-md">
+                                <input type="text" class="form-control bag-number" id="bag-number"
+                                    placeholder="Select Bags" autocomplete="off">
+                            </div>
+                            <div class="col-md-auto">
+                                <button type="submit" class="btn btn-primary" onclick="searchLocation()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                     <div id="location_suggestions"></div>
+                    <div class="floating-box">
+                        <div class="room-selector">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Small - 18-22 inches</span>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="decreaseValues('1')">-</button>
+                                    <span class="mx-2 counter" id="counter1">0</span>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="increaseValues('1')">+</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Medium - 24-26 inches</span>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="decreaseValues('2')">-</button>
+                                    <span class="mx-2 counter" id="counter2">0</span>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="increaseValues('2')">+</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Large - 28-32 inches</span>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="decreaseValues('3')">-</button>
+                                    <span class="mx-2 counter" id="counter3">0</span>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="increaseValues('3')">+</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Extra Large - 30-34 inches</span>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="decreaseValues('4')">-</button>
+                                    <span class="mx-2 counter" id="counter4">0</span>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="increaseValues('4')">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ratings">
+                        <img src="{{ asset('assets') }}/img/google.png" alt="Google">
+                        <span class="stars">★★★★★</span>
+                        <img src="{{ asset('assets') }}/img/trust.png" alt="Trustpilot">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-images">
+            <img src="{{ asset('assets') }}/img/traveler1.png" alt="Traveler" class="img-1">
+            <img src="{{ asset('assets') }}/img/luggage.png" alt="Luggage" class="img-2">
+            <img src="{{ asset('assets') }}/img/traveler2.png" alt="Traveler" class="img-3">
+            <img src="{{ asset('assets') }}/img/storage.png" alt="Storage" class="img-4">
+        </div>
+
+        <div class="floating-icon left">
+            <img src="{{ asset('assets') }}/img/arrow.png" alt="Chat">
+        </div>
+        <div class="floating-icon right">
+            <img src="{{ asset('assets') }}/img/user.png" alt="User">
+        </div>
+    </div>
+    <section class="trusted-by">
+        <div class="container">
+            <h2 class="text-center mb-4">Trusted by more than <span class="highlight">1200+</span> companies worldwide
+            </h2>
+            <div class="logo-container">
+                <img src="{{ asset('assets') }}/img/tripadvisor-logo.png" alt="Tripadvisor" class="company-logo">
+                <img src="{{ asset('assets') }}/img/expedia-logo.png" alt="Expedia" class="company-logo">
+                <img src="{{ asset('assets') }}/img/booking-logo.png" alt="Booking.com" class="company-logo">
+                <img src="{{ asset('assets') }}/img/airbnb-logo.png" alt="Airbnb" class="company-logo">
+                <img src="{{ asset('assets') }}/img/orbitz-logo.png" alt="Orbitz" class="company-logo">
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose-us">
+        <div class="container">
+            <h2 class="section-title">Why thousands choose us daily</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="icon-container">
+                        <img src="{{ asset('assets') }}/img/shield-icon.png" alt="Shield icon" class="feature-icon">
+                    </div>
+                    <h3 class="feature-title">Stored safely</h3>
+                    <p class="feature-description">All bags stashed with us are protected against loss, theft & damage.
+                    </p>
+                </div>
+                <div class="feature-card center-card">
+                    <div class="icon-container">
+                        <img src="{{ asset('assets') }}/img/money-back-icon.png" alt="Money back icon" class="feature-icon">
+                    </div>
+                    <h3 class="feature-title">Money back guarantee</h3>
+                    <p class="feature-description">Free cancellation on all unused bookings and a full refund if you're
+                        not satisfied.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-container">
+                        <img src="{{ asset('assets') }}/img/support-icon.png" alt="Support icon" class="feature-icon">
+                    </div>
+                    <h3 class="feature-title">24/7 support</h3>
+                    <p class="feature-description">Reach out to our customer support team with any questions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="travelers-section">
+        <div class="container">
+            <img src="{{ asset('assets') }}/img/travel_back.png" alt="Traveler with luggage" class="traveler-image traveler-bg">
+            <div class="row align-items-center">
+                <div class="col-lg-6 traveler-image-container">
+
+                    <img src="{{ asset('assets') }}/img/traveler-image.png" alt="Traveler with luggage" class="traveler-image">
+                    <div class="price-tag">
+                        <span class="check-icon">✓</span> Discounted Price
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-title">Thousands of travelers book our luggage storage every day</h2>
+                    <p class="section-description">Contrary to popular belief, Lorem Ipsum is not simply random text. It
+                        has roots in a piece of classical Latin literature from 45 BC.</p>
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <h3 class="stat-number">350+</h3>
+                            <p class="stat-description">Carefully stored</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="stat-number">100%</h3>
+                            <p class="stat-description">Store secure</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="stat-number">500+</h3>
+                            <p class="stat-description">Bag guardians</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="stat-number">2k+</h3>
+                            <p class="stat-description">Happy Customer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container text-center my-5 section-bg">
+        <h2 class="mb-4">Store your bags in a few clicks</h2>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-3 step">
+                <div class="icon mb-3">
+                    <img src="{{ asset('assets') }}/img/icon-locate.png" alt="Locate Icon" class="img-fluid">
+                </div>
+                <h5>Step 1</h5>
+                <p><strong>Locate</strong></p>
+                <p>Find a luggage storage location near you</p>
+            </div>
+            <div class="col-12 col-md-3 step">
+                <div class="icon mb-3">
+                    <img src="{{ asset('assets') }}/img/icon-book.png" alt="Book Icon" class="img-fluid">
+                </div>
+                <h5>Step 2</h5>
+                <p><strong>Book</strong></p>
+                <p>Proceed with online booking</p>
+            </div>
+            <div class="col-12 col-md-3 step">
+                <div class="icon mb-3">
+                    <img src="{{ asset('assets') }}/img/icon-store.png" alt="Store Icon" class="img-fluid">
+                </div>
+                <h5>Step 3</h5>
+                <p><strong>Store</strong></p>
+                <p>Store your suitcases</p>
+            </div>
+            <div class="col-12 col-md-3 step">
+                <div class="icon mb-3">
+                    <img src="{{ asset('assets') }}/img/icon-enjoy.png" alt="Enjoy Icon" class="img-fluid">
+                </div>
+                <h5>Step 4</h5>
+                <p><strong>Enjoy</strong></p>
+                <p>Enjoy your hands-free journey</p>
+            </div>
+        </div>
+        <img src="{{ asset('assets') }}/img/curvedline.png" class="curved-line">
+        <!-- <svg class="curved-line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"> -->
+        <!-- <path d="M 0,50 C 250,100 750,0 1000,50" stroke="#007bff" stroke-width="2" fill="none"/> -->
+        <!-- </svg> -->
+    </section>
+
+    <section class="container-fluid text-center my-5 section-locations">
+        <h2 class="mb-4">Our top Luggage Storage locations</h2>
+        <div class="row justify-content-center display-section">
+            <?php if (!empty($hubDetails)):
+                    $count = 0;
+                    foreach ($hubDetails as $hub): ?>
+            <div class="col-12 col-md-3 mb-4" onclick="redirectMe('Hub/Details/<?= encodeID($hub['id']) ?>')">
+                <div class="location-card">
+                    <img src="<?= base_url() ?>uploads/hub_images/<?= $hub['hub_image']; ?>" alt="Bounce"
+                        class="img-fluid rounded">
+                    <h5>
+                        <?= $hub['hubname']; ?>
+                    </h5>
+                    <p>
+                        <?php
+                        $address = $hub['address'];
+                        if (strlen($address) > 50) {
+                            $address = substr($address, 0, 25) . '...';
+                        }
+                        echo $address;
+                        ?>
+                    </p>
+                    <div class="rating">
+                        <span>4.8</span> <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <?php
+            endforeach;
+            endif;
+            ?>
+        </div>
+    </section>
+
+    <section class="container-fluid text-center my-5 section-reviews">
+        <h2 class="mb-4">Our customer reviews rock!</h2>
+        <div class="row justify-content-center display-section">
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <div class="review-card">
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <p>Easy to use way of finding a place to store your bags, especially when there's no early check-in
+                        at your vacation house.</p>
+                    <div class="reviewer">
+                        <img src="{{ asset('assets') }}/img/john.png" alt="John Smith" class="rounded-circle">
+                        <div>
+                            <h5>John Smith</h5>
+                            <p>New York, NY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="luggage-storage-section">
+        <div class="container-fluid px-0">
+            <div class="row g-0 justify-content-center">
+                <div class="col-12">
+                    <div class="content-wrapper text-center">
+                        <h2 class="mb-3">Secure and Flexible Luggage Storage</h2>
+                        <p class="mb-4">Book now and enjoy hassle-free luggage storage with convenient options.</p>
+                        <a href="#" class="btn btn-light btn-lg">Book Now Today</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5 class="mb-3">
+                        <img src="{{ asset('assets') }}/img/logo.png" alt="Laggaes bnb" class="me-2" style="width: 125px;">
+                        <!-- Laggaes bnb -->
+                    </h5>
+                    <div class="social-icons">
+                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-1 nomob"></div>
+                <div class="col-6 col-md-2">
+                    <h6>Account</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Log in</a></li>
+                        <li><a href="#">Transition Project</a></li>
+                        <li><a href="#">Affiliate Program</a></li>
+                        <li><a href="#">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6>Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Black Friday Deals</a></li>
+                        <li><a href="#">Cart Abandonment</a></li>
+                        <li><a href="#">Changelog</a></li>
+                        <li><a href="#">Recomendation</a></li>
+                        <li><a href="#">Brand Assets</a></li>
+                        <li><a href="#">Videos</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6>Questions</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">General Enquiries</a></li>
+                        <li><a href="#">Request Support</a></li>
+                        <li><a href="#">Knowledge Base</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6>Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4 pt-4 border-top">
+            <div class="row">
+                <div class="col-md-8">
+                    <small>© 2023 #1 Sales Funnel Builder For WordPress - Beautiful Checkout Pages & One Click
+                        Upsells.</small>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline text-md-end mb-0">
+                        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="#">Refund Policy</a></li>
+                        <li class="list-inline-item"><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/custom.js"></script>
+    <script>
+        document.querySelector('.bag-number').addEventListener('click', function (e) {
+            e.preventDefault();
+            const floatingBox = document.querySelector('.floating-box');
+            floatingBox.style.display = floatingBox.style.display === 'none' ? 'block' : 'none';
+            // bagcontent = floatingBox.style.display === 'none' ? '' : false;
+        });
+        $(function () {
+            $("#check-in-date").datepicker();
+            $("#check-out-date").datepicker();
+        });
+    </script>
+</body>
+
+</html>

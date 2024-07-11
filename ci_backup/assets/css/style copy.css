@@ -1,0 +1,3842 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+@import url("https://fonts.googleapis.com/css?family=Inter:500,700,600,400");
+
+
+@font-face {
+    font-family: "Circular Std-Bold";
+    font-style: normal;
+    font-weight: 700;
+    src: url('https://anima-uploads.s3.amazonaws.com/5bad6b173b8df5000aac518c/CircularStd-Bold.otf') format("opentype");
+}
+
+@font-face {
+    font-family: "Proxima Nova-Bold";
+    font-style: normal;
+    font-weight: 700;
+    src: url('https://anima-uploads.s3.amazonaws.com/projects/623ec822ecf12f908cda1529/fonts/mark-simonson-proxima-nova-bold.otf') format("opentype");
+}
+
+@font-face {
+    font-family: "Proxima Nova-Regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://anima-uploads.s3.amazonaws.com/projects/60bdaccb1fa40b327a333e32/fonts/mark-simonson-proxima-nova-a.otf') format("opentype");
+}
+
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/6652f9ecffa3c95e634bfe5e.6652f9ecffa3c95e634bfe61.wjSV3P8.hch.png");
+
+
+.screen textarea:focus,
+.screen input:focus {
+    outline: none;
+}
+
+.screen * {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+.screen div {
+    -webkit-text-size-adjust: none;
+}
+
+.component-wrapper a {
+    display: contents;
+    pointer-events: auto;
+    text-decoration: none;
+}
+
+.component-wrapper * {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.component-wrapper a *,
+.component-wrapper input,
+.component-wrapper video,
+.component-wrapper iframe {
+    pointer-events: auto;
+}
+
+.component-wrapper.not-ready,
+.component-wrapper.not-ready * {
+    visibility: hidden !important;
+}
+
+.screen a {
+    display: contents;
+    text-decoration: none;
+}
+
+.full-width-a {
+    width: 100%;
+}
+
+.full-height-a {
+    height: 100%;
+}
+
+.container-center-vertical {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    pointer-events: none;
+}
+
+.container-center-vertical>* {
+    flex-shrink: 0;
+    pointer-events: auto;
+}
+
+.container-center-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+}
+
+.container-center-horizontal>* {
+    flex-shrink: 0;
+    pointer-events: auto;
+}
+
+.auto-animated div {
+    --z-index: -1;
+    opacity: 0;
+    position: absolute;
+}
+
+.auto-animated input {
+    --z-index: -1;
+    opacity: 0;
+    position: absolute;
+}
+
+.auto-animated .container-center-vertical,
+.auto-animated .container-center-horizontal {
+    opacity: 1;
+}
+
+.overlay-base {
+    display: none;
+    height: 100%;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.overlay-base.animate-appear {
+    align-items: center;
+    animation: reveal 0.3s ease-in-out 1 normal forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+}
+
+.overlay-base.animate-disappear {
+    animation: reveal 0.3s ease-in-out 1 reverse forwards;
+    display: block;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.overlay-base.animate-disappear * {
+    pointer-events: none;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.animate-nodelay {
+    animation-delay: 0s;
+}
+
+.align-self-flex-start {
+    align-self: flex-start;
+}
+
+.align-self-flex-end {
+    align-self: flex-end;
+}
+
+.align-self-flex-center {
+    align-self: flex-center;
+}
+
+.valign-text-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.valign-text-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+input:focus {
+    outline: none;
+}
+
+.listeners-active,
+.listeners-active * {
+    pointer-events: auto;
+}
+
+.hidden,
+.hidden * {
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.smart-layers-pointers,
+.smart-layers-pointers * {
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.listeners-active-click,
+.listeners-active-click * {
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #000000;
+    --black-2: #000000b2;
+    --black-3: #00000099;
+    --c100: #7752fe;
+    --charade: #1f2937;
+    --grey-scaleblack: #191825;
+    --grey-scaleblack-10: #1918251a;
+    --grey-scaleblack-50: #19182580;
+    --grey-scaleblack-75: #191825bf;
+    --mariner: #2563eb;
+    --mariner100: #d6f2ff;
+    --mariner200: #b6eaff;
+    --mariner50: #edfaff;
+    --mariner600: #098fff;
+    --mercury: #e5e7eb;
+    --orange: #ff5722;
+    --pale-sky: #6b7280;
+    --pale-sky-2: #6b728066;
+    --pale-sky-3: #6b72804c;
+    --vulcan: #12141d;
+    --white: #ffffff;
+
+    --font-size-12px: 12px;
+    --font-size-14px: 14px;
+    --font-size-32px: 32px;
+    --font-size-64px: 64px;
+    --font-size-l: 17px;
+    --font-size-m: 16px;
+    --font-size-s: 15px;
+    --font-size-xl: 18px;
+    --font-size-xxl: 20px;
+    --font-size-xxxl: 24px;
+    --font-size-xxxxl: 48px;
+
+    --font-family-circular_std-bold: "Circular Std-Bold", Helvetica;
+    --font-family-inter: "Inter", Helvetica;
+    --font-family-proxima_nova-bold: "Proxima Nova-Bold", Helvetica;
+    --font-family-proxima_nova-regular: "Proxima Nova-Regular", Helvetica;
+}
+
+.website-text-sizeheading-1bold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-64px);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeheading-2bold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxxxl);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeheading-3bold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-32px);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeheading-4bold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxxl);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeheading-5medium {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeheading-6semibold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0px;
+}
+
+.website-text-sizeparagraphregular-standard {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+}
+
+.website-text-sizelabel-or-small-textregular {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-12px);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+}
+
+.body {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+}
+
+.baseregular {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.08px;
+}
+
+.basebold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.08px;
+}
+
+.smregular {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-14px);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.07px;
+}
+
+.basesemi-bold {
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.08px;
+}
+
+.proximanova-regular-normal-black-17px {
+    color: var(--black-2);
+    font-family: var(--font-family-proxima_nova-regular);
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.circularstd-bold-orange-23px {
+    color: var(--orange);
+    font-family: var(--font-family-circular_std-bold);
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.proximanova-bold-black-18px {
+    color: var(--black);
+    font-family: var(--font-family-proxima_nova-bold);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 700;
+}
+
+.proximanova-regular-normal-black-15px {
+    color: var(--black-3);
+    font-family: var(--font-family-proxima_nova-regular);
+    font-size: var(--font-size-s);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.inter-bold-vulcan-20px {
+    color: var(--vulcan);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 700;
+}
+
+:root {}
+
+
+/* screen - laggage-stor-website */
+
+.laggage-stor-website {
+    background-color: var(--white);
+    margin: 0px;
+    /* min-height: 8570px;
+    min-width: 1728px;
+    overflow: hidden;
+    overflow-x: hidden; */
+    position: absolute;
+    width: 100%;
+}
+
+.laggage-stor-website .frame-81-MuMxPI {
+    align-items: center;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    left: calc(50.00% - 546px);
+    position: absolute;
+    top: 1325px;
+}
+
+.laggage-stor-website .frame-22-9OT3uX {
+    align-items: flex-start;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    width: 444px;
+}
+
+.laggage-stor-website .why-thousands-choose-us-daily-fVrrYu {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 58px;
+    margin-right: -140.39px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+    width: 584.39453125px;
+}
+
+.laggage-stor-website .frame-26-9OT3uX {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 21px;
+    position: relative;
+}
+
+.laggage-stor-website .frame-23-BXrUeD {
+    align-items: center;
+    align-self: stretch;
+    background-color: var(--white);
+    border: 0.5px solid;
+    border-color: var(--pale-sky-3);
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding: 64px;
+    position: relative;
+    width: 350px;
+}
+
+.laggage-stor-website .destination-1-x6q0YY {
+    background-color: transparent;
+    height: 64px;
+    object-fit: cover;
+    position: relative;
+    width: 64px;
+}
+
+.laggage-stor-website .frame-24-x6q0YY {
+    background-color: transparent;
+    flex: 0 0 auto;
+    gap: 32px;
+    width: 100%;
+}
+
+.laggage-stor-website .stored-safely-CfZ7pX {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .all-bags-stashed-wit-CfZ7pX {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--grey-scaleblack-50);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .frame-24-BXrUeD {
+    background-color: var(--white);
+    border: 0.5px solid;
+    border-color: var(--pale-sky-3);
+    border-radius: 32px;
+    box-shadow: 0px 0px 0px #0000001a, 0px 41px 89px #0000001a;
+    gap: 64px;
+    padding: 64px;
+    width: 350px;
+}
+
+.laggage-stor-website .booking-1-Id4YWy {
+    background-color: transparent;
+    height: 64px;
+    object-fit: cover;
+    position: relative;
+    width: 64px;
+}
+
+.laggage-stor-website .frame-24-Id4YWy {
+    background-color: transparent;
+    flex: 0 0 auto;
+    gap: 32px;
+    width: 100%;
+}
+
+.laggage-stor-website .money-back-guarantee-BX84s5 {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .free-cancellation-on-BX84s5 {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--grey-scaleblack-50);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .frame-25-BXrUeD {
+    align-items: center;
+    align-self: stretch;
+    background-color: var(--white);
+    border: 0.5px solid;
+    border-color: var(--pale-sky-3);
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding: 64px;
+    position: relative;
+    width: 350px;
+}
+
+.laggage-stor-website .cloudy-1-hlr9DI {
+    background-color: transparent;
+    height: 64px;
+    object-fit: cover;
+    position: relative;
+    width: 64px;
+}
+
+.laggage-stor-website .frame-24-hlr9DI {
+    background-color: transparent;
+    flex: 0 0 auto;
+    gap: 32px;
+    width: 100%;
+}
+
+.laggage-stor-website .x247-support-plR2Bx {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .reach-out-to-our-cus-plR2Bx {
+    align-self: stretch;
+    background-color: transparent;
+    color: var(--grey-scaleblack-50);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: center;
+}
+
+.laggage-stor-website .how-to-use-MuMxPI {
+    background-color: transparent;
+    height: 641px;
+    left: 0px;
+    position: absolute;
+    top: 3032px;
+    width: 1728px;
+}
+
+.laggage-stor-website .bg-bEVWSD {
+    background-color: var(--mariner50);
+    height: 641px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 1728px;
+}
+
+.laggage-stor-website .group-1171276359-bEVWSD {
+    background-color: transparent;
+    height: 387px;
+    left: calc(50.00% - 645px);
+    position: absolute;
+    top: 130px;
+    width: 1289px;
+}
+
+.laggage-stor-website .store-your-bags-in-a-few-clicks-CKao3H {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: calc(50.00% - 384px);
+    line-height: 58px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    width: 768px;
+}
+
+.laggage-stor-website .content-CKao3H {
+    height: 209px;
+    left: 0px;
+    top: 178px;
+    width: 1287px;
+}
+
+.laggage-stor-website .x1-A4zHA7 {
+    height: 209px;
+    top: 0px;
+    width: 180px;
+}
+
+.laggage-stor-website .txt-w5xe9R {
+    height: 110px;
+    left: 0px;
+}
+
+.laggage-stor-website .locate-IE0lui {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 1px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 28px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .find-a-luggage-storage-location-near-you-IE0lui {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1px;
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 62px;
+    width: 180px;
+}
+
+.laggage-stor-website .ellipse-1195-w5xe9R {
+    background-color: var(--white);
+    border: 0.5px solid;
+    border-color: var(--pale-sky-2);
+    border-radius: 37.5px;
+    height: 75px;
+    left: 0px;
+    position: absolute;
+    top: 1px;
+    width: 75px;
+}
+
+.laggage-stor-website .image-52-w5xe9R {
+    background-color: transparent;
+    height: 45px;
+    left: 15px;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    width: 45px;
+}
+
+.laggage-stor-website .x6120876-A4zHA7 {
+    height: 209px;
+    left: 370px;
+    top: 1px;
+    width: 180px;
+}
+
+.laggage-stor-website .txt-ML0nfm {
+    height: 110px;
+    left: 0px;
+}
+
+.laggage-stor-website .book-NA5AjY {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 0px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 28px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .proceed-with-online-booking-NA5AjY {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1px;
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 62px;
+    width: 180px;
+}
+
+.laggage-stor-website .ellipse-1196-ML0nfm {
+    left: 1px;
+}
+
+.laggage-stor-website .image-53-ML0nfm {
+    background-color: transparent;
+    height: 45px;
+    left: 15px;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    width: 45px;
+}
+
+.laggage-stor-website .x6120877-A4zHA7 {
+    height: 185px;
+    left: 739px;
+    top: 1px;
+    width: 180px;
+}
+
+.laggage-stor-website .txt-xoyNeW {
+    height: 86px;
+    left: 0px;
+}
+
+.laggage-stor-website .store-31W2pf {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 1px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 28px;
+    width: 64px;
+}
+
+.laggage-stor-website .step-3-31W2pf {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .store-your-suitcases-31W2pf {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1px;
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 62px;
+    width: 180px;
+}
+
+.laggage-stor-website .ellipse-1196-xoyNeW {
+    left: 1px;
+}
+
+.laggage-stor-website .image-54-xoyNeW {
+    background-color: transparent;
+    height: 45px;
+    left: 15px;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    width: 45px;
+}
+
+.laggage-stor-website .x6120878-A4zHA7 {
+    height: 209px;
+    left: 1107px;
+    top: 1px;
+    width: 180px;
+}
+
+.laggage-stor-website .txt-fc3Tzg {
+    height: 110px;
+    left: 1px;
+}
+
+.laggage-stor-website .enjoy-yYzoGd {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 0px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 28px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .step-4-yYzoGd {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .enjoy-your-hands-free-journey-yYzoGd {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 62px;
+    width: 180px;
+}
+
+.laggage-stor-website .ellipse-1196-fc3Tzg {
+    left: 0px;
+}
+
+.laggage-stor-website .image-55-fc3Tzg {
+    background-color: transparent;
+    height: 45px;
+    left: 15px;
+    object-fit: cover;
+    position: absolute;
+    top: 15px;
+    width: 45px;
+}
+
+.laggage-stor-website .group-1171276362-bEVWSD {
+    background-color: transparent;
+    height: 157px;
+    left: 288px;
+    position: absolute;
+    top: 273px;
+    width: 1044px;
+}
+
+.laggage-stor-website .review-MuMxPI {
+    height: 670px;
+    left: 224px;
+    top: 5350px;
+    width: 1283px;
+}
+
+.laggage-stor-website .our-customer-reviews-rock-jop95z {
+    background-color: transparent;
+    color: var(--black);
+    font-style: normal;
+    font-weight: 700;
+    height: 58px;
+    left: 272px;
+    line-height: 58px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .group-1171276358-jop95z {
+    background-color: transparent;
+    height: 512px;
+    left: 0px;
+    position: absolute;
+    top: 158px;
+    width: 1281px;
+}
+
+.laggage-stor-website .frame-1171276283-gYJFYx {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 16px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-1171276284-gYJFYx {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 16px;
+    left: 435px;
+    position: absolute;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-1171276285-gYJFYx {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 16px;
+    left: 870px;
+    position: absolute;
+    top: 0px;
+}
+
+.laggage-stor-website .trusted-MuMxPI {
+    align-items: center;
+    background-color: var(--white);
+    display: inline-flex;
+    flex-direction: column;
+    left: calc(50.00% - 720px);
+    position: absolute;
+    top: 1003px;
+}
+
+.laggage-stor-website .trusted-by-more-than-wDNOlC {
+    background-color: transparent;
+    letter-spacing: -0.50px;
+    line-height: 32px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .span0-yqY7jx {
+    letter-spacing: -0.10px;
+}
+
+.laggage-stor-website .span1-yqY7jx {
+    color: var(--vulcan);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.10px;
+}
+
+.laggage-stor-website .span2-yqY7jx {
+    letter-spacing: -0.10px;
+}
+
+.laggage-stor-website .span3-yqY7jx {
+    color: var(--vulcan);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.10px;
+}
+
+.laggage-stor-website .frame-79-wDNOlC {
+    background-color: transparent;
+    flex: 0 0 auto;
+    position: relative;
+    width: 1440px;
+}
+
+.laggage-stor-website .frame-82-MuMxPI {
+    height: 697px;
+    left: 96px;
+    top: 2066px;
+    width: 1562px;
+}
+
+.laggage-stor-website .group-9238-ebOk7N {
+    background-color: transparent;
+    height: 789px;
+    left: -362px;
+    position: absolute;
+    top: 0px;
+    width: 1067px;
+}
+
+.laggage-stor-website .rectangle-7-XM5Zxw {
+    background-color: transparent;
+    height: 550px;
+    left: 269px;
+    position: absolute;
+    top: 129px;
+    width: 798px;
+}
+
+.laggage-stor-website .rectangle-8-XM5Zxw {
+    background-color: transparent;
+    height: 1328px;
+    left: 266px;
+    position: absolute;
+    top: -171px;
+    width: 1162px;
+}
+
+.laggage-stor-website .sahpe-left-XM5Zxw {
+    background-color: transparent;
+    height: 513px;
+    left: 266px;
+    position: absolute;
+    top: 275px;
+    width: 247px;
+}
+
+.laggage-stor-website .my-project-1-XM5Zxw {
+    background-color: transparent;
+    height: 697px;
+    left: 343px;
+    object-fit: cover;
+    position: absolute;
+    top: 0px;
+    width: 697px;
+}
+
+.laggage-stor-website .frame-22-ebOk7N {
+    background-color: transparent;
+    height: 674px;
+    left: 950px;
+    position: absolute;
+    top: 11px;
+    width: 445px;
+}
+
+.laggage-stor-website .frame-47-ji02Zm {
+    align-items: flex-start;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 445px;
+}
+
+.laggage-stor-website .frame-39-NeASNF {
+    align-items: flex-start;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    margin-right: -78.00px;
+    position: relative;
+    width: 523px;
+}
+
+.laggage-stor-website .thousands-of-travele-Na8R69 {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 58px;
+    margin-right: -82.71px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    width: 605.71484375px;
+}
+
+.laggage-stor-website .contrary-to-popular-NeASNF {
+    background-color: transparent;
+    color: var(--grey-scaleblack-50);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    margin-right: -160.71px;
+    position: relative;
+    text-align: left;
+    width: 605.71484375px;
+}
+
+.laggage-stor-website .frame-46-ji02Zm {
+    align-items: flex-start;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    left: 0px;
+    position: absolute;
+    top: 342px;
+    width: 445px;
+}
+
+.laggage-stor-website .frame-44-IwtevG {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 32px;
+    position: relative;
+    width: 100%;
+}
+
+.laggage-stor-website .frame-40-Ps2jck {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--grey-scaleblack-10);
+    border-radius: 32px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    padding: 32px;
+    position: relative;
+}
+
+.laggage-stor-website .x350-egTFwO {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .carefully-stored-egTFwO {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .frame-41-Ps2jck {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--grey-scaleblack-10);
+    border-radius: 32px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    padding: 32px;
+    position: relative;
+}
+
+.laggage-stor-website .x100-CDm2mN {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .store-secure-CDm2mN {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .frame-45-IwtevG {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 32px;
+    position: relative;
+    width: 100%;
+}
+
+.laggage-stor-website .frame-42-r6GX2x {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--grey-scaleblack-10);
+    border-radius: 32px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    padding: 32px;
+    position: relative;
+}
+
+.laggage-stor-website .x500-GgrBZe {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .bag-guardians-GgrBZe {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .frame-43-r6GX2x {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--grey-scaleblack-10);
+    border-radius: 32px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    padding: 32px;
+    position: relative;
+}
+
+.laggage-stor-website .x2k-GUKFWc {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-family: var(--font-family-circular_std-bold);
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.00px;
+    line-height: 42.0px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .happy-customer-GUKFWc {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    margin-left: -0.75px;
+    margin-right: -0.75px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .frame-83-MuMxPI {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 100px;
+    box-shadow: 0px 0px 0px #00000008, 0px 15px 34px #00000008, 0px 62px 62px #00000005, 0px 139px 83px #00000003, 0px 246px 99px transparent, 0px 385px 108px transparent;
+    gap: 16px;
+    left: 470px;
+    padding: 16px 32px;
+    top: 2197px;
+}
+
+.laggage-stor-website .discount-1-FlKgfN {
+    background-color: transparent;
+    height: 40px;
+    position: relative;
+    width: 40px;
+}
+
+.laggage-stor-website .discounted-price-FlKgfN {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-family: var(--font-family-circular_std-bold);
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.00px;
+    line-height: 27.6px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .destination-MuMxPI {
+    background-color: transparent;
+    height: 2766px;
+    left: calc(50.00% - 768px);
+    position: absolute;
+    top: 3803px;
+    width: 1556px;
+}
+
+.laggage-stor-website .x1-wR3npR {
+    height: 579px;
+    top: 178px;
+    width: 1552px;
+}
+
+.laggage-stor-website .frame-82-M5MG2g {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 579px;
+    left: 0px;
+    top: 0px;
+    width: 350px;
+}
+
+.laggage-stor-website .frame-83-M5MG2g {
+    align-items: flex-start;
+    background-color: transparent;
+    flex-direction: column;
+    left: 400px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-jwSVnC {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-84-M5MG2g {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    left: 801px;
+    position: absolute;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-R2nwjz {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276287-M5MG2g {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    left: 1202px;
+    position: absolute;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-TEUWUB {
+    object-fit: cover;
+}
+
+.laggage-stor-website .x6120876-wR3npR {
+    height: 579px;
+    left: 1px;
+    top: 805px;
+    width: 1553px;
+}
+
+.laggage-stor-website .frame-82-xJxTKw {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    left: 1203px;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-83-xJxTKw {
+    align-items: flex-start;
+    background-color: transparent;
+    flex-direction: column;
+    left: 0px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-KjnECR {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276288-xJxTKw {
+    left: 401px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-p57T7y {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276289-xJxTKw {
+    left: 802px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-KoMJKx {
+    object-fit: cover;
+}
+
+.laggage-stor-website .x6120877-wR3npR {
+    height: 579px;
+    left: 0px;
+    top: 1432px;
+    width: 1554px;
+}
+
+.laggage-stor-website .frame-82-9sAQVs {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    left: 401px;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-83-9sAQVs {
+    align-items: flex-start;
+    background-color: transparent;
+    flex-direction: column;
+    left: 0px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-YnOhdN {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276289-9sAQVs {
+    left: 802px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-jLw3w3 {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276288-9sAQVs {
+    left: 1204px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-M4bUEi {
+    object-fit: cover;
+}
+
+.laggage-stor-website .x6120878-wR3npR {
+    height: 579px;
+    left: 0px;
+    top: 2059px;
+    width: 1553px;
+}
+
+.laggage-stor-website .frame-82-ie25ZG {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    left: 0px;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-83-ie25ZG {
+    align-items: flex-start;
+    background-color: transparent;
+    flex-direction: column;
+    left: 1203px;
+    top: 0px;
+}
+
+.laggage-stor-website .rectangle-6-Rjbohv {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276289-ie25ZG {
+    left: 401px;
+    top: 1px;
+}
+
+.laggage-stor-website .rectangle-6-dJ3rn1 {
+    object-fit: cover;
+}
+
+.laggage-stor-website .frame-1171276288-ie25ZG {
+    left: 802px;
+    top: 1px;
+}
+
+.laggage-stor-website .rectangle-6-6UwY6o {
+    object-fit: cover;
+}
+
+.laggage-stor-website .our-top-luggage-storage-locations-wR3npR {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: calc(50.00% - 418px);
+    line-height: 58px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .frame-29-wR3npR {
+    left: calc(50.00% - 84px);
+    padding: 12px 30px;
+    top: 1400px;
+}
+
+.laggage-stor-website .show-more-gYePUw {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .cta-MuMxPI {
+    background-color: transparent;
+    height: 482px;
+    left: 80px;
+    position: absolute;
+    top: 6150px;
+    width: 1568px;
+}
+
+.laggage-stor-website .bg-Q3HhCG {
+    background-color: var(--c100);
+    border-radius: 20px;
+    box-shadow: 0px 0px 250px #098fff;
+    height: 123px;
+    left: 134px;
+    position: absolute;
+    top: 319px;
+    width: 1301px;
+}
+
+.laggage-stor-website .bg-wWTyb5 {
+    background-color: var(--mariner600);
+    border-radius: 20px;
+    height: 482px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 1568px;
+}
+
+.laggage-stor-website .mask-group-Q3HhCG {
+    height: 482px;
+    left: 0px;
+    top: 0px;
+    width: 1568px;
+}
+
+.laggage-stor-website .content-Q3HhCG {
+    height: 234px;
+    left: calc(50.00% - 400px);
+    top: 125px;
+    width: 871px;
+}
+
+.laggage-stor-website .text-0JF2Yw {
+    height: 106px;
+    left: calc(50.00% - 436px);
+    top: 0px;
+    width: 875px;
+}
+
+.laggage-stor-website .book-now-and-enjoy-h-Oti3Us {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: calc(50.00% - 258px);
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 82px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .secure-and-flexible-luggage-storage-Oti3Us {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 0px;
+    line-height: 58px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .btn-0JF2Yw {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 16px;
+    display: flex;
+    gap: 8px;
+    height: 74px;
+    justify-content: center;
+    left: calc(50.00% - 172px);
+    padding: 28px 40px;
+    position: absolute;
+    top: 160px;
+    width: 273px;
+}
+
+.laggage-stor-website .get-cartflows-now-GvgMAw {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-family: var(--font-family-proxima_nova-bold);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.00px;
+    line-height: 18px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .rectangle-6667212-MuMxPI {
+    background-color: var(--mariner100);
+    height: 477px;
+    left: 0px;
+    position: absolute;
+    top: 6750px;
+    width: 1728px;
+}
+
+.laggage-stor-website .footer-MuMxPI {
+    height: 394px;
+    left: 0px;
+    top: 6800px;
+    width: 1728px;
+}
+
+.laggage-stor-website .footer-gUBDiJ {
+    height: 246px;
+    left: 80px;
+    top: 0px;
+    width: 1568px;
+}
+
+.laggage-stor-website .logo-xS6buR {
+    background-color: transparent;
+    height: 32.76%;
+    left: 0px;
+    position: absolute;
+    top: 6.23%;
+    width: 14.17%;
+}
+
+.laggage-stor-website .vector-2REkXH {
+    background-color: transparent;
+    height: 60.83%;
+    left: 0px;
+    position: absolute;
+    top: -12%;
+    width: 13.17%;
+}
+
+.laggage-stor-website .laggaes-bnb-2REkXH {
+    background-color: transparent;
+    color: var(--charade);
+    font-family: var(--font-family-inter);
+    font-size: 29.3px;
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 37px;
+    letter-spacing: 0.00px;
+    line-height: 35.8px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .fb-xS6buR {
+    background-color: transparent;
+    height: 50px;
+    left: 0px;
+    position: absolute;
+    top: 75px;
+    width: 50px;
+}
+
+.laggage-stor-website .ellipse-28-xDihum {
+    background-color: #3c5997;
+    border-radius: 25px;
+    height: 50px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 50px;
+}
+
+.laggage-stor-website .facebook-logo-xDihum {
+    left: 13px;
+    top: 13px;
+}
+
+.laggage-stor-website .facebook-logo-1gAYY8 {
+    left: 0px;
+    object-fit: cover;
+    top: 0px;
+}
+
+.laggage-stor-website .twiter-xS6buR {
+    background-color: transparent;
+    height: 50px;
+    left: 60px;
+    position: absolute;
+    top: 75px;
+    width: 50px;
+}
+
+.laggage-stor-website .ellipse-29-Zwxiam {
+    background-color: #1fa0f0;
+    border-radius: 25px;
+    height: 50px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 50px;
+}
+
+.laggage-stor-website .twitter-logo-Zwxiam {
+    left: 13px;
+    top: 13px;
+}
+
+.laggage-stor-website .twitter-logo-EXs9xR {
+    left: 0px;
+    object-fit: cover;
+    top: 0px;
+}
+
+.laggage-stor-website .youtube-xS6buR {
+    background-color: transparent;
+    height: 50px;
+    left: 120px;
+    position: absolute;
+    top: 75px;
+    width: 50px;
+}
+
+.laggage-stor-website .ellipse-30-uJiwJa {
+    background-color: #cd211f;
+    border-radius: 25px;
+    height: 50px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 50px;
+}
+
+.laggage-stor-website .youtube-clip-logo-uJiwJa {
+    left: 13px;
+    top: 13px;
+}
+
+.laggage-stor-website .youtube-clip-logo-XDZrws {
+    left: 0px;
+    object-fit: cover;
+    top: 0px;
+}
+
+.laggage-stor-website .f-content-1-xS6buR {
+    background-color: transparent;
+    height: 176px;
+    left: 773px;
+    position: absolute;
+    top: 0px;
+    width: 131px;
+}
+
+.laggage-stor-website .account-EqCYl4 {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: 27px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .text-EqCYl4 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0px;
+    top: 36px;
+}
+
+.laggage-stor-website .log-in-Stzrrq {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .transition-project-Stzrrq {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .affiliate-program-Stzrrq {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .my-account-Stzrrq {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .f-content-2-xS6buR {
+    background-color: transparent;
+    height: 246px;
+    left: 1012px;
+    position: absolute;
+    top: 0px;
+    width: 144px;
+}
+
+.laggage-stor-website .resources-43d93S {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: 27px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .text-43d93S {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0px;
+    top: 36px;
+}
+
+.laggage-stor-website .black-friday-deals-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .cart-abandonment-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .changelog-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .recomendation-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .brand-assets-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .videos-BHBlFT {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .f-content-3-xS6buR {
+    background-color: transparent;
+    height: 176px;
+    left: 1251px;
+    position: absolute;
+    top: 0px;
+    width: 131px;
+}
+
+.laggage-stor-website .questions-YJRTkT {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: 27px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .text-YJRTkT {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0px;
+    top: 36px;
+}
+
+.laggage-stor-website .genarel-enquries-axQ0b9 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .request-support-axQ0b9 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .knowledge-base-axQ0b9 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .faq-axQ0b9 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .f-content-4-xS6buR {
+    background-color: transparent;
+    height: 141px;
+    left: 1490px;
+    position: absolute;
+    top: 0px;
+    width: 80px;
+}
+
+.laggage-stor-website .company-U93HTP {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: 27px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .text-U93HTP {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0px;
+    top: 36px;
+}
+
+.laggage-stor-website .blog-xlixnM {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .about-xlixnM {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .contact-xlixnM {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 35px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .line-1-gUBDiJ {
+    height: 1px;
+    left: 0px;
+    position: absolute;
+    top: 338px;
+    width: 1728px;
+}
+
+.laggage-stor-website .footer-2-gUBDiJ {
+    background-color: transparent;
+    height: 30px;
+    left: 80px;
+    position: absolute;
+    top: 364px;
+    width: 1576px;
+}
+
+.laggage-stor-website .x2023-1-sales-funnel-wk0ch1 {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: 30px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .privacy-policy-wk0ch1 {
+    background-color: transparent;
+    height: auto;
+    left: 1194px;
+    letter-spacing: 0.00px;
+    line-height: 30px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .refound-policy-wk0ch1 {
+    background-color: transparent;
+    height: auto;
+    left: 1313px;
+    letter-spacing: 0.00px;
+    line-height: 30px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .terms-conditions-wk0ch1 {
+    background-color: transparent;
+    height: auto;
+    left: 1440px;
+    letter-spacing: 0.00px;
+    line-height: 30px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .group-1171276363-MuMxPI {
+    background-color: transparent;
+    height: 913px;
+    /* left: -86px; */
+    position: absolute;
+    top: -120px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.laggage-stor-website .bg-MkxnZq {
+    background-color: var(--mariner50);
+    height: 797px;
+    /* left: 85px; */
+    position: absolute;
+    top: 116px;
+    width: 100%;
+}
+
+.laggage-stor-website .mask-group-MkxnZq {
+    height: 797px;
+    left: 86px;
+    top: 116px;
+    width: 1728px;
+}
+
+.laggage-stor-website .ellipse-32-MkxnZq {
+    background-color: var(--mariner50);
+    border-radius: 133px;
+    filter: blur(67.5999984741211px);
+    ;
+    height: 266px;
+    left: 0px;
+    position: absolute;
+    top: 452px;
+    width: 266px;
+}
+
+.laggage-stor-website .ellipse-33-MkxnZq {
+    background-color: var(--mariner50);
+    border-radius: 133px;
+    filter: blur(67.5999984741211px);
+    ;
+    height: 266px;
+    left: 226px;
+    position: absolute;
+    top: 336px;
+    width: 266px;
+}
+
+.laggage-stor-website .ellipse-34-MkxnZq {
+    background-color: var(--mariner50);
+    border-radius: 172.69px/133px;
+    filter: blur(67.5999984741211px);
+    ;
+    height: 266px;
+    left: 73px;
+    position: absolute;
+    top: 0px;
+    width: 345px;
+}
+
+.laggage-stor-website .navigation-MkxnZq {
+    background-color: transparent;
+    height: 88px;
+    left: 86px;
+    position: absolute;
+    top: 40px;
+    width: 1728px;
+}
+
+.laggage-stor-website .frame-14-MkxnZq {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 27.823631286621094px;
+    left: 25px;
+    position: absolute;
+    top: 357px;
+}
+
+.laggage-stor-website .rectangle-2-xbTsTh {
+    height: 260.8465576171875px;
+    position: relative;
+    width: 236.5009765625px;
+}
+
+.laggage-stor-website .layer-MkxnZq {
+    background-color: transparent;
+    height: 477px;
+    left: 472px;
+    position: absolute;
+    top: 180px;
+    width: 984px;
+}
+
+.laggage-stor-website .search-filter-MkxnZq {
+    background-color: transparent;
+    height: 80px;
+    left: 412px;
+    position: absolute;
+    top: 617px;
+    width: 959px;
+}
+
+.laggage-stor-website .bg-ep24ba {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--mariner200);
+    border-radius: 16px;
+    height: 80px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    /* width: 959px; */
+}
+
+.laggage-stor-website .bg-hwGoxZ {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--mariner200);
+    border-radius: 16px;
+    height: 80px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    /* width: 959px; */
+}
+
+.laggage-stor-website .bg-M03ye5 {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--mariner200);
+    border-radius: 16px;
+    height: 80px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 940px;
+}
+
+.laggage-stor-website .content-ep24ba {
+    height: 48px;
+    left: 0px;
+    top: 16px;
+    width: 940px;
+}
+
+.laggage-stor-website .search-box-WtiUa6 {
+    left: 233px;
+    position: absolute;
+    top: 2px;
+    width: 72px;
+}
+
+.laggage-stor-website .check-in-EeB7C7 {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    /* left: 0px; */
+    line-height: 22px;
+    /* position: absolute; */
+    text-align: left;
+    /* top: 0px; */
+    white-space: nowrap;
+    width: auto;
+    margin-left: 25px;
+}
+
+.laggage-stor-website .search-box-JNDgYF {
+    left: 381px;
+    position: absolute;
+    top: 2px;
+    width: 84px;
+}
+
+.laggage-stor-website .check-out-lMNb7N {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    /* left: 0px; */
+    line-height: 22px;
+    /* position: absolute; */
+    text-align: left;
+    /* top: 0px; */
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .bag-number-WtiUa6 {
+    background-color: transparent;
+    height: 44px;
+    left: 541px;
+    position: absolute;
+    top: 2px;
+    width: 167px;
+}
+
+.laggage-stor-website .search-box-NwsYQm {
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 105px;
+}
+
+.laggage-stor-website .add-bags-E0h8e3 {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    /* left: 0px; */
+    line-height: 22px;
+    /* position: absolute; */
+    text-align: left;
+    /* top: 0px; */
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .add-bags-number-E0h8e3 {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    /* left: 0px; */
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 40px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .frame-NwsYQm {
+    background-color: transparent;
+    height: 20px;
+    left: 147px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+}
+
+.laggage-stor-website .search-WtiUa6 {
+    background-color: transparent;
+    height: 44px;
+    left: 0px;
+    position: absolute;
+    top: 2px;
+    width: 161px;
+}
+
+.laggage-stor-website .frame-3wv93M {
+    background-color: transparent;
+    height: 20px;
+    left: 141px;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+}
+
+.laggage-stor-website .conent-3wv93M {
+    background-color: transparent;
+    height: 44px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 107px;
+}
+
+.laggage-stor-website .search-box-O5XIWE {
+    left: 0px;
+    position: relative;
+    top: 0px;
+    width: 111px;
+}
+
+.laggage-stor-website .search-CykRTC {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    /* left: 0px; */
+    line-height: 22px;
+    /* position: absolute; */
+    text-align: left;
+    /* top: 0px; */
+    white-space: nowrap;
+    width: auto;
+    padding-left: 50px;
+}
+
+.laggage-stor-website .enter-your-location-CykRTC {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 40px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .frame-29-WtiUa6 {
+    left: 740px;
+    padding: 4px 22px 4px 14px;
+    top: 0px;
+}
+
+.laggage-stor-website .frame-Ew4GGG {
+    background-color: transparent;
+    height: 20px;
+    position: relative;
+    width: 20px;
+}
+
+.laggage-stor-website .line-1-Ew4GGG {
+    height: 40px;
+    position: relative;
+    width: 1px;
+}
+
+.laggage-stor-website .search-Ew4GGG {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .line-4-WtiUa6 {
+    height: 60px;
+    left: 193px;
+    top: 10px;
+}
+
+.laggage-stor-website .line-5-WtiUa6 {
+    background-color: transparent;
+    height: 60px;
+    left: 341px;
+    position: absolute;
+    top: 10px;
+    width: 1px;
+}
+
+.laggage-stor-website .line-6-WtiUa6 {
+    background-color: transparent;
+    height: 60px;
+    left: 501px;
+    position: absolute;
+    top: 10px;
+    width: 1px;
+}
+
+.laggage-stor-website .store-your-luggage-hassle-free-with-us-MkxnZq {
+    background-color: transparent;
+    color: transparent;
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: calc(50.00% - 452px);
+    line-height: 80px;
+    position: absolute;
+    text-align: center;
+    top: 251px;
+    width: 857px;
+}
+
+.laggage-stor-website .span0-mEY5HZ {
+    color: var(--charade);
+    font-style: normal;
+}
+
+.laggage-stor-website .span1-mEY5HZ {
+    color: var(--mariner600);
+    font-style: normal;
+}
+
+.laggage-stor-website .span2-mEY5HZ {
+    color: var(--charade);
+    font-style: normal;
+}
+
+.laggage-stor-website .welcome-to-our-lugga-MkxnZq {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 500;
+    height: auto;
+    left: calc(50.00% - 342px);
+    line-height: 26px;
+    position: absolute;
+    text-align: center;
+    top: 435px;
+    width: 637px;
+}
+
+.laggage-stor-website .group-1-MkxnZq {
+    background-color: transparent;
+    height: 581px;
+    left: 21px;
+    position: absolute;
+    top: 177px;
+    /* width: 1820px; */
+}
+
+.laggage-stor-website .frame-15-BksRZG {
+    height: 622px;
+    left: 1320px;
+    top: 0px;
+    width: 371px;
+}
+
+.laggage-stor-website .frame-15-4Xzfob {
+    height: 261px;
+    left: 1454px;
+    top: 180px;
+    width: 237px;
+}
+
+.laggage-stor-website .rectangle-2-2UkmiH {
+    height: 261px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 237px;
+}
+
+.laggage-stor-website .rectangle-3-BksRZG {
+    background-color: transparent;
+    height: 261px;
+    left: 1338px;
+    position: absolute;
+    top: 320px;
+    width: 237px;
+}
+
+.laggage-stor-website .frame-16-BksRZG {
+    background-color: transparent;
+    height: 150px;
+    left: -27px;
+    position: absolute;
+    top: 477px;
+    width: 110px;
+}
+
+.laggage-stor-website .rectangle-1-MkxnZq {
+    background-color: transparent;
+    height: 261px;
+    left: 168px;
+    position: absolute;
+    top: 497px;
+    width: 237px;
+}
+
+.laggage-stor-website .review-MkxnZq {
+    height: 29px;
+    left: 700px;
+    top: 725px;
+    width: 286px;
+}
+
+.laggage-stor-website .group-9240-vKJ3LB {
+    background-color: transparent;
+    height: 28px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 286px;
+}
+
+.laggage-stor-website .image-41-HEksZc {
+    background-color: transparent;
+    height: 9px;
+    left: 243px;
+    object-fit: cover;
+    position: absolute;
+    top: 14px;
+    width: 43px;
+}
+
+.laggage-stor-website .image-42-HEksZc {
+    background-color: transparent;
+    height: 28px;
+    left: 0px;
+    object-fit: cover;
+    position: absolute;
+    top: 0px;
+    width: 56px;
+}
+
+.laggage-stor-website .image-46-vKJ3LB {
+    background-color: transparent;
+    height: 28px;
+    left: 172px;
+    object-fit: cover;
+    position: absolute;
+    top: 1px;
+    width: 67px;
+}
+
+.laggage-stor-website .star-vKJ3LB {
+    background-color: transparent;
+    height: 17px;
+    left: 64px;
+    position: absolute;
+    top: 6px;
+    width: 100px;
+}
+
+.laggage-stor-website .frame-wIHPdK {
+    background-color: transparent;
+    height: 17px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 17px;
+}
+
+.laggage-stor-website .frame-WHcPxv {
+    background-color: transparent;
+    height: 17px;
+    left: 18px;
+    position: absolute;
+    top: 0px;
+    width: 17px;
+}
+
+.laggage-stor-website .frame-xdmVyj {
+    background-color: transparent;
+    height: 17px;
+    left: 36px;
+    position: absolute;
+    top: 0px;
+    width: 17px;
+}
+
+.laggage-stor-website .frame-FJevxa {
+    background-color: transparent;
+    height: 17px;
+    left: 54px;
+    position: absolute;
+    top: 0px;
+    width: 17px;
+}
+
+.laggage-stor-website .frame-iygOY1 {
+    background-color: transparent;
+    height: 17px;
+    left: 72px;
+    position: absolute;
+    top: 0px;
+    width: 17px;
+}
+
+.laggage-stor-website .line-4-wIHPdK {
+    height: 15px;
+    left: 100px;
+    top: 2px;
+}
+
+.laggage-stor-website .add-dates {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    /* left: 0px; */
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 40px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .content {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .easy-to-use-way-of-f {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    position: relative;
+    text-align: left;
+    width: 347px;
+}
+
+.laggage-stor-website .ellipse-1194 {
+    background-color: transparent;
+    height: 60px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 60px;
+}
+
+.laggage-stor-website .ellipse-1196 {
+    background-color: var(--white);
+    border: 0.5px solid;
+    border-color: var(--pale-sky-2);
+    border-radius: 37.5px;
+    height: 75px;
+    position: absolute;
+    top: 0px;
+    width: 75px;
+}
+
+.laggage-stor-website .facebook-logo {
+    background-color: transparent;
+    height: 24px;
+    position: absolute;
+    width: 24px;
+}
+
+.laggage-stor-website .footer {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .frame-1171276281 {
+    align-items: flex-start;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--mercury);
+    border-radius: 24px;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    padding: 32px;
+    position: relative;
+    width: 411px;
+}
+
+.laggage-stor-website .frame-1171276282 {
+    align-items: flex-start;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--mercury);
+    border-radius: 24px;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    padding: 32px;
+    position: relative;
+    width: 411px;
+}
+
+.laggage-stor-website .frame-1171276288 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+.laggage-stor-website .frame-1171276289 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+.laggage-stor-website .frame-15 {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .frame-24 {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.laggage-stor-website .frame-29 {
+    align-items: center;
+    background-color: var(--mariner600);
+    border-radius: 6px;
+    box-shadow: 0px 2px 2px #2137ab0f, 0px 4px 3px #2137ab12;
+    display: inline-flex;
+    gap: 6px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.laggage-stor-website .frame-30 {
+    align-items: center;
+    background-color: transparent;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 8px;
+    position: relative;
+}
+
+.laggage-stor-website .frame-31 {
+    align-items: flex-start;
+    background-color: var(--white);
+    border-radius: 0px 0px 32px 32px;
+    box-shadow: 0px 0px 0px #0000000d, 0px 32px 71px #0000000d, 0px 128px 128px #0000000a, 0px 288px 173px #00000008, 0px 513px 205px #00000003, 0px 801px 224px transparent;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px;
+    position: relative;
+    width: 350px;
+}
+
+.laggage-stor-website .frame-32 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    width: 286px;
+}
+
+.laggage-stor-website .frame-36 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.laggage-stor-website .frame-37 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.laggage-stor-website .frame-38 {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.laggage-stor-website .frame-82 {
+    background-color: transparent;
+    position: relative;
+}
+
+.laggage-stor-website .frame-83 {
+    display: inline-flex;
+    position: absolute;
+}
+
+.laggage-stor-website .group-1171276354 {
+    background-color: transparent;
+    height: 20px;
+    position: relative;
+    width: 100px;
+}
+
+.laggage-stor-website .group-1171276355 {
+    background-color: transparent;
+    height: 46px;
+    left: 76px;
+    position: absolute;
+    top: 7px;
+    width: 96px;
+}
+
+.laggage-stor-website .group-1171276356 {
+    background-color: transparent;
+    height: 60px;
+    position: relative;
+    width: 168px;
+}
+
+.laggage-stor-website .john-smith {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 0px;
+    line-height: 24px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .laplands-bantayan-island {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    flex: 1;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+}
+
+.laggage-stor-website .line-1 {
+    background-color: transparent;
+    object-fit: cover;
+}
+
+.laggage-stor-website .line-4 {
+    background-color: transparent;
+    position: absolute;
+    width: 1px;
+}
+
+.laggage-stor-website .maldives {
+    background-color: transparent;
+    color: var(--grey-scaleblack-75);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .mask-group {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .maxico-worldwide-best-city {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    flex: 1;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+}
+
+.laggage-stor-website .new-york-ny {
+    background-color: transparent;
+    color: var(--mariner);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 20px;
+    position: absolute;
+    text-align: left;
+    top: 26px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .parish-bantayan {
+    background-color: transparent;
+    color: var(--grey-scaleblack);
+    font-style: normal;
+    font-weight: 700;
+    height: 60px;
+    line-height: 30px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    width: 286px;
+}
+
+.laggage-stor-website .rectangle-2 {
+    background-color: transparent;
+    object-fit: cover;
+}
+
+.laggage-stor-website .rectangle-6 {
+    background-color: transparent;
+    height: 350px;
+    position: relative;
+    width: 350px;
+    border-radius: 50px;
+}
+
+.laggage-stor-website .review {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .rome-italy {
+    background-color: transparent;
+    color: var(--grey-scaleblack-75);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .search-box {
+    background-color: transparent;
+    height: 44px;
+}
+
+.laggage-stor-website .star-1 {
+    background-color: transparent;
+    height: 24px;
+    position: relative;
+    width: 24px;
+}
+
+.laggage-stor-website .step-1 {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.laggage-stor-website .text {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .twitter-logo {
+    background-color: transparent;
+    height: 24px;
+    position: absolute;
+    width: 24px;
+}
+
+.laggage-stor-website .txt {
+    background-color: transparent;
+    position: absolute;
+    top: 99px;
+    width: 186px;
+}
+
+.laggage-stor-website .united-arab-emeries {
+    background-color: transparent;
+    color: var(--grey-scaleblack-75);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28.8px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .x1 {
+    background-color: transparent;
+    left: 0px;
+    position: relative;
+    display: flex;
+    gap: 30px;
+}
+
+.laggage-stor-website .x45 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 27.6px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .x48 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 27.6px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .x50 {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: 27.6px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.laggage-stor-website .x6120876 {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .x6120877 {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .x6120878 {
+    background-color: transparent;
+    position: absolute;
+}
+
+.laggage-stor-website .youtube-clip-logo {
+    background-color: transparent;
+    height: 24px;
+    position: absolute;
+    width: 24px;
+}
+
+.text-laggage-stor-website {
+    background-color: var(--white);
+    margin: 0px;
+    min-height: 80px;
+    min-width: 1728px;
+    overflow: hidden;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 99;
+}
+
+.text-laggage-stor-website .navigation-H4BOT9 {
+    background-color: transparent;
+    height: 80px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 1728px;
+}
+
+.text-laggage-stor-website .bg-PnLCXF {
+    background-color: var(--mariner100);
+    width: 1728px;
+}
+
+.text-laggage-stor-website .content-PnLCXF {
+    height: 40px;
+    left: calc(50.00% - 808px);
+    top: 20px;
+    width: 1616px;
+}
+
+.text-laggage-stor-website .logo-Vd8XTR {
+    background-color: transparent;
+    height: 75.00%;
+    left: 0px;
+    position: absolute;
+    top: 12.50%;
+    width: 8.53%;
+}
+
+.text-laggage-stor-website .vector-qa43Tt {
+    background-color: transparent;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 13.05%;
+}
+
+.text-laggage-stor-website .laggaes-bnb-qa43Tt {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 23px;
+    line-height: 22px;
+    position: absolute;
+    text-align: left;
+    top: 4px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .menu-text-Vd8XTR {
+    align-items: center;
+    background-color: transparent;
+    display: inline-flex;
+    gap: 48px;
+    justify-content: center;
+    left: calc(50.00% - 295px);
+    position: absolute;
+    top: 8px;
+}
+
+.text-laggage-stor-website .all-cities-HvnWPn {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .how-it-works-HvnWPn {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .pricing-HvnWPn {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .about-HvnWPn {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .become-a-partner-HvnWPn {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .cta-Vd8XTR {
+    background-color: transparent;
+    height: 40px;
+    left: 1408px;
+    position: absolute;
+    top: 0px;
+    width: 210px;
+}
+
+.text-laggage-stor-website .login-Vysqnh {
+    background-color: transparent;
+    color: var(--mariner600);
+    font-style: normal;
+    font-weight: 500;
+    height: auto;
+    left: 22px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: 8px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .fi_666201-Vysqnh {
+    background-color: transparent;
+    height: 16px;
+    left: 0px;
+    position: absolute;
+    top: 12px;
+    width: 16px;
+}
+
+.text-laggage-stor-website .frame-29-Vysqnh {
+    left: 93px;
+    padding: 0px 8px 0px 16px;
+}
+
+.text-laggage-stor-website .sing-up-0ow3tq {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .frame-0ow3tq {
+    position: relative;
+}
+
+.text-laggage-stor-website .image-40-H4BOT9 {
+    background-color: transparent;
+    height: 651px;
+    left: 0px;
+    position: absolute;
+    top: 76px;
+    width: 1728px;
+}
+
+.text-laggage-stor-website .search-filter-H4BOT9 {
+    background-color: transparent;
+    height: 80px;
+    left: 384px;
+    position: absolute;
+    top: 527px;
+    width: 959px;
+}
+
+.text-laggage-stor-website .bg-IfaZJ5 {
+    background-color: var(--white);
+    border-radius: 16px;
+    width: 959px;
+}
+
+.text-laggage-stor-website .content-IfaZJ5 {
+    height: 48px;
+    left: 40px;
+    top: 16px;
+    width: 879px;
+}
+
+.text-laggage-stor-website .search-box-9qXDRG {
+    left: 241px;
+    position: absolute;
+    top: 2px;
+    width: 72px;
+}
+
+.text-laggage-stor-website .check-in-WSVp40 {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 0px;
+    line-height: 22px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .search-box-cfi6pN {
+    left: 389px;
+    position: absolute;
+    top: 2px;
+    width: 84px;
+}
+
+.text-laggage-stor-website .check-out-UxNbiR {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 0px;
+    line-height: 22px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .bag-number-9qXDRG {
+    background-color: transparent;
+    height: 44px;
+    left: 549px;
+    position: absolute;
+    top: 2px;
+    width: 167px;
+}
+
+.text-laggage-stor-website .search-box-sdXqPn {
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 132px;
+}
+
+.text-laggage-stor-website .x14-bags-E9l65U {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 0px;
+    line-height: 22px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .check-in-bags-number-E9l65U {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 26px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .frame-sdXqPn {
+    left: 147px;
+    position: absolute;
+    top: 0px;
+}
+
+.text-laggage-stor-website .search-9qXDRG {
+    background-color: transparent;
+    height: 44px;
+    left: 0px;
+    position: absolute;
+    top: 2px;
+    width: 161px;
+}
+
+.text-laggage-stor-website .frame-tvWSkR {
+    left: 141px;
+    position: absolute;
+    top: 0px;
+}
+
+.text-laggage-stor-website .conent-tvWSkR {
+    background-color: transparent;
+    height: 44px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 107px;
+}
+
+.text-laggage-stor-website .search-box-iYLs6d {
+    left: 0px;
+    position: relative;
+    top: 0px;
+    width: 111px;
+}
+
+.text-laggage-stor-website .search-TVbwax {
+    background-color: transparent;
+    color: var(--charade);
+    font-style: normal;
+    font-weight: 600;
+    height: auto;
+    left: 0px;
+    line-height: 22px;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .enter-your-location-TVbwax {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 26px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .frame-29-9qXDRG {
+    left: 756px;
+    padding: 4px 22px 4px 14px;
+}
+
+.text-laggage-stor-website .frame-hvWk7Z {
+    position: relative;
+}
+
+.text-laggage-stor-website .search-hvWk7Z {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.text-laggage-stor-website .line-H4BOT9 {
+    background-color: transparent;
+    height: 47px;
+    left: 574px;
+    position: absolute;
+    top: 781px;
+    width: 308px;
+}
+
+.text-laggage-stor-website .line-4-IVe5xe {
+    background-color: transparent;
+    height: 1px;
+    left: 5171px;
+    position: absolute;
+    top: -1375px;
+    width: 47px;
+}
+
+.text-laggage-stor-website .line-5-IVe5xe {
+    background-color: transparent;
+    height: 1px;
+    left: 5319px;
+    position: absolute;
+    top: -1375px;
+    width: 47px;
+}
+
+.text-laggage-stor-website .line-6-IVe5xe {
+    background-color: transparent;
+    height: 1px;
+    left: 5479px;
+    position: absolute;
+    top: -1375px;
+    width: 47px;
+}
+
+.text-laggage-stor-website .title-H4BOT9 {
+    background-color: transparent;
+    color: #eff8ff;
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 223px;
+    line-height: 80px;
+    position: absolute;
+    text-align: center;
+    top: 171px;
+    width: 878px;
+}
+
+.text-laggage-stor-website .welcome-to-our-lugga-H4BOT9 {
+    background-color: transparent;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 500;
+    height: auto;
+    left: 224px;
+    line-height: 26px;
+    position: absolute;
+    text-align: left;
+    top: 355px;
+    width: 637px;
+}
+
+.text-laggage-stor-website .add-dates {
+    background-color: transparent;
+    color: var(--pale-sky);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 0px;
+    line-height: 18px;
+    position: absolute;
+    text-align: left;
+    top: 26px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.text-laggage-stor-website .bg {
+    height: 80px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+}
+
+.text-laggage-stor-website .content {
+    background-color: transparent;
+    position: absolute;
+}
+
+.text-laggage-stor-website .frame {
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
+}
+
+.text-laggage-stor-website .frame-29 {
+    align-items: center;
+    background-color: var(--mariner600);
+    border-radius: 6px;
+    box-shadow: 0px 2px 2px #2137ab0f, 0px 4px 3px #2137ab12;
+    display: inline-flex;
+    gap: 6px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+}
+
+.text-laggage-stor-website .line-1 {
+    background-color: transparent;
+    height: 40px;
+    object-fit: cover;
+    position: relative;
+    width: 1px;
+}
+
+.text-laggage-stor-website .search-box {
+    background-color: transparent;
+    height: 44px;
+}
+
+

@@ -1,0 +1,2054 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+@import url("https://fonts.googleapis.com/css?family=Inter:700,400");
+
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/6652f9ecffa3c95e634bfe5e.6652f9ecffa3c95e634bfe61.wjSV3P8.hch.png");
+
+
+.screen textarea:focus,
+.screen input:focus {
+    outline: none;
+}
+
+.screen * {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+.screen div {
+    -webkit-text-size-adjust: none;
+}
+
+.component-wrapper a {
+    display: contents;
+    pointer-events: auto;
+    text-decoration: none;
+}
+
+.component-wrapper * {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.component-wrapper a *,
+.component-wrapper input,
+.component-wrapper video,
+.component-wrapper iframe {
+    pointer-events: auto;
+}
+
+.component-wrapper.not-ready,
+.component-wrapper.not-ready * {
+    visibility: hidden !important;
+}
+
+.screen a {
+    display: contents;
+    text-decoration: none;
+}
+
+.full-width-a {
+    width: 100%;
+}
+
+.full-height-a {
+    height: 100%;
+}
+
+.container-center-vertical {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    pointer-events: none;
+}
+
+.container-center-vertical>* {
+    flex-shrink: 0;
+    pointer-events: auto;
+}
+
+.container-center-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+}
+
+.container-center-horizontal>* {
+    flex-shrink: 0;
+    pointer-events: auto;
+}
+
+.auto-animated div {
+    --z-index: -1;
+    opacity: 0;
+    position: absolute;
+}
+
+.auto-animated input {
+    --z-index: -1;
+    opacity: 0;
+    position: absolute;
+}
+
+.auto-animated .container-center-vertical,
+.auto-animated .container-center-horizontal {
+    opacity: 1;
+}
+
+.overlay-base {
+    display: none;
+    height: 100%;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.overlay-base.animate-appear {
+    align-items: center;
+    animation: reveal 0.3s ease-in-out 1 normal forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+}
+
+.overlay-base.animate-disappear {
+    animation: reveal 0.3s ease-in-out 1 reverse forwards;
+    display: block;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.overlay-base.animate-disappear * {
+    pointer-events: none;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.animate-nodelay {
+    animation-delay: 0s;
+}
+
+.align-self-flex-start {
+    align-self: flex-start;
+}
+
+.align-self-flex-end {
+    align-self: flex-end;
+}
+
+.align-self-flex-center {
+    align-self: flex-center;
+}
+
+.valign-text-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.valign-text-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+input:focus {
+    outline: none;
+}
+
+.listeners-active,
+.listeners-active * {
+    pointer-events: auto;
+}
+
+.hidden,
+.hidden * {
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.smart-layers-pointers,
+.smart-layers-pointers * {
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.listeners-active-click,
+.listeners-active-click * {
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #000000;
+    --dodger-blue: #098fff;
+    --manatee: #8f939f;
+    --onahau: #c6efff;
+    --tuna: #2c3643;
+    --white: #ffffff;
+
+    --font-size-l: 16px;
+    --font-size-m: 14px;
+    --font-size-xl: 18px;
+    --font-size-xxl: 20px;
+
+    --font-family-inter: "Inter", Helvetica;
+}
+
+.inter-normal-manatee-14px {
+    color: var(--manatee);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.inter-normal-black-14px {
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.inter-normal-tuna-16px {
+    color: var(--tuna);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.inter-bold-manatee-14px {
+    color: var(--manatee);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 700;
+}
+
+.inter-normal-black-20px {
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 400;
+}
+
+.inter-bold-black-20px {
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 700;
+}
+
+:root {}
+
+
+/* screen - macbook-pro-16u34-1 */
+
+.macbook-pro-16u34-1 {
+    background-color: var(--white);
+    height: 1225px;
+    overflow: hidden;
+    overflow-x: hidden;
+    position: relative;
+    width: 1728px;
+}
+
+.macbook-pro-16u34-1 .laggaes-bnb-HFdR2Z {
+    background-color: transparent;
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 700;
+    height: auto;
+    left: 246px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 30px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .frame-2-HFdR2Z {
+    align-items: flex-start;
+    background-color: transparent;
+    display: inline-flex;
+    gap: 49px;
+    left: 569px;
+    position: absolute;
+    top: 33px;
+}
+
+.macbook-pro-16u34-1 .all-cities-uwefDO {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.macbook-pro-16u34-1 .how-it-worls-uwefDO {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.macbook-pro-16u34-1 .pricing-uwefDO {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.macbook-pro-16u34-1 .about-uwefDO {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.macbook-pro-16u34-1 .become-a-partner-uwefDO {
+    background-color: transparent;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    margin-top: -1.00px;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.macbook-pro-16u34-1 .james-HFdR2Z {
+    background-color: transparent;
+    color: var(--dodger-blue);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1320px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 32px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .laggaes-bn-b-your-home-HFdR2Z {
+    background-color: transparent;
+    color: var(--dodger-blue);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1460px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 32px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .icons8-male-user-60-2-4-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 1297px;
+    object-fit: cover;
+    position: absolute;
+    top: 33px;
+    width: 19px;
+}
+
+.macbook-pro-16u34-1 .line-9-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 0px;
+    position: absolute;
+    top: 78px;
+    width: 1728px;
+}
+
+.macbook-pro-16u34-1 .line-33-HFdR2Z {
+    background-color: transparent;
+    height: 2px;
+    left: 74px;
+    position: absolute;
+    top: 1129px;
+    width: 1579px;
+}
+
+.macbook-pro-16u34-1 .over-1000-places-within-map-area-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 166px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 327px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-1-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 166px;
+    object-fit: cover;
+    position: absolute;
+    top: 365px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-HFdR2Z {
+    left: 167px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-HFdR2Z {
+    left: 166px;
+    top: 637px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-HFdR2Z {
+    left: 166px;
+    top: 657px;
+}
+
+.macbook-pro-16u34-1 .x231-HFdR2Z {
+    left: 166px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .x173-HFdR2Z {
+    left: 202px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-HFdR2Z {
+    left: 236px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-1-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 330px;
+    object-fit: cover;
+    position: absolute;
+    top: 618px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-HFdR2Z {
+    left: 348px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .line-10-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 166px;
+    object-fit: cover;
+    position: absolute;
+    top: 694px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-11-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 284px;
+    object-fit: cover;
+    position: absolute;
+    top: 701px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-2-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 457px;
+    object-fit: cover;
+    position: absolute;
+    top: 365px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-2-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 676px;
+    object-fit: cover;
+    position: absolute;
+    top: 380px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .cabin-in-engeloya-no-HFdR2Z {
+    left: 458px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-61T15F {
+    left: 457px;
+    top: 637px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-61T15F {
+    left: 457px;
+    top: 657px;
+}
+
+.macbook-pro-16u34-1 .x231-61T15F {
+    left: 457px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .x173-61T15F {
+    left: 493px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-61T15F {
+    left: 527px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-2-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 621px;
+    object-fit: cover;
+    position: absolute;
+    top: 618px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x492-39-HFdR2Z {
+    left: 639px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .line-12-HFdR2Z {
+    height: 1px;
+    left: 457px;
+    object-fit: cover;
+    top: 694px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-13-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 575px;
+    object-fit: cover;
+    position: absolute;
+    top: 701px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-1-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 385px;
+    object-fit: cover;
+    position: absolute;
+    top: 380px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-3-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 738px;
+    object-fit: cover;
+    position: absolute;
+    top: 365px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-61T15F {
+    left: 739px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-erP7bk {
+    left: 738px;
+    top: 637px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-erP7bk {
+    left: 738px;
+    top: 657px;
+}
+
+.macbook-pro-16u34-1 .x231-erP7bk {
+    left: 738px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .x173-erP7bk {
+    left: 774px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-erP7bk {
+    left: 808px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-3-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 902px;
+    object-fit: cover;
+    position: absolute;
+    top: 618px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-61T15F {
+    left: 920px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .line-14-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 738px;
+    object-fit: cover;
+    position: absolute;
+    top: 694px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-15-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 856px;
+    object-fit: cover;
+    position: absolute;
+    top: 701px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-4-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 1029px;
+    object-fit: cover;
+    position: absolute;
+    top: 365px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-3-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 1248px;
+    object-fit: cover;
+    position: absolute;
+    top: 380px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .cabin-in-engeloya-no-61T15F {
+    left: 1030px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-5RPur3 {
+    left: 1029px;
+    top: 637px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-5RPur3 {
+    left: 1029px;
+    top: 657px;
+}
+
+.macbook-pro-16u34-1 .x231-5RPur3 {
+    left: 1029px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .x173-5RPur3 {
+    left: 1065px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-5RPur3 {
+    left: 1099px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-4-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 1193px;
+    object-fit: cover;
+    position: absolute;
+    top: 618px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x492-39-61T15F {
+    left: 1211px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .line-16-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1029px;
+    object-fit: cover;
+    position: absolute;
+    top: 694px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-17-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1147px;
+    object-fit: cover;
+    position: absolute;
+    top: 701px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-4-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 957px;
+    object-fit: cover;
+    position: absolute;
+    top: 380px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-5-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 1310px;
+    object-fit: cover;
+    position: absolute;
+    top: 365px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-erP7bk {
+    left: 1311px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-9xHQwW {
+    left: 1310px;
+    top: 637px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-9xHQwW {
+    left: 1310px;
+    top: 657px;
+}
+
+.macbook-pro-16u34-1 .x231-9xHQwW {
+    left: 1310px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .x173-9xHQwW {
+    left: 1346px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-9xHQwW {
+    left: 1380px;
+    top: 685px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-5-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 1474px;
+    object-fit: cover;
+    position: absolute;
+    top: 618px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-erP7bk {
+    left: 1492px;
+    top: 615px;
+}
+
+.macbook-pro-16u34-1 .line-18-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1310px;
+    object-fit: cover;
+    position: absolute;
+    top: 694px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-19-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1428px;
+    object-fit: cover;
+    position: absolute;
+    top: 701px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-6-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 1529px;
+    object-fit: cover;
+    position: absolute;
+    top: 380px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-6-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 166px;
+    object-fit: cover;
+    position: absolute;
+    top: 743px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-5RPur3 {
+    left: 167px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-BivrdB {
+    left: 166px;
+    top: 1015px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-BivrdB {
+    left: 166px;
+    top: 1035px;
+}
+
+.macbook-pro-16u34-1 .x231-BivrdB {
+    left: 166px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .x173-BivrdB {
+    left: 202px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-BivrdB {
+    left: 236px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-6-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 330px;
+    object-fit: cover;
+    position: absolute;
+    top: 996px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-5RPur3 {
+    left: 348px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .line-20-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 166px;
+    object-fit: cover;
+    position: absolute;
+    top: 1072px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-21-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 284px;
+    object-fit: cover;
+    position: absolute;
+    top: 1088px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-7-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 457px;
+    object-fit: cover;
+    position: absolute;
+    top: 743px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-7-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 676px;
+    object-fit: cover;
+    position: absolute;
+    top: 758px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .cabin-in-engeloya-no-erP7bk {
+    left: 458px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-HElWjI {
+    left: 457px;
+    top: 1015px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-HElWjI {
+    left: 457px;
+    top: 1035px;
+}
+
+.macbook-pro-16u34-1 .x231-HElWjI {
+    left: 457px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .x173-HElWjI {
+    left: 493px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-HElWjI {
+    left: 527px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-7-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 621px;
+    object-fit: cover;
+    position: absolute;
+    top: 996px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x492-39-erP7bk {
+    left: 639px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .line-22-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 457px;
+    object-fit: cover;
+    position: absolute;
+    top: 1072px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-23-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 575px;
+    object-fit: cover;
+    position: absolute;
+    top: 1088px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-8-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 385px;
+    object-fit: cover;
+    position: absolute;
+    top: 758px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-8-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 738px;
+    object-fit: cover;
+    position: absolute;
+    top: 743px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-9xHQwW {
+    left: 739px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-znCyQn {
+    left: 738px;
+    top: 1015px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-znCyQn {
+    left: 738px;
+    top: 1035px;
+}
+
+.macbook-pro-16u34-1 .x231-znCyQn {
+    left: 738px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .x173-znCyQn {
+    left: 774px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-znCyQn {
+    left: 808px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-8-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 902px;
+    object-fit: cover;
+    position: absolute;
+    top: 996px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-9xHQwW {
+    left: 920px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .line-24-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 738px;
+    object-fit: cover;
+    position: absolute;
+    top: 1072px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-25-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 856px;
+    object-fit: cover;
+    position: absolute;
+    top: 1088px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-9-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 1029px;
+    object-fit: cover;
+    position: absolute;
+    top: 743px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-9-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 1248px;
+    object-fit: cover;
+    position: absolute;
+    top: 758px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .cabin-in-engeloya-no-5RPur3 {
+    left: 1030px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-zgcuNL {
+    left: 1029px;
+    top: 1015px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-zgcuNL {
+    left: 1029px;
+    top: 1035px;
+}
+
+.macbook-pro-16u34-1 .x231-zgcuNL {
+    left: 1029px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .x173-zgcuNL {
+    left: 1065px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-zgcuNL {
+    left: 1099px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-9-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 1193px;
+    object-fit: cover;
+    position: absolute;
+    top: 996px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x492-39-5RPur3 {
+    left: 1211px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .line-26-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1029px;
+    object-fit: cover;
+    position: absolute;
+    top: 1072px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-27-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1147px;
+    object-fit: cover;
+    position: absolute;
+    top: 1088px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-10-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 957px;
+    object-fit: cover;
+    position: absolute;
+    top: 758px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .d403bbbf-2767-4b26-a165-7a8286833eb3-10-HFdR2Z {
+    background-color: transparent;
+    height: 238px;
+    left: 1310px;
+    object-fit: cover;
+    position: absolute;
+    top: 743px;
+    width: 251px;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur-BivrdB {
+    left: 1311px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte-PPkztp {
+    left: 1310px;
+    top: 1015px;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom-PPkztp {
+    left: 1310px;
+    top: 1035px;
+}
+
+.macbook-pro-16u34-1 .x231-PPkztp {
+    left: 1310px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .x173-PPkztp {
+    left: 1346px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .night-206-total-PPkztp {
+    left: 1380px;
+    top: 1063px;
+}
+
+.macbook-pro-16u34-1 .icons8-star-60-2-10-HFdR2Z {
+    background-color: transparent;
+    height: 13px;
+    left: 1474px;
+    object-fit: cover;
+    position: absolute;
+    top: 996px;
+    width: 14px;
+}
+
+.macbook-pro-16u34-1 .x482-379-BivrdB {
+    left: 1492px;
+    top: 993px;
+}
+
+.macbook-pro-16u34-1 .line-28-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1310px;
+    object-fit: cover;
+    position: absolute;
+    top: 1072px;
+    width: 33px;
+}
+
+.macbook-pro-16u34-1 .line-29-HFdR2Z {
+    background-color: transparent;
+    height: 1px;
+    left: 1428px;
+    object-fit: cover;
+    position: absolute;
+    top: 1088px;
+    width: 71px;
+}
+
+.macbook-pro-16u34-1 .icons8-heart-60-11-HFdR2Z {
+    background-color: transparent;
+    height: 17px;
+    left: 1529px;
+    object-fit: cover;
+    position: absolute;
+    top: 758px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .rectangle-9-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px #0000001a;
+    height: 93px;
+    left: 304px;
+    position: absolute;
+    top: 114px;
+    width: 1120px;
+}
+
+.macbook-pro-16u34-1 .rectangle-10-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px #0000001a;
+    height: 61px;
+    left: 1048px;
+    position: absolute;
+    top: 237px;
+    width: 139px;
+}
+
+.macbook-pro-16u34-1 .rectangle-11-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px #0000001a;
+    height: 61px;
+    left: 530px;
+    position: absolute;
+    top: 237px;
+    width: 488px;
+}
+
+.macbook-pro-16u34-1 .search-HFdR2Z {
+    left: 342px;
+    top: 137px;
+    white-space: nowrap;
+}
+
+.macbook-pro-16u34-1 .enter-your-location-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 342px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 167px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .vector-6-HFdR2Z {
+    background-color: transparent;
+    height: 9px;
+    left: 510px;
+    position: absolute;
+    top: 139px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .vector-7-HFdR2Z {
+    background-color: transparent;
+    height: 9px;
+    left: 1150px;
+    position: absolute;
+    top: 139px;
+    width: 17px;
+}
+
+.macbook-pro-16u34-1 .line-8-HFdR2Z {
+    background-color: transparent;
+    height: 56px;
+    left: 566px;
+    position: absolute;
+    top: 133px;
+    width: 2px;
+}
+
+.macbook-pro-16u34-1 .group-7-HFdR2Z {
+    background-color: transparent;
+    height: 47px;
+    left: 616px;
+    position: absolute;
+    top: 138px;
+    width: 90px;
+}
+
+.macbook-pro-16u34-1 .check-in-QUPH46 {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-30-HFdR2Z {
+    height: 56px;
+    left: 752px;
+    top: 133px;
+}
+
+.macbook-pro-16u34-1 .group-8-HFdR2Z {
+    background-color: transparent;
+    height: 47px;
+    left: 802px;
+    position: absolute;
+    top: 138px;
+    width: 104px;
+}
+
+.macbook-pro-16u34-1 .check-out-xXCSQP {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-31-HFdR2Z {
+    height: 56px;
+    left: 952px;
+    top: 133px;
+}
+
+.macbook-pro-16u34-1 .group-9-HFdR2Z {
+    background-color: transparent;
+    height: 47px;
+    left: 1002px;
+    position: absolute;
+    top: 138px;
+    width: 122px;
+}
+
+.macbook-pro-16u34-1 .add-bags-HlkoZz {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .add-bag-numbers-HlkoZz {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 30px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .rectangle-12-HFdR2Z {
+    background-color: var(--dodger-blue);
+    border-radius: 5px;
+    height: 59px;
+    left: 1206px;
+    position: absolute;
+    top: 131px;
+    width: 144px;
+}
+
+.macbook-pro-16u34-1 .search-61T15F {
+    color: var(--white);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xl);
+    font-style: normal;
+    font-weight: 400;
+    left: 1262px;
+    top: 148px;
+}
+
+.macbook-pro-16u34-1 .group-10-HFdR2Z {
+    background-color: transparent;
+    height: 19px;
+    left: 1227px;
+    position: absolute;
+    top: 149px;
+    width: 18px;
+}
+
+.macbook-pro-16u34-1 .ellipse-1-GE9xKn {
+    background-color: var(--dodger-blue);
+    border: 1px solid;
+    border-color: var(--white);
+    border-radius: 7.5px;
+    height: 15px;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 15px;
+}
+
+.macbook-pro-16u34-1 .line-5-GE9xKn {
+    background-color: transparent;
+    height: 7px;
+    left: 12px;
+    object-fit: cover;
+    position: absolute;
+    top: 12px;
+    width: 7px;
+}
+
+.macbook-pro-16u34-1 .filters-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 1104px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 254px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .icons8-filter-96-2-HFdR2Z {
+    background-color: transparent;
+    height: 22px;
+    left: 1073px;
+    object-fit: cover;
+    position: absolute;
+    top: 257px;
+    width: 21px;
+}
+
+.macbook-pro-16u34-1 .rectangle-13-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px #0000001a;
+    height: 61px;
+    left: 1439px;
+    position: absolute;
+    top: 114px;
+    width: 130px;
+}
+
+.macbook-pro-16u34-1 .grid-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 1465px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 131px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .icons8-grid-100-1-HFdR2Z {
+    background-color: transparent;
+    height: 28px;
+    left: 1515px;
+    object-fit: cover;
+    position: absolute;
+    top: 130px;
+    width: 29px;
+}
+
+.macbook-pro-16u34-1 .rectangle-16-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px #0000001a;
+    height: 61px;
+    left: 1584px;
+    position: absolute;
+    top: 114px;
+    width: 130px;
+}
+
+.macbook-pro-16u34-1 .list-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 1612px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 131px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .icons8-grid-100-2-HFdR2Z {
+    background-color: transparent;
+    height: 28px;
+    left: 1656px;
+    object-fit: cover;
+    position: absolute;
+    top: 130px;
+    width: 29px;
+}
+
+.macbook-pro-16u34-1 .rectangle-14-HFdR2Z {
+    background-color: var(--dodger-blue);
+    border-radius: 10px;
+    height: 51px;
+    left: 535px;
+    position: absolute;
+    top: 242px;
+    width: 91px;
+}
+
+.macbook-pro-16u34-1 .hourly-HFdR2Z {
+    background-color: transparent;
+    color: var(--white);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxl);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 551px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 255px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-31-61T15F {
+    height: 28px;
+    left: 639px;
+    top: 254px;
+}
+
+.macbook-pro-16u34-1 .daily-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 659px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 255px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-30-61T15F {
+    height: 28px;
+    left: 726px;
+    top: 254px;
+}
+
+.macbook-pro-16u34-1 .weekly-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 746px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 255px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-12-61T15F {
+    height: 28px;
+    left: 835px;
+    top: 254px;
+    width: 2px;
+}
+
+.macbook-pro-16u34-1 .line-32-HFdR2Z {
+    background-color: transparent;
+    height: 28px;
+    left: 952px;
+    position: absolute;
+    top: 254px;
+    width: 2px;
+}
+
+.macbook-pro-16u34-1 .monthly-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 855px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 255px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .all-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 972px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 255px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x2024-laggaesbnb-inc-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 195px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .terms-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 379px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x-HFdR2Z {
+    left: 369px;
+}
+
+.macbook-pro-16u34-1 .sitemap-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 441px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x-61T15F {
+    left: 431px;
+}
+
+.macbook-pro-16u34-1 .privacy-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 518px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x-erP7bk {
+    left: 508px;
+}
+
+.macbook-pro-16u34-1 .your-privacy-choices-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 589px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .english-us-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 1300px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x-5RPur3 {
+    left: 579px;
+}
+
+.macbook-pro-16u34-1 .ellipse-2-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--black);
+    border-radius: 11px;
+    height: 22px;
+    left: 166px;
+    position: absolute;
+    top: 1168px;
+    width: 22px;
+}
+
+.macbook-pro-16u34-1 .c-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 171px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .rectangle-15-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--onahau);
+    border-radius: 15px;
+    height: 48px;
+    left: 1413px;
+    position: absolute;
+    top: 1156px;
+    width: 95px;
+}
+
+.macbook-pro-16u34-1 .usd-HFdR2Z {
+    background-color: transparent;
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    left: 1436px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1169px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .icons8-facebook-60-1-HFdR2Z {
+    background-color: transparent;
+    height: 23px;
+    left: 1527px;
+    object-fit: cover;
+    position: absolute;
+    top: 1168px;
+    width: 25px;
+}
+
+.macbook-pro-16u34-1 .icons8-facebook-60-2-HFdR2Z {
+    background-color: transparent;
+    height: 23px;
+    left: 1557px;
+    object-fit: cover;
+    position: absolute;
+    top: 1168px;
+    width: 25px;
+}
+
+.macbook-pro-16u34-1 .icons8-facebook-60-3-HFdR2Z {
+    background-color: transparent;
+    height: 23px;
+    left: 1587px;
+    object-fit: cover;
+    position: absolute;
+    top: 1168px;
+    width: 25px;
+}
+
+.macbook-pro-16u34-1 .rectangle-17-HFdR2Z {
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--manatee);
+    border-radius: 5px;
+    height: 28px;
+    left: 1683px;
+    position: absolute;
+    top: 1180px;
+    width: 28px;
+}
+
+.macbook-pro-16u34-1 .x1-HFdR2Z {
+    background-color: transparent;
+    height: auto;
+    left: 1693px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1184px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .add-dates {
+    background-color: transparent;
+    height: auto;
+    left: 0px;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 30px;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .cabin-in-engeloya-no {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .cave-in-noyers-sur {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .la-grotte-du-moulin-de-la-motte {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .line-12 {
+    background-color: transparent;
+    position: absolute;
+}
+
+.macbook-pro-16u34-1 .line-30 {
+    background-color: transparent;
+    position: absolute;
+    width: 2px;
+}
+
+.macbook-pro-16u34-1 .line-31 {
+    background-color: transparent;
+    position: absolute;
+    width: 2px;
+}
+
+.macbook-pro-16u34-1 .night-206-total {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .search {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 1165px;
+    white-space: nowrap;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x173 {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x2-beds-1-bedroom {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x231 {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x482-379 {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
+
+.macbook-pro-16u34-1 .x492-39 {
+    background-color: transparent;
+    height: auto;
+    letter-spacing: 0.00px;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: auto;
+}
