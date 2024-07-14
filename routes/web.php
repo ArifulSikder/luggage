@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\fontend\AppearanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AppearanceController::class, "index"]);
+Route::get('/details/data/{data}', [AppearanceController::class, "hub_details"]);
+Route::get('/customer-profile', [AppearanceController::class, "customerProfile"])->name('customer-profile');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

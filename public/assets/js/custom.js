@@ -50,6 +50,45 @@ function selectOption(name, lat, lon) {
     document.getElementById("location_suggestions").style.display = 'none';
 }
 
+function getCoordinatesDrop() {
+    var locationName = document.getElementById("location_name_drop").value;
+    if (locationName.length < 3) {
+        return; // Wait until at least 3 characters are entered
+    }
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + locationName)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            var content = "";
+            if (data.length > 0) {
+                var dataList = document.getElementById("location_suggestions");
+                dataList.innerHTML = ""; // Clear any previous suggestions
+
+                data.forEach((location, index) => {
+                    content += "<p class='pointer' onclick='selectOptionDrop(\"" + location.display_name + "\", \"" + location.lat + "\", \"" + location.lon + "\")'>" + location.display_name + "</p>";
+                    // dataList.innerHTML += content;
+                });
+                dataList.style.display = 'block';
+                dataList.innerHTML = content;
+            } else {
+                dataList.innerHTML = content;
+                dataList.style.display = 'none';
+                document.getElementById("location_name_drop").style.borderColor = "red";
+                document.getElementById("location_name_drop").focus();
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+function selectOptionDrop(name, lat, lon) {
+    document.getElementById("location_name_drop").value = name;
+    document.getElementById("latvalue").value = lat;
+    document.getElementById("lonvalue").value = lon;
+    document.getElementById("location_suggestions").innerHTML = ""; // Clear suggestions after selection
+    document.getElementById("location_suggestions").style.display = 'none';
+}
+
 function encryptData(data) {
     // Placeholder for the encryption function
     // Replace this with your actual encryption logic
