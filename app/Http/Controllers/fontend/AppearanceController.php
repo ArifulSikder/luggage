@@ -14,40 +14,52 @@ class AppearanceController extends Controller
     {
         return view('frontend.pages.home');
     }
-public function hub_details(Request $request, $data_url)
-{
-    $encrypted_data = $request->get('data') ?? $data_url;
+    public function hub_details(Request $request, $data_url)
+    {
+        $encrypted_data = $request->get('data') ?? $data_url;
 
-    if ($encrypted_data) {
-        // Decrypt the data
-        $decrypted_data = base64_decode($encrypted_data);
-        
-        if ($decrypted_data) {
-            // Decode the JSON data
-            $urldata = json_decode($decrypted_data, true);
-            
-            if ($urldata) {
-       
-                    // Fetch hub details
-                    $data['hub_details'] = MyHub::with('user', 'hub_pricing')->findOrFail(1);
+        if ($encrypted_data) {
+            $decrypted_data = base64_decode($encrypted_data);
+
+            if ($decrypted_data) {
+                $urldata = json_decode($decrypted_data, true);
+
+                if ($urldata) {
+                    $lat = $urldata['latvalue'];
+                    $lon = $urldata['lonvalue'];
+                    $radius = 10; // Radius in kilometers
+
+                    $haversine = "(6371 * acos(cos(radians($lat))
+                                * cos(radians(lat_value))
+                                * cos(radians(lon_value) - radians($lon))
+                                + sin(radians($lat))
+                                * sin(radians(lat_value))))";
+
+                    $data['hub_details'] = MyHub::with('user', 'hub_pricing')
+                        ->select('*')
+                        ->selectRaw("{$haversine} AS distance")
+                        ->having('distance', '<', $radius)
+                        ->orderBy('distance')
+                        ->first(); 
+                    // $data['hub_details'] = MyHub::with('user', 'hub_pricing')->findOrFail(1);
+
                     $data['option_details'] = Option::where('option_identity', 'Tax')->first();
                     $data['urldata'] = $urldata;
 
                     return view('frontend.pages.hub', $data);
-          
+                } else {
+                    // Handle JSON decoding error
+                    abort(400, 'Failed to decode data.');
+                }
             } else {
-                // Handle JSON decoding error
-                abort(400, 'Failed to decode data.');
+                // Handle base64 decoding error
+                abort(400, 'Failed to decrypt data.');
             }
         } else {
-            // Handle base64 decoding error
-            abort(400, 'Failed to decrypt data.');
+            // Handle missing data parameter
+            abort(400, 'No data parameter provided.');
         }
-    } else {
-        // Handle missing data parameter
-        abort(400, 'No data parameter provided.');
     }
-}
 
     // public function hub_details(Request $request, $data){
     // 	$encrypted_data = $request->get('data') ?? $data;
@@ -91,10 +103,4 @@ public function hub_details(Request $request, $data_url)
     // 		abort('No data parameter provided.', 400);
     // 	}
     // }
-
-
-    public function customerProfile()
-    {
-        return view('frontend.pages.customer-profile');
-    }
 }

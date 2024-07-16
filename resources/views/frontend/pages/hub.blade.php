@@ -217,31 +217,33 @@
 
                             @endphp
 
+                         <form action="{{ url('reserve') }}" method="POST">
+                            @csrf
                             <div>
                                 <div class="mb-3">
                                     <label for="checkin-date" class="form-label">Check - In</label>
-                                    <input type="date" id="checkin-date" class="form-control"
+                                    <input type="date" id="checkin-date" name="checkin_date" class="form-control"
                                         value="<?php if (count($urldata) > 0) {
                                             echo date('Y-m-d', strtotime($urldata['checkInDate']));
                                         } ?>" onchange="calculateTotalCost()">
                                 </div>
                                 <div class="mb-3">
                                     <label for="checkout-date" class="form-label">Check - Out</label>
-                                    <input type="date" id="checkout-date" class="form-control"
+                                    <input type="date" id="checkout-date" name="checkout_date" class="form-control"
                                         value="<?php if (count($urldata) > 0) {
                                             echo date('Y-m-d', strtotime($urldata['checkOutDate']));
                                         } ?>" onchange="calculateTotalCost()">
                                 </div>
 
                                 <h4 class="mb-2">Luggages</h4>
-                                <p class="text-muted mb-3" id="countluggage"><?= $total_bag ?> luggages</p>
+                                <p class="text-muted mb-3" id="countluggage">{{ $total_bag  }} luggages</p>
 
                                 <div class="luggage-item">
                                     <span>Small - 18-22 inches</span>
                                     <div class="counter-section">
                                         <button type="button" onclick="decreaseValue('1')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter1" value="<?= $Small ?>"
+                                        <input type="text" id="counter1" name="counter1" value="<?= $Small ?>"
                                             class="unique-counter-input" readonly>
                                         <button type="button" onclick="increaseValue('1')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">+</button>
@@ -256,7 +258,7 @@
                                     <div class="counter-section">
                                         <button type="button" onclick="decreaseValue('2')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter2" value="<?= $Medium ?>"
+                                        <input type="text" id="counter2" name="counter2" value="<?= $Medium ?>"
                                             class="unique-counter-input" readonly>
                                         <button type="button" onclick="increaseValue('2')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">+</button>
@@ -271,7 +273,7 @@
                                     <div class="counter-section">
                                         <button type="button" onclick="decreaseValue('3')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter3" value="<?= $Large ?>"
+                                        <input type="text" id="counter3" name="counter3" value="<?= $Large ?>"
                                             class="unique-counter-input" readonly>
                                         <button type="button" onclick="increaseValue('3')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">+</button>
@@ -286,7 +288,7 @@
                                     <div class="counter-section">
                                         <button type="button" onclick="decreaseValue('4')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter4" value="<?= $ExtraLarge ?>"
+                                        <input type="text" id="counter4" name="counter4" value="<?= $ExtraLarge ?>"
                                             class="unique-counter-input" readonly>
                                         <button type="button" onclick="increaseValue('4')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">+</button>
@@ -296,7 +298,7 @@
                                     <input type="hidden" id="subTotal4" value="<?= $ExtraLargePrice ?>">
                                 </div>
 
-                                <input type="hidden" id="hub_id" value="{{ $hub_details->hub_pricing->hub_id }}">
+                                <input type="hidden" id="hub_id" name="hub_id" value="{{ $hub_details->hub_pricing->hub_id }}">
                                 <button type="submit" class="btn btn-primary w-100 mt-4"
                                 onclick="StartBooking1()">Reserve</button>
                                 <div class="text-center mt-2">
@@ -307,6 +309,7 @@
                                     </div>
                                 </div>
                             </div>
+                         </form>
                         </div>
                     </div>
                 </div>
@@ -426,9 +429,65 @@
             calculateTotalCost();
         });
 
-        
-
         function StartBooking1() {
+            // Check if user is logged in
+            showLoader();
+            $.ajax({
+                url: baseUrl+'Hub/checkUserSession',
+                method: 'POST',
+                success: function(response) {
+                    response = JSON.parse(response);
+                    console.log(response.loggedIn);
+                    if (response.loggedIn) {
+                        // User is logged in, proceed with booking
+                        let checkInDate = document.getElementById('checkin-date').value;
+                        let checkOutDate = document.getElementById('checkout-date').value;
+                        let smallBags = document.getElementById('counter1').value;
+                        let mediumBags = document.getElementById('counter2').value;
+                        let largeBags = document.getElementById('counter3').value;
+                        let extraLargeBags = document.getElementById('counter4').value;
+                        let hub_id = document.getElementById('hub_id').value;
+                        let premiumServices = [];
+        
+                        $('.unique-checkbox').each(function() {
+                            if ($(this).is(':checked')) {
+                                premiumServices.push($(this).val());
+                            }
+                        });
+        
+                        $.ajax({
+                            url: baseUrl+'Hub/bookLuggage',
+                            method: 'POST',
+                            data: {
+                                checkInDate: checkInDate,
+                                checkOutDate: checkOutDate,
+                                smallBags: smallBags,
+                                mediumBags: mediumBags,
+                                largeBags: largeBags,
+                                extraLargeBags: extraLargeBags,
+                                premiumServices: premiumServices,
+                                hub_id: hub_id
+                            },
+                            success: function(response) {
+                                response = JSON.parse(response);
+                                console.log(response.success);
+                                if (response.success) {
+                                    alert("Your booking is successfully placed.")
+                                    window.location.href = baseUrl;
+                                } else {
+                                    alert('Booking failed, please try again.');
+                                }
+                            }
+                        });
+                    } else {
+                        // User not logged in, redirect to login page
+                        window.location.href = baseUrl+'Userlogin';
+                    }
+                }
+            });
+        }
+
+        {{--  function StartBooking1() {
             $("#loader_text").removeClass('d-none');
             showLoader1();
             setTimeout(function() {
@@ -436,7 +495,7 @@
                 $('#staticBackdrop').modal('show');
                 // window.location.href = baseUrl+"Hub/confirm_page/MQ==";
             }, 2000);
-        }
+        }  --}}
 
         function goToDashbord() {
             window.location.href = "{{ url('customer-profile') }}"
