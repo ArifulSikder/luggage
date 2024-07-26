@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('premium_service_1', 10,2)->nullable();
             $table->decimal('premium_service_2', 10,2)->nullable();
             $table->decimal('premium_service_3', 10,2)->nullable();
+            $table->decimal('per_km_price', 10,2)->nullable();
             $table->foreignId('created_by');
             $table->softDeletes();
             $table->timestamps();

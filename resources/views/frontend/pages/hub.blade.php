@@ -5,114 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luggage Hub - Store Your Luggage</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('frontend/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('assets') }}/css/style.css">
-    <style>
-        /* body {
-            background-color: #f8f9fa;
-            font-size: 14px;
-        }
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
 
-        .container {
-            background-color: #f8f9fa;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        } */
-
-        .banner-section {
-            background-color: white;
-            padding: 20px 0;
-        }
-
-        .content-section {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .form-section {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-        .section-title {
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 10px;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .star-rating {
-            color: #ffc107;
-        }
-
-        .luggage-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .luggage-item img {
-            width: 30px;
-            margin-right: 10px;
-        }
-
-        .unique-counter-input {
-            width: 40px;
-            text-align: center;
-        }
-
-        .pt-30 {
-            padding-top: 30px;
-        }
-    </style>
-    <style>
-        .btn-circle {
-            width: 30px;
-            height: 30px;
-            padding: 6px 0;
-            border-radius: 50%;
-            text-align: center;
-            font-size: 12px;
-            line-height: 1.42857;
-        }
-
-        .btn-circle:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .unique-counter-input {
-            width: 40px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            background: transparent;
-            margin: 0 5px;
-        }
-
-        .luggage-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .luggage-item span {
-            display: inline-block;
-            width: 180px;
-            white-space: nowrap;
-        }
-
-        .counter-section {
-            display: flex;
-            align-items: center;
-        }
-    </style>
 </head>
 
 <body>
@@ -215,26 +113,30 @@
                                     }
                                 }
 
+                                if($shortestDistance){
+                                    $total_price += $shortestDistance * $hub_details->hub_pricing->per_km_price;
+                                }
+
                             @endphp
 
                          <form action="{{ url('reserve') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="pick_up_location" value="{{ $urldata['pick_up_location_name'] }}">
+                            <input type="hidden" name="drop_off_location" value="{{ $urldata['drop_off_location_name'] }}">
                             <div>
                                 <div class="mb-3">
-                                    <label for="checkin-date" class="form-label">Check - In</label>
-                                    <input type="date" id="checkin-date" name="checkin_date" class="form-control"
-                                        value="<?php if (count($urldata) > 0) {
-                                            echo date('Y-m-d', strtotime($urldata['checkInDate']));
-                                        } ?>" onchange="calculateTotalCost()">
+                                    <label for="checkin-datetime" class="form-label">Check - In</label>
+                                    <input type="datetime-local" id="checkin-datetime" name="checkin_datetime" class="form-control"
+                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkInDate'])) : '' }}"
+                                        onchange="calculateTotalCost()">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="checkout-date" class="form-label">Check - Out</label>
-                                    <input type="date" id="checkout-date" name="checkout_date" class="form-control"
-                                        value="<?php if (count($urldata) > 0) {
-                                            echo date('Y-m-d', strtotime($urldata['checkOutDate']));
-                                        } ?>" onchange="calculateTotalCost()">
+                                    <label for="checkout-datetime" class="form-label">Check - Out</label>
+                                    <input type="datetime-local" id="checkout-datetime" name="checkout_datetime" class="form-control"
+                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkOutDate'])) : '' }}"
+                                        onchange="calculateTotalCost()">
                                 </div>
-
+                                
                                 <h4 class="mb-2">Luggages</h4>
                                 <p class="text-muted mb-3" id="countluggage">{{ $total_bag  }} luggages</p>
 
@@ -297,8 +199,9 @@
                                         value="{{ $hub_details->hub_pricing->daily_price_4 }}">
                                     <input type="hidden" id="subTotal4" value="<?= $ExtraLargePrice ?>">
                                 </div>
-
+                                <input type="hidden" id="driving_price" name="driving_price" value="{{ $shortestDistance * $hub_details->hub_pricing->per_km_price }}">
                                 <input type="hidden" id="hub_id" name="hub_id" value="{{ $hub_details->hub_pricing->hub_id }}">
+                                <input type="hidden" id="total_cost" name="total_cost" value="{{ number_format($total_price, 2) }}">
                                 <button type="submit" class="btn btn-primary w-100 mt-4"
                                 onclick="StartBooking1()">Reserve</button>
                                 <div class="text-center mt-2">
@@ -406,12 +309,13 @@
     </div>
 
     @include('frontend.include.footer')
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{ asset('frontend/js/jquery-3.5.1.slim.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/popper.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets') }}/js/custom.js"></script>
     <script>
         document.querySelector('.bag-number').addEventListener('click', function(e) {
@@ -425,9 +329,29 @@
             $("#check-out-date").datepicker();
         });
 
-        $(document).ready(function() {
-            calculateTotalCost();
-        });
+        function calculateTotalCost(premium = 0) {
+            const subTotal1 = parseFloat(document.getElementById('subTotal1').value) || 0;
+            const subTotal2 = parseFloat(document.getElementById('subTotal2').value) || 0;
+            const subTotal3 = parseFloat(document.getElementById('subTotal3').value) || 0;
+            const subTotal4 = parseFloat(document.getElementById('subTotal4').value) || 0;
+            const driving_price = parseFloat(document.getElementById('driving_price').value) || 0;
+            const totalCost = subTotal1 + subTotal2 + subTotal3 + subTotal4 + driving_price + parseFloat(premium);
+     
+            const checkinDate = document.getElementById('checkin-datetime').value;
+            const checkoutDate = document.getElementById('checkout-datetime').value;
+        
+            // Calculate date difference in days
+            const diffInMs = new Date(checkoutDate) - new Date(checkinDate);
+            const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+        
+            // Calculate total cost including date difference
+            const totalCostWithDateDiff = totalCost * diffInDays;
+        
+            // Update the displayed total cost
+            document.getElementById('totalCost').innerHTML = "$" + totalCostWithDateDiff.toFixed(2);
+            $('#total_cost').val(totalCostWithDateDiff.toFixed(2));
+        }
+
 
         function StartBooking1() {
             // Check if user is logged in

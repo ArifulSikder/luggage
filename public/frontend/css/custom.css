@@ -1,0 +1,157 @@
+.btn-circle {
+width: 30px;
+height: 30px;
+padding: 6px 0;
+border-radius: 50%;
+text-align: center;
+font-size: 12px;
+line-height: 1.42857;
+}
+
+.btn-circle:hover {
+background-color: #007bff;
+color: #fff;
+}
+
+.counter {
+font-size: 1.2rem;
+font-weight: bold;
+}
+
+
+.banner-section {
+background-color: white;
+padding: 20px 0;
+}
+
+.content-section {
+background-color: white;
+padding: 20px;
+margin-top: 20px;
+}
+
+.form-section {
+background-color: white;
+padding: 20px;
+margin-top: 20px;
+box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.section-title {
+border-bottom: 1px solid #dee2e6;
+padding-bottom: 10px;
+text-align: left;
+margin-bottom: 20px;
+}
+
+.star-rating {
+color: #ffc107;
+}
+
+.luggage-item {
+display: flex;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.luggage-item img {
+width: 30px;
+margin-right: 10px;
+}
+
+.unique-counter-input {
+width: 40px;
+text-align: center;
+}
+
+.pt-30 {
+padding-top: 30px;
+}
+
+.btn-circle {
+width: 30px;
+height: 30px;
+padding: 6px 0;
+border-radius: 50%;
+text-align: center;
+font-size: 12px;
+line-height: 1.42857;
+}
+
+.btn-circle:hover {
+background-color: #007bff;
+color: #fff;
+}
+
+.unique-counter-input {
+width: 40px;
+text-align: center;
+font-size: 1.2rem;
+font-weight: bold;
+border: none;
+background: transparent;
+margin: 0 5px;
+}
+
+.luggage-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.luggage-item span {
+display: inline-block;
+width: 180px;
+white-space: nowrap;
+}
+
+.counter-section {
+display: flex;
+align-items: center;
+}
+
+
+.hero-content {
+    position: relative;
+}
+
+.search-form {
+    position: relative;
+    z-index: 2;
+    background: white;
+    /* Optional: add a background color to ensure readability */
+    padding: 20px;
+    margin-top: 20px;
+    /* Adjust as necessary */
+}
+
+.hero-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.hero-images img {
+    max-width: 25%;
+    /* Adjust the size of images */
+}
+
+.floating-icon {
+    position: fixed;
+    z-index: 3;
+}
+
+.floating-icon.left {
+    left: 10px;
+    bottom: 10px;
+}
+
+.floating-icon.right {
+    right: 10px;
+    bottom: 10px;
+}

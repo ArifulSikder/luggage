@@ -6,16 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MyHub;
 use App\Models\Option;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class AppearanceController extends Controller
 {
+    protected $client;
+
+    public function __construct()
+    {
+        $this->client = new Client([
+            'base_uri' => 'https://router.hereapi.com/v8/',
+        ]);
+    }
+
     public function index()
     {
         return view('frontend.pages.home');
     }
     public function hub_details(Request $request, $data_url)
     {
+        $apiKey = env('GOOGLE_MAPS_API_KEY');
         $encrypted_data = $request->get('data') ?? $data_url;
 
         if ($encrypted_data) {
@@ -25,26 +36,53 @@ class AppearanceController extends Controller
                 $urldata = json_decode($decrypted_data, true);
 
                 if ($urldata) {
-                    $lat = $urldata['latvalue'];
-                    $lon = $urldata['lonvalue'];
-                    $radius = 10; // Radius in kilometers
+                    $destinations = $this->getDestinationsFromDatabase(); 
+                    $shortestDistance = null;
+                    $shortestDestination = null;
+            
+                    foreach ($destinations as $destination) {
+                        $url = "https://maps.googleapis.com/maps/api/distancematrix/json";
+                        $response = Http::get($url, [
+                            'origins' => $urldata['pick_up_location_name'],
+                            'destinations' => $destination,
+                            'key' => $apiKey,
+                            'mode' => 'driving',  // Travel mode
+                            'units' => 'imperial', // Units
+                            'avoid' => 'highways,tolls' // Avoid highways and tolls
+                        ])->json();
+            
+                        if ($response['status'] === 'OK') {
+                            $element = $response['rows'][0]['elements'][0];
+            
+                            if ($element['status'] === 'ZERO_RESULTS') {
+                                continue; // No route for driving
+                            }
+            
+                            $distance = $element['distance']['value']; // Distance in meters
+                            $distanceInMiles = $distance / 1609.34;
+            
+                            if ($shortestDistance === null || $distanceInMiles < $shortestDistance) {
+                                $shortestDistance = $distanceInMiles;
+                                $shortestDestination = $destination;
+                            }
+                        }
+                    }
+               
+            
+                    $data['hub_details'] = MyHub::whereAddress($shortestDestination)->first();
+                    if ($data['hub_details'] == null) {
+                        $message = [
+                            'error' => 'Sorry No Hub matching your requirement can be found now.'
+                        ];
 
-                    $haversine = "(6371 * acos(cos(radians($lat))
-                                * cos(radians(lat_value))
-                                * cos(radians(lon_value) - radians($lon))
-                                + sin(radians($lat))
-                                * sin(radians(lat_value))))";
-
-                    $data['hub_details'] = MyHub::with('user', 'hub_pricing')
-                        ->select('*')
-                        ->selectRaw("{$haversine} AS distance")
-                        ->having('distance', '<', $radius)
-                        ->orderBy('distance')
-                        ->first(); 
+                        return redirect()->back()->with($message);
+                    }
                     // $data['hub_details'] = MyHub::with('user', 'hub_pricing')->findOrFail(1);
 
                     $data['option_details'] = Option::where('option_identity', 'Tax')->first();
                     $data['urldata'] = $urldata;
+                    $data['shortestDistance'] = $shortestDistance;
+                    $data['shortestDestination'] = $shortestDestination;
 
                     return view('frontend.pages.hub', $data);
                 } else {
@@ -61,46 +99,9 @@ class AppearanceController extends Controller
         }
     }
 
-    // public function hub_details(Request $request, $data){
-    // 	$encrypted_data = $request->get('data') ?? $data;
-    // 	if ($encrypted_data) {
-    // 		$decrypted_data = base64_decode($encrypted_data);
-    // 		if ($decrypted_data) {
-    // 			$data = json_decode($decrypted_data, true);
-    //             $latitude = $request->input('latitude');
-    //             $longitude = $request->input('longitude');
-    //             $distance = $request->input('distance') ?? 500; // Distance in kilometers
-
-    //             $results = DB::table('my_hubs as hub')
-    //                 ->selectRaw('hub.*, hub_price.*, (
-    //                     6371 * acos(
-    //                         cos(radians(?)) * cos(radians(hub.lat_value)) * cos(radians(hub.lon_value) - radians(?)) +
-    //                         sin(radians(?)) * sin(radians(hub.lat_value))
-    //                     )
-    //                 ) AS distance', [$latitude, $longitude, $latitude])
-    //                 ->leftJoin('hub_pricings as hub_price', 'hub_price.hub_id', '=', 'hub.id')
-    //                 ->having('distance', '<=', $distance)
-    //                 ->orderBy('distance')
-    //                 ->get();
-
-    //             $results['data'] =  $results;
-    // 			// $this->load->model('MyhubModel');
-
-    // 			// // Find locations within a 5 km radius
-    // 			// $results = $this->MyhubModel->find_locations_within_radius($data['latvalue'], $data['lonvalue'], 500);
-    // 			// $results['data'] = $data;
-    // 			// // echo "<pre>". print_r(json_encode($results)); die;
-    // 			// // Pass results to the view
-    // 			// $this->load->view('Listing/listing_view', ['results' => $results,'data' => $encrypted_data]);
-
-    //             return view('frontend.pages.hub', ['results' => $results,'data' => $encrypted_data]);
-    // 		} else {
-    // 			// Handle decryption error
-    // 			abort('Invalid or corrupt data.', 400);
-    // 		}
-    // 	} else {
-    // 		// Handle missing data parameter
-    // 		abort('No data parameter provided.', 400);
-    // 	}
-    // }
+    private function getDestinationsFromDatabase()
+    {
+        $hubAddress = MyHub::pluck('address')->toArray();
+        return $hubAddress;
+    }
 }

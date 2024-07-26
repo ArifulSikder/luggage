@@ -10,85 +10,6 @@ function redirectTo(pageUrl, Param) {
     window.location.href = baseUrl + pageUrl + '?data=' + encodeURIComponent(encryptedData);
 }
 
-function getCoordinates() {
-    var locationName = document.getElementById("location_name").value;
-    if (locationName.length < 3) {
-        return; // Wait until at least 3 characters are entered
-    }
-    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + locationName)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            var content = "";
-            if (data.length > 0) {
-                var dataList = document.getElementById("location_suggestions");
-                dataList.innerHTML = ""; // Clear any previous suggestions
-
-                data.forEach((location, index) => {
-                    content += "<p class='pointer' onclick='selectOption(\"" + location.display_name + "\", \"" + location.lat + "\", \"" + location.lon + "\")'>" + location.display_name + "</p>";
-                    // dataList.innerHTML += content;
-                });
-                dataList.style.display = 'block';
-                dataList.innerHTML = content;
-            } else {
-                dataList.innerHTML = content;
-                dataList.style.display = 'none';
-                document.getElementById("location_name").style.borderColor = "red";
-                document.getElementById("location_name").focus();
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}
-
-function selectOption(name, lat, lon) {
-    document.getElementById("location_name").value = name;
-    document.getElementById("latvalue").value = lat;
-    document.getElementById("lonvalue").value = lon;
-    document.getElementById("location_suggestions").innerHTML = ""; // Clear suggestions after selection
-    document.getElementById("location_suggestions").style.display = 'none';
-}
-
-function getCoordinatesDrop() {
-    var locationName = document.getElementById("location_name_drop").value;
-    if (locationName.length < 3) {
-        return; // Wait until at least 3 characters are entered
-    }
-    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + locationName)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            var content = "";
-            if (data.length > 0) {
-                var dataList = document.getElementById("location_suggestions");
-                dataList.innerHTML = ""; // Clear any previous suggestions
-
-                data.forEach((location, index) => {
-                    content += "<p class='pointer' onclick='selectOptionDrop(\"" + location.display_name + "\", \"" + location.lat + "\", \"" + location.lon + "\")'>" + location.display_name + "</p>";
-                    // dataList.innerHTML += content;
-                });
-                dataList.style.display = 'block';
-                dataList.innerHTML = content;
-            } else {
-                dataList.innerHTML = content;
-                dataList.style.display = 'none';
-                document.getElementById("location_name_drop").style.borderColor = "red";
-                document.getElementById("location_name_drop").focus();
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}
-function selectOptionDrop(name, lat, lon) {
-    document.getElementById("location_name_drop").value = name;
-    document.getElementById("latvalue").value = lat;
-    document.getElementById("lonvalue").value = lon;
-    document.getElementById("location_suggestions").innerHTML = ""; // Clear suggestions after selection
-    document.getElementById("location_suggestions").style.display = 'none';
-}
-
 function encryptData(data) {
     // Placeholder for the encryption function
     // Replace this with your actual encryption logic
@@ -170,31 +91,11 @@ function decreaseValue(id) {
     getPremiumPrice();
 }
 
-function calculateTotalCost(premium = 0) {
-    const subTotal1 = parseFloat(document.getElementById('subTotal1').value) || 0;
-    const subTotal2 = parseFloat(document.getElementById('subTotal2').value) || 0;
-    const subTotal3 = parseFloat(document.getElementById('subTotal3').value) || 0;
-    const subTotal4 = parseFloat(document.getElementById('subTotal4').value) || 0;
-    const totalCost = subTotal1 + subTotal2 + subTotal3 + subTotal4 + parseFloat(premium);
-    console.log("totalCost"+totalCost);
-    // Get check-in and check-out date values
-    const checkinDate = document.getElementById('checkin-date').value;
-    const checkoutDate = document.getElementById('checkout-date').value;
 
-    // Calculate date difference in days
-    const diffInMs = new Date(checkoutDate) - new Date(checkinDate);
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-    // Calculate total cost including date difference
-    const totalCostWithDateDiff = totalCost * diffInDays;
-
-    // Update the displayed total cost
-    document.getElementById('totalCost').innerHTML = "$" + totalCostWithDateDiff.toFixed(2);
-}
 
 // Example usage when the dates change (assuming the dates are changed elsewhere and trigger an event)
-// document.getElementById('checkin-date').addEventListener('change', calculateTotalCost);
-// document.getElementById('checkout-date').addEventListener('change', calculateTotalCost);
+// document.getElementById('checkin-datetime').addEventListener('change', calculateTotalCost);
+// document.getElementById('checkout-datetime').addEventListener('change', calculateTotalCost);
 
 function getPremiumPrice() {
     // Get all checkboxes with the class 'unique-checkbox'
@@ -269,49 +170,6 @@ function getBagcountValue() {
     console.log(bagContent); // For testing purposes, you can remove or replace this line with the desired action
 }
 
-function registerUser() {
-    // Get form values by ID
-    showLoader();
-    const name = document.getElementById('nameInput').value;
-    const email = document.getElementById('emailInput').value;
-    const password = document.getElementById('passwordInput').value;
-    const retypePassword = document.getElementById('retypePasswordInput').value;
-    const messageSpan = document.getElementById('messageSpan');
-
-    // Basic validation
-    if (password !== retypePassword) {
-        showMessage('Passwords do not match!', 'error');
-        return;
-    }
-
-    // Prepare data for AJAX
-    const formData = {
-        name: name,
-        email: email,
-        password: password
-    };
-
-    // Send AJAX request
-    $.ajax({
-        url: baseUrl + 'UserRegister/register',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            if (response.status === 'success') {
-                showMessage('Registration successful!', 'success');
-                hideLoader();
-                // Redirect or perform other actions as needed
-            } else {
-                showMessage('Registration failed: ' + response.message, 'error');
-            }
-        },
-        error: function() {
-            showMessage('An error occurred during registration.', 'error');
-        }
-    });
-}
-
 function showMessage(message, type) {
     const messageSpan = document.getElementById('messageSpan');
     messageSpan.textContent = message;
@@ -328,100 +186,7 @@ function showMessage(message, type) {
     }, 5000);
 }
 
-function loginUser() {
-    showLoader();
-    // Get form values by ID
-    const email = document.getElementById('emailInput').value;
-    const password = document.getElementById('passwordInput').value;
-    const messageSpan = document.getElementById('messageSpan');
 
-    // Prepare data for AJAX
-    const formData = {
-        email: email,
-        password: password
-    };
-
-    // Send AJAX request
-    $.ajax({
-        url: baseUrl + 'Userlogin/login',
-        type: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            console.log("status :: "+response.status);
-            if (response.status == 200) {
-                console.log(response.status);
-                showMessage('Login successful!', 'success');
-                redirectMe('Home');
-                // Redirect or perform other actions as needed
-            } else {
-                showMessage('Login failed: ' + response.message, 'error');
-            }
-        },
-        error: function() {
-            showMessage('An error occurred during login.', 'error');
-        }
-    });
-}
-
-
-function StartBooking() {
-    // Check if user is logged in
-    showLoader();
-    $.ajax({
-        url: baseUrl+'Hub/checkUserSession',
-        method: 'POST',
-        success: function(response) {
-            response = JSON.parse(response);
-            console.log(response.loggedIn);
-            if (response.loggedIn) {
-                // User is logged in, proceed with booking
-                let checkInDate = document.getElementById('checkin-date').value;
-                let checkOutDate = document.getElementById('checkout-date').value;
-                let smallBags = document.getElementById('counter1').value;
-                let mediumBags = document.getElementById('counter2').value;
-                let largeBags = document.getElementById('counter3').value;
-                let extraLargeBags = document.getElementById('counter4').value;
-                let hub_id = document.getElementById('hub_id').value;
-                let premiumServices = [];
-
-                $('.unique-checkbox').each(function() {
-                    if ($(this).is(':checked')) {
-                        premiumServices.push($(this).val());
-                    }
-                });
-
-                $.ajax({
-                    url: baseUrl+'Hub/bookLuggage',
-                    method: 'POST',
-                    data: {
-                        checkInDate: checkInDate,
-                        checkOutDate: checkOutDate,
-                        smallBags: smallBags,
-                        mediumBags: mediumBags,
-                        largeBags: largeBags,
-                        extraLargeBags: extraLargeBags,
-                        premiumServices: premiumServices,
-                        hub_id: hub_id
-                    },
-                    success: function(response) {
-                        response = JSON.parse(response);
-                        console.log(response.success);
-                        if (response.success) {
-                            alert("Your booking is successfully placed.")
-                            window.location.href = baseUrl;
-                        } else {
-                            alert('Booking failed, please try again.');
-                        }
-                    }
-                });
-            } else {
-                // User not logged in, redirect to login page
-                window.location.href = baseUrl+'Userlogin';
-            }
-        }
-    });
-}
 
 window.onload = function() {
     hideLoader();

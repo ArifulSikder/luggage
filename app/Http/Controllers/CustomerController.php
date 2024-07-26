@@ -20,34 +20,43 @@ class CustomerController extends Controller
     public function reserve(Request $request)
     {
         // Retrieve form data
-        $checkInDate = $request->input('checkin_date');
-        $checkOutDate = $request->input('checkout_date');
+        $pick_up_location = $request->input('pick_up_location');
+        $drop_off_location = $request->input('drop_off_location');
+        $checkInDate = $request->input('checkin_datetime');
+        $checkOutDate = $request->input('checkout_datetime');
         $smallBags = $request->input('counter1');
         $mediumBags = $request->input('counter2');
         $largeBags = $request->input('counter3');
         $extraLargeBags = $request->input('counter4');
         $premiumServices = $request->input('premiumServices');
         $hub_id = $request->input('hub_id');
+        $driving_price = $request->input('driving_price');
 
         // Calculate total cost
-        $totalCost = $this->calculateTotalCost($hub_id, $checkInDate, $checkOutDate, $smallBags, $mediumBags, $largeBags, $extraLargeBags, $premiumServices);
+        $totalCost = $request->input('total_cost');
 
         // Create booking entry in the database
-        $booking = Booking::create([
+        $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+
+        Booking::create([
+            'invoice' => $invoiceNumber,
             'user_id' => Auth::id(),
             'hub_id' => $hub_id,
+            'pick_up_location' => $pick_up_location,
+            'drop_off_location' => $drop_off_location,
             'booking_date' => Carbon::now(),
-            'check_in_date' => $checkInDate,
-            'check_out_date' => $checkOutDate,
+            'check_in_date' => Carbon::parse($checkInDate),
+            'check_out_date' => Carbon::parse($checkOutDate),
             'small_bags' => $smallBags,
             'medium_bags' => $mediumBags,
             'large_bags' => $largeBags,
             'extra_large_bags' => $extraLargeBags,
+            'driving_price' => $driving_price,
             'total_cost' => $totalCost,
             'status' => "Booked"
         ]);
-
-        return redirect('/')->with('success', 'Booking was successful!');
+        
+        return redirect('/customer-dashboard')->with('success', 'Booking was successful!');
     }
 
     public function calculateTotalCost($hub_id, $checkInDate, $checkOutDate, $smallBags, $mediumBags, $largeBags, $extraLargeBags, $premiumServices)
