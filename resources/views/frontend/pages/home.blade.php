@@ -25,8 +25,7 @@
                             <div class="col-md">
                                 <input type="datetime-local" class="form-control" id="check-in-date" placeholder="Add dates"
                                     autocomplete="off" required>
-                            </div>
-                            <div class="col-md">
+                      
                                 <input type="datetime-local" class="form-control" id="check-out-date"
                                     placeholder="Add dates" autocomplete="off" required>
                             </div>

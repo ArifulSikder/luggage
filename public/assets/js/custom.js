@@ -61,6 +61,7 @@ function ListView() {
 }
 
 function increaseValue(id) {
+    $('.reserve').attr('disabled', false);
     const inputElement = document.getElementById('counter' + id);
     const price = document.getElementById('price' + id).value;
     let currentValue = parseInt(inputElement.value, 10);
@@ -80,15 +81,30 @@ function decreaseValue(id) {
     const inputElement = document.getElementById('counter' + id);
     const price = document.getElementById('price' + id).value;
     let currentValue = parseInt(inputElement.value, 10);
+    
+    // Ensure the current value is a valid number
     if (isNaN(currentValue)) {
-        currentValue = 0;
+        currentValue = 1;  // Set default to minimum value if current value is not a number
     }
-    currentValue--;
-    inputElement.value = currentValue;
-    const totalCost = currentValue * price;
-    document.getElementById('subTotal' + id).value = totalCost;
-    document.getElementById('countluggage').innerHTML = parseInt(document.getElementById('countluggage').innerHTML) - 1 + " luggages";
-    getPremiumPrice();
+    
+    // Decrease the value only if it's greater than the minimum value
+    if (currentValue > 0) {
+        currentValue--;
+        inputElement.value = currentValue;
+        
+        const totalCost = currentValue * price;
+        document.getElementById('subTotal' + id).value = totalCost;
+        
+        const countLuggageElement = document.getElementById('countluggage');
+        const newCountLuggage = parseInt(countLuggageElement.innerHTML) - 1;
+        countLuggageElement.innerHTML = newCountLuggage + " luggages";
+        
+        if (newCountLuggage === 0) {
+            $('.reserve').attr('disabled', true);
+        }
+
+        getPremiumPrice();
+    }
 }
 
 

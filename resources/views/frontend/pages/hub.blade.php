@@ -145,7 +145,7 @@
                                     <div class="counter-section">
                                         <button type="button" onclick="decreaseValue('1')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter1" name="counter1" value="<?= $Small ?>"
+                                        <input type="text" id="counter1" name="counter1" min="1" value="<?= $Small ?>"
                                             class="unique-counter-input" readonly>
                                         <button type="button" onclick="increaseValue('1')"
                                             class="btn btn-outline-secondary btn-sm btn-circle">+</button>
@@ -202,8 +202,7 @@
                                 <input type="hidden" id="driving_price" name="driving_price" value="{{ $shortestDistance * $hub_details->hub_pricing->per_km_price }}">
                                 <input type="hidden" id="hub_id" name="hub_id" value="{{ $hub_details->hub_pricing->hub_id }}">
                                 <input type="hidden" id="total_cost" name="total_cost" value="{{ number_format($total_price, 2) }}">
-                                <button type="submit" class="btn btn-primary w-100 mt-4"
-                                onclick="StartBooking1()">Reserve</button>
+                                <button type="submit" class="btn btn-primary w-100 mt-4 reserve" onclick="StartBooking1()">Reserve</button>
                                 <div class="text-center mt-2">
                                     <div class="h5">
                                         <span id="totalCost">${{ number_format($total_price, 2) }}</span>+

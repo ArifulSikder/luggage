@@ -11,78 +11,27 @@ use GuzzleHttp\Client;
 
 class AppearanceController extends Controller
 {
-    protected $client;
-
-    public function __construct()
-    {
-        $this->client = new Client([
-            'base_uri' => 'https://router.hereapi.com/v8/',
-        ]);
-    }
-
     public function index()
     {
         return view('frontend.pages.home');
     }
-    public function hub_details(Request $request, $data_url)
+    public function hub_details(Request $request, $dataUrl)
     {
-        $apiKey = env('GOOGLE_MAPS_API_KEY');
-        $encrypted_data = $request->get('data') ?? $data_url;
+        $encryptedData = $request->get('data') ?? $dataUrl; // encrypted data from request
 
-        if ($encrypted_data) {
-            $decrypted_data = base64_decode($encrypted_data);
+        if ($encryptedData) {
+            $decryptedData = base64_decode($encryptedData); // decoded data
 
-            if ($decrypted_data) {
-                $urldata = json_decode($decrypted_data, true);
+            if ($decryptedData) {
+                $urldata = json_decode($decryptedData, true); 
 
                 if ($urldata) {
-                    $destinations = $this->getDestinationsFromDatabase(); 
-                    $shortestDistance = null;
-                    $shortestDestination = null;
-            
-                    foreach ($destinations as $destination) {
-                        $url = "https://maps.googleapis.com/maps/api/distancematrix/json";
-                        $response = Http::get($url, [
-                            'origins' => $urldata['pick_up_location_name'],
-                            'destinations' => $destination,
-                            'key' => $apiKey,
-                            'mode' => 'driving',  // Travel mode
-                            'units' => 'imperial', // Units
-                            'avoid' => 'highways,tolls' // Avoid highways and tolls
-                        ])->json();
-            
-                        if ($response['status'] === 'OK') {
-                            $element = $response['rows'][0]['elements'][0];
-            
-                            if ($element['status'] === 'ZERO_RESULTS') {
-                                continue; // No route for driving
-                            }
-            
-                            $distance = $element['distance']['value']; // Distance in meters
-                            $distanceInMiles = $distance / 1609.34;
-            
-                            if ($shortestDistance === null || $distanceInMiles < $shortestDistance) {
-                                $shortestDistance = $distanceInMiles;
-                                $shortestDestination = $destination;
-                            }
-                        }
-                    }
-               
-            
-                    $data['hub_details'] = MyHub::whereAddress($shortestDestination)->first();
-                    if ($data['hub_details'] == null) {
-                        $message = [
-                            'error' => 'Sorry No Hub matching your requirement can be found now.'
-                        ];
-
-                        return redirect()->back()->with($message);
-                    }
-                    // $data['hub_details'] = MyHub::with('user', 'hub_pricing')->findOrFail(1);
-
+                    $shortestDistanceAndHub = $this->shortestDistanceAndHub($urldata); // get all destination from the database
+                     
                     $data['option_details'] = Option::where('option_identity', 'Tax')->first();
                     $data['urldata'] = $urldata;
-                    $data['shortestDistance'] = $shortestDistance;
-                    $data['shortestDestination'] = $shortestDestination;
+                    $data['shortestDistance'] = $shortestDistanceAndHub['shortestDistance'];
+                    $data['hub_details'] = $shortestDistanceAndHub['selectedHub'];
 
                     return view('frontend.pages.hub', $data);
                 } else {
@@ -99,9 +48,52 @@ class AppearanceController extends Controller
         }
     }
 
-    private function getDestinationsFromDatabase()
+    private function shortestDistanceAndHub($urldata)
     {
-        $hubAddress = MyHub::pluck('address')->toArray();
-        return $hubAddress;
+        $apiKey = env('GOOGLE_MAPS_API_KEY'); // google api key
+        $hubAddress = MyHub::get(); // get all addresses from database
+        $uniqueAddresses = $hubAddress->pluck('address')->unique()->toArray(); 
+
+        $shortestDistance = null;
+        $shortestDestination = null;
+
+        foreach ($uniqueAddresses as $destination) {
+            $url = "https://maps.googleapis.com/maps/api/distancematrix/json";
+            $response = Http::get($url, [
+                'origins' => $urldata['pick_up_location_name'], //pickup location
+                'destinations' => $destination, // hub location
+                'key' => $apiKey,
+                'mode' => 'driving',  // Travel mode
+                'units' => 'imperial', // Units
+                'avoid' => 'highways,tolls' // Avoid highways and tolls
+            ])->json();
+
+            if ($response['status'] === 'OK') {
+                $element = $response['rows'][0]['elements'][0];
+
+                if ($element['status'] === 'ZERO_RESULTS') {
+                    continue; // No route for driving
+                }
+
+                $distance = $element['distance']['value']; // Distance in meters
+                $distanceInKm = $distance / 1000; // distance in km
+
+                if ($shortestDistance === null || $distanceInKm < $shortestDistance) {
+                    $shortestDistance = $distanceInKm;
+                    $shortestDestination = $destination;
+                }
+            }
+        }
+     
+        if ($shortestDistance === null) {
+            return ['message' => 'No available route found for driving'];
+        }
+
+        $selectedHub = $hubAddress->where('address', $shortestDestination)->first();
+
+        return [
+            'shortestDistance' => $shortestDistance, 
+            'selectedHub' => $selectedHub
+        ];
     }
 }

@@ -13,7 +13,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $data['orders'] = Booking::whereUserId(Auth::id())->where('status', "Booked")->get();
+        $data['orders'] = Booking::whereUserId(Auth::id())->where('status', "Booked")->orderBy('id', 'desc')->get(); // all orders
         return view('frontend.pages.customer-profile', $data);
     }
 
@@ -36,7 +36,7 @@ class CustomerController extends Controller
         $totalCost = $request->input('total_cost');
 
         // Create booking entry in the database
-        $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+        $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT); //generate invoice number
 
         Booking::create([
             'invoice' => $invoiceNumber,
@@ -56,35 +56,8 @@ class CustomerController extends Controller
             'status' => "Booked"
         ]);
         
-        return redirect('/customer-dashboard')->with('success', 'Booking was successful!');
+        return redirect('/customer-dashboard')->with('success', 'Booking was successful!'); // redirect to the customer dashboard
     }
-
-    public function calculateTotalCost($hub_id, $checkInDate, $checkOutDate, $smallBags, $mediumBags, $largeBags, $extraLargeBags, $premiumServices)
-    {
-        $taxOption = Option::where('option_identity', 'Tax')->first();
-        $tax = $taxOption ? $taxOption->option_value : 0;
-
-        $days = (strtotime($checkOutDate) - strtotime($checkInDate)) / (60 * 60 * 24);
-
-        $smallPrice = $this->getDailyPrice($hub_id, 'small') * $smallBags * $days;
-        $mediumPrice = $this->getDailyPrice($hub_id, 'medium') * $mediumBags * $days;
-        $largePrice = $this->getDailyPrice($hub_id, 'large') * $largeBags * $days;
-        $extraLargePrice = $this->getDailyPrice($hub_id, 'extra_large') * $extraLargeBags * $days;
-
-        $premiumServiceCost = 0;
-        // if ($premiumServices) {
-        //     foreach ($premiumServices as $service) {
-        //         $premiumServiceCost += $service; // Replace with actual logic to get premium service price
-        //     }
-        // }
-
-        $subTotal = $smallPrice + $mediumPrice + $largePrice + $extraLargePrice + $premiumServiceCost;
-
-        $totalAmount = $subTotal + ($subTotal * ($tax / 100));
-
-        return $totalAmount;
-    }
-   
 
     public function getDailyPrice($hub_id, $size)
     {
