@@ -23,16 +23,24 @@ class AppearanceController extends Controller
             $decryptedData = base64_decode($encryptedData); // decoded data
 
             if ($decryptedData) {
-                $urldata = json_decode($decryptedData, true); 
+                $urldata = json_decode($decryptedData, true);
 
                 if ($urldata) {
+
                     $shortestDistanceAndHub = $this->shortestDistanceAndHub($urldata); // get all destination from the database
-                     
+                    if (!$shortestDistanceAndHub['shortestDistance'] && !$shortestDistanceAndHub['selectedHub']) {
+                        $message = [
+                            'error' => 'Sorry No Hub matching your requirement can be found now.'
+                        ];
+                        return redirect()->back()->with($message)->withInput($urldata); 
+                    }
+
+                    session()->put('shortestDistance', $shortestDistanceAndHub['shortestDistance']);
                     $data['option_details'] = Option::where('option_identity', 'Tax')->first();
                     $data['urldata'] = $urldata;
-                    $data['shortestDistance'] = $shortestDistanceAndHub['shortestDistance'];
-                    $data['hub_details'] = $shortestDistanceAndHub['selectedHub'];
-
+                    $data['hubDetails'] = $shortestDistanceAndHub['selectedHub']; 
+                    $data['hubInfo'] = calculateBagTotals($urldata, $shortestDistanceAndHub['selectedHub']->hubPricing);
+                    
                     return view('frontend.pages.hub', $data);
                 } else {
                     // Handle JSON decoding error
@@ -51,21 +59,29 @@ class AppearanceController extends Controller
     private function shortestDistanceAndHub($urldata)
     {
         $apiKey = env('GOOGLE_MAPS_API_KEY'); // google api key
-        $hubAddress = MyHub::get(); // get all addresses from database
-        $uniqueAddresses = $hubAddress->pluck('address')->unique()->toArray(); 
-
         $shortestDistance = null;
         $shortestDestination = null;
+        $selectedHub = null;
+        // Get the no space hub destinations from the session
+        $noSpaceHubDestinations = session()->get('no_space_hub_destinations', []);
+
+        $hubAddress = MyHub::with('hubPricing')->get(); // get all addresses from database
+        $uniqueAddresses = $hubAddress->pluck('address')->unique()->toArray();
+
+        // Exclude all no space hub destinations from unique addresses
+        if (!empty($noSpaceHubDestinations)) {
+            $uniqueAddresses = array_diff($uniqueAddresses, $noSpaceHubDestinations);
+        }
 
         foreach ($uniqueAddresses as $destination) {
-            $url = "https://maps.googleapis.com/maps/api/distancematrix/json";
+            $url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
             $response = Http::get($url, [
-                'origins' => $urldata['pick_up_location_name'], //pickup location
+                'origins' => $urldata['pick_up_location_name'], // pickup location
                 'destinations' => $destination, // hub location
                 'key' => $apiKey,
-                'mode' => 'driving',  // Travel mode
+                'mode' => 'driving', // Travel mode
                 'units' => 'imperial', // Units
-                'avoid' => 'highways,tolls' // Avoid highways and tolls
+                'avoid' => 'highways,tolls', // Avoid highways and tolls
             ])->json();
 
             if ($response['status'] === 'OK') {
@@ -84,16 +100,38 @@ class AppearanceController extends Controller
                 }
             }
         }
-     
-        if ($shortestDistance === null) {
-            return ['message' => 'No available route found for driving'];
+        if (count($uniqueAddresses) > 0) {
+            $bagNumber = $urldata['bagNumber'];
+            $requestBags = requestBag($bagNumber);
+           
+            if ($requestBags) {
+                foreach ($requestBags as $requestBag) {
+                    $capacityField = strtolower($requestBag['size']) . '_bags_capacity';
+                    $selectedHub = $hubAddress
+                        ->where('address', $shortestDestination)
+                        ->where($capacityField, '>=', $requestBag['quantity'])
+                        ->first();
+        
+                    if ($selectedHub == null) {
+                        // Add the shortest destination to the session array
+                        $noSpaceHubDestinations[] = $shortestDestination;
+                        session()->put('no_space_hub_destinations', $noSpaceHubDestinations);
+        
+                        // Call the method recursively
+                        return $this->shortestDistanceAndHub($urldata);
+                    }
+                }
+        
+                // Clear the session data if a suitable hub is found
+                session()->forget('no_space_hub_destinations');
+            }
         }
 
-        $selectedHub = $hubAddress->where('address', $shortestDestination)->first();
 
+        // Return the shortest distance and selected hub
         return [
-            'shortestDistance' => $shortestDistance, 
-            'selectedHub' => $selectedHub
+            'shortestDistance' => $shortestDistance,
+            'selectedHub' => $selectedHub,
         ];
     }
 }

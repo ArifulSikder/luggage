@@ -12,7 +12,7 @@ class MyHub extends Model
 
     protected $guarded = [];
 
-    public function hub_pricing(){
+    public function hubPricing(){
         return $this->hasOne(HubPricing::class, 'hub_id');
     }
     public function user(){

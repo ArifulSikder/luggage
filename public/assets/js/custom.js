@@ -61,21 +61,33 @@ function ListView() {
 }
 
 function increaseValue(id) {
-    $('.reserve').attr('disabled', false);
-    const inputElement = document.getElementById('counter' + id);
-    const price = document.getElementById('price' + id).value;
-    let currentValue = parseInt(inputElement.value, 10);
+    // Enable the reserve button
+    $('.reserve').prop('disabled', false);
+    
+    // Get the input element and its value
+    const $inputElement = $('#counter' + id);
+    const price = parseFloat($('#price' + id).val());
+    let currentValue = parseInt($inputElement.val(), 10);
+    
     if (isNaN(currentValue)) {
         currentValue = 0;
     }
+    
+    // Increment the value
     currentValue++;
-    inputElement.value = currentValue;
-    console.log(price);
+    $inputElement.val(currentValue);
+    
+    // Calculate the total cost
     const totalCost = currentValue * price;
-    document.getElementById('subTotal' + id).value = totalCost;
-    document.getElementById('countluggage').innerHTML = parseInt(document.getElementById('countluggage').innerHTML) + 1 + " luggages";
-    getPremiumPrice();
+    $('#subTotal' + id).val(totalCost);
+    // Update the count of luggages
+    const $countLuggage = $('#countluggage');
+    const currentLuggageCount = parseInt($countLuggage.text(), 10);
+    $countLuggage.text((currentLuggageCount + 1) + " luggages");
+    
 }
+
+
 
 function decreaseValue(id) {
     const inputElement = document.getElementById('counter' + id);
@@ -103,7 +115,6 @@ function decreaseValue(id) {
             $('.reserve').attr('disabled', true);
         }
 
-        getPremiumPrice();
     }
 }
 
@@ -113,20 +124,6 @@ function decreaseValue(id) {
 // document.getElementById('checkin-datetime').addEventListener('change', calculateTotalCost);
 // document.getElementById('checkout-datetime').addEventListener('change', calculateTotalCost);
 
-function getPremiumPrice() {
-    // Get all checkboxes with the class 'unique-checkbox'
-    const checkboxes = document.querySelectorAll('.unique-checkbox');
-    let total = 0;
-
-    // Iterate over each checkbox
-    checkboxes.forEach(checkbox => {
-        // If the checkbox is checked, add its value to the total
-        if (checkbox.checked) {
-            total += parseFloat(checkbox.value);
-        }
-    });
-    calculateTotalCost(total.toFixed(2));
-}
 
 // Get all checkboxes with the class 'unique-checkbox'
 const checkboxes = document.querySelectorAll('.unique-checkbox');

@@ -28,7 +28,6 @@ class CustomerController extends Controller
         $mediumBags = $request->input('counter2');
         $largeBags = $request->input('counter3');
         $extraLargeBags = $request->input('counter4');
-        $premiumServices = $request->input('premiumServices');
         $hub_id = $request->input('hub_id');
         $driving_price = $request->input('driving_price');
 
@@ -37,7 +36,7 @@ class CustomerController extends Controller
 
         // Create booking entry in the database
         $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT); //generate invoice number
-
+        
         Booking::create([
             'invoice' => $invoiceNumber,
             'user_id' => Auth::id(),

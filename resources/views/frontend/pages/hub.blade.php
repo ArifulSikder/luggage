@@ -29,9 +29,9 @@
                     <div class="col-lg-8">
                         <div class="content-section">
                             <h3 class="section-title">Guide Help one</h3>
-                            <p class="mb-4">{!! $hub_details->description !!}</p>
+                            <p class="mb-4">{!! $hubDetails->description !!}</p>
                             <h3 class="section-title">Guide Help two</h3>
-                            {!! $hub_details->help_guide !!}
+                            {!! $hubDetails->help_guide !!}
                             <!-- <ul class="list-unstyled">
                                 <li class="mb-2">• Visit the LuggageHero website or app.</li>
                                 <li class="mb-2">• Choose your city and find a nearby storage location.</li>
@@ -41,7 +41,7 @@
                             </ul> -->
 
                             <h3 class="section-title">Guide Help three</h3>
-                            {!! $hub_details->help_guide !!}
+                            {!! $hubDetails->help_guide !!}
                             <!-- <ul class="list-unstyled">
                                 <li class="mb-2">• Visit the LuggageHero website or app.</li>
                                 <li class="mb-2">• Choose your city and find a nearby storage location.</li>
@@ -60,158 +60,95 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h3>Book Luggage</h3>
                             </div>
-                            @php
-                                $bagNumber = 0;
-
-                                if (count($urldata) > 0) {
-                                    $bagNumber = $urldata['bagNumber'];
-                                }
-
-                                $items = explode(', ', $bagNumber);
-                                $Small = 0;
-                                $Medium = 0;
-                                $Large = 0;
-                                $ExtraLarge = 0;
-                                $SmallPrice = 0;
-                                $MediumPrice = 0;
-                                $LargePrice = 0;
-                                $ExtraLargePrice = 0;
-                                $total_price = 0;
-                                $total_bag = 0;
-
-                                if ($items[0] != 0) {
-                                    foreach ($items as $item) {
-                                        [$size, $quantity] = explode(' - ', $item);
-                                        $quantity = (int) $quantity;
-                                        switch (trim($size)) {
-                                            case 'Small':
-                                                $total_price += $quantity * $hub_details->hub_pricing->daily_price_1;
-                                                $SmallPrice += $quantity * $hub_details->hub_pricing->daily_price_1;
-                                                $Small += $quantity;
-                                                $total_bag += $quantity;
-                                                break;
-                                            case 'Medium':
-                                                $total_price += $quantity * $hub_details->hub_pricing->daily_price_2;
-                                                $MediumPrice += $quantity * $hub_details->hub_pricing->daily_price_2;
-                                                $Medium += $quantity;
-                                                $total_bag += $quantity;
-                                                break;
-                                            case 'Medium':
-                                                $total_price += $quantity * $hub_details->hub_pricing->daily_price_3;
-                                                $LargePrice += $quantity * $hub_details->hub_pricing->daily_price_3;
-                                                $Large += $quantity;
-                                                $total_bag += $quantity;
-                                                break;
-                                            case 'Extra Large':
-                                                $total_price += $quantity * $hub_details->hub_pricing->daily_price_4;
-                                                $ExtraLargePrice +=
-                                                    $quantity * $hub_details->hub_pricing->daily_price_4;
-                                                $ExtraLarge += $quantity;
-                                                $total_bag += $quantity;
-                                                break;
-                                        }
-                                    }
-                                }
-
-                                if($shortestDistance){
-                                    $total_price += $shortestDistance * $hub_details->hub_pricing->per_km_price;
-                                }
-
-                            @endphp
-
-                         <form action="{{ url('reserve') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="pick_up_location" value="{{ $urldata['pick_up_location_name'] }}">
-                            <input type="hidden" name="drop_off_location" value="{{ $urldata['drop_off_location_name'] }}">
-                            <div>
-                                <div class="mb-3">
-                                    <label for="checkin-datetime" class="form-label">Check - In</label>
-                                    <input type="datetime-local" id="checkin-datetime" name="checkin_datetime" class="form-control"
-                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkInDate'])) : '' }}"
-                                        onchange="calculateTotalCost()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkout-datetime" class="form-label">Check - Out</label>
-                                    <input type="datetime-local" id="checkout-datetime" name="checkout_datetime" class="form-control"
-                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkOutDate'])) : '' }}"
-                                        onchange="calculateTotalCost()">
-                                </div>
-                                
-                                <h4 class="mb-2">Luggages</h4>
-                                <p class="text-muted mb-3" id="countluggage">{{ $total_bag  }} luggages</p>
-
-                                <div class="luggage-item">
-                                    <span>Small - 18-22 inches</span>
-                                    <div class="counter-section">
-                                        <button type="button" onclick="decreaseValue('1')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter1" name="counter1" min="1" value="<?= $Small ?>"
-                                            class="unique-counter-input" readonly>
-                                        <button type="button" onclick="increaseValue('1')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                            <form action="{{ url('reserve') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="pick_up_location"
+                                    value="{{ $urldata['pick_up_location_name'] }}">
+                                <input type="hidden" name="drop_off_location"
+                                    value="{{ $urldata['drop_off_location_name'] }}">
+                                <div>
+                                    <div class="mb-3">
+                                        <label for="checkin-datetime" class="form-label">Check - In</label>
+                                        <input type="datetime-local" id="checkin-datetime" name="checkin_datetime"
+                                            class="form-control"
+                                            value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkInDate'])) : '' }}"
+                                            onchange="calculateTotalCost()">
                                     </div>
-                                    <input type="hidden" id="price1"
-                                        value="{{ $hub_details->hub_pricing->daily_price_1 }}">
-                                    <input type="hidden" id="subTotal1" value="<?= $SmallPrice ?>">
-                                </div>
-
-                                <div class="luggage-item">
-                                    <span>Medium - 24-26 inches</span>
-                                    <div class="counter-section">
-                                        <button type="button" onclick="decreaseValue('2')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter2" name="counter2" value="<?= $Medium ?>"
-                                            class="unique-counter-input" readonly>
-                                        <button type="button" onclick="increaseValue('2')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                    <div class="mb-3">
+                                        <label for="checkout-datetime" class="form-label">Check - Out</label>
+                                        <input type="datetime-local" id="checkout-datetime" name="checkout_datetime"
+                                            class="form-control"
+                                            value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkOutDate'])) : '' }}"
+                                            onchange="calculateTotalCost()">
                                     </div>
-                                    <input type="hidden" id="price2"
-                                        value="{{ $hub_details->hub_pricing->daily_price_2 }}">
-                                    <input type="hidden" id="subTotal2" value="<?= $MediumPrice ?>">
-                                </div>
 
-                                <div class="luggage-item">
-                                    <span>Large - 28-32 inches</span>
-                                    <div class="counter-section">
-                                        <button type="button" onclick="decreaseValue('3')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter3" name="counter3" value="<?= $Large ?>"
-                                            class="unique-counter-input" readonly>
-                                        <button type="button" onclick="increaseValue('3')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
-                                    </div>
-                                    <input type="hidden" id="price3"
-                                        value="{{ $hub_details->hub_pricing->daily_price_3 }}">
-                                    <input type="hidden" id="subTotal3" value="<?= $LargePrice ?>">
-                                </div>
+                                    <h4 class="mb-2">Luggages</h4>
+                                    <p class="text-muted mb-3" id="countluggage">{{ $hubInfo['totalBag'] }} luggages</p>
 
-                                <div class="luggage-item">
-                                    <span>Extra Large - 30-34 inches</span>
-                                    <div class="counter-section">
-                                        <button type="button" onclick="decreaseValue('4')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                        <input type="text" id="counter4" name="counter4" value="<?= $ExtraLarge ?>"
-                                            class="unique-counter-input" readonly>
-                                        <button type="button" onclick="increaseValue('4')"
-                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                    <div class="luggage-item">
+                                        <span>Small - 18-22 inches</span>
+                                        <div class="counter-section">
+                                            <button type="button" onclick="decreaseValue('1')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                            <input type="text" id="counter1" name="counter1" min="1"
+                                                value="{{ $hubInfo['totals']['Small'] }}" class="unique-counter-input"
+                                                readonly>
+                                            <button type="button" onclick="increaseValue('1')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                        </div>
                                     </div>
-                                    <input type="hidden" id="price4"
-                                        value="{{ $hub_details->hub_pricing->daily_price_4 }}">
-                                    <input type="hidden" id="subTotal4" value="<?= $ExtraLargePrice ?>">
-                                </div>
-                                <input type="hidden" id="driving_price" name="driving_price" value="{{ $shortestDistance * $hub_details->hub_pricing->per_km_price }}">
-                                <input type="hidden" id="hub_id" name="hub_id" value="{{ $hub_details->hub_pricing->hub_id }}">
-                                <input type="hidden" id="total_cost" name="total_cost" value="{{ number_format($total_price, 2) }}">
-                                <button type="submit" class="btn btn-primary w-100 mt-4 reserve" onclick="StartBooking1()">Reserve</button>
-                                <div class="text-center mt-2">
-                                    <div class="h5">
-                                        <span id="totalCost">${{ number_format($total_price, 2) }}</span>+
-                                        {{ isset($option_details->option_value) ? $option_details->option_value : 0 }}%
-                                        Tax
+
+                                    <div class="luggage-item">
+                                        <span>Medium - 24-26 inches</span>
+                                        <div class="counter-section">
+                                            <button type="button" onclick="decreaseValue('2')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                            <input type="text" id="counter2" name="counter2"
+                                                value="{{ $hubInfo['totals']['Medium'] }}" class="unique-counter-input"
+                                                readonly>
+                                            <button type="button" onclick="increaseValue('2')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="luggage-item">
+                                        <span>Large - 28-32 inches</span>
+                                        <div class="counter-section">
+                                            <button type="button" onclick="decreaseValue('3')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                            <input type="text" id="counter3" name="counter3"
+                                                value="{{ $hubInfo['totals']['Large'] }}"
+                                                class="unique-counter-input" readonly>
+                                            <button type="button" onclick="increaseValue('3')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="luggage-item">
+                                        <span>Extra Large - 30-34 inches</span>
+                                        <div class="counter-section">
+                                            <button type="button" onclick="decreaseValue('4')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                            <input type="text" id="counter4" name="counter4"
+                                                value="{{ $hubInfo['totals']['Extra Large'] }}"
+                                                class="unique-counter-input" readonly>
+                                            <button type="button" onclick="increaseValue('4')"
+                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="hub_id" name="hub_id"
+                                        value="{{ $hubDetails->hubPricing->hub_id }}">
+                                    <button type="submit" class="btn btn-primary w-100 mt-4 reserve"
+                                        onclick="StartBooking1()">Reserve</button>
+                                    <div class="text-center mt-2">
+                                        <div class="h5">
+                                            <span id="totalCost">${{  $hubInfo['totalPrice'] }} </span>+
+                                            {{ isset($option_details->option_value) ? $option_details->option_value : 0 }}%
+                                            Tax
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                         </form>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -219,7 +156,7 @@
         </div>
     </div>
 
-    
+
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -335,17 +272,17 @@
             const subTotal4 = parseFloat(document.getElementById('subTotal4').value) || 0;
             const driving_price = parseFloat(document.getElementById('driving_price').value) || 0;
             const totalCost = subTotal1 + subTotal2 + subTotal3 + subTotal4 + driving_price + parseFloat(premium);
-     
+
             const checkinDate = document.getElementById('checkin-datetime').value;
             const checkoutDate = document.getElementById('checkout-datetime').value;
-        
+
             // Calculate date difference in days
             const diffInMs = new Date(checkoutDate) - new Date(checkinDate);
             const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-        
+
             // Calculate total cost including date difference
             const totalCostWithDateDiff = totalCost * diffInDays;
-        
+
             // Update the displayed total cost
             document.getElementById('totalCost').innerHTML = "$" + totalCostWithDateDiff.toFixed(2);
             $('#total_cost').val(totalCostWithDateDiff.toFixed(2));
@@ -356,7 +293,7 @@
             // Check if user is logged in
             showLoader();
             $.ajax({
-                url: baseUrl+'Hub/checkUserSession',
+                url: baseUrl + 'Hub/checkUserSession',
                 method: 'POST',
                 success: function(response) {
                     response = JSON.parse(response);
@@ -371,15 +308,15 @@
                         let extraLargeBags = document.getElementById('counter4').value;
                         let hub_id = document.getElementById('hub_id').value;
                         let premiumServices = [];
-        
+
                         $('.unique-checkbox').each(function() {
                             if ($(this).is(':checked')) {
                                 premiumServices.push($(this).val());
                             }
                         });
-        
+
                         $.ajax({
-                            url: baseUrl+'Hub/bookLuggage',
+                            url: baseUrl + 'Hub/bookLuggage',
                             method: 'POST',
                             data: {
                                 checkInDate: checkInDate,
@@ -404,7 +341,7 @@
                         });
                     } else {
                         // User not logged in, redirect to login page
-                        window.location.href = baseUrl+'Userlogin';
+                        window.location.href = baseUrl + 'Userlogin';
                     }
                 }
             });
