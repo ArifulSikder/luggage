@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\MyHub;
 use App\Models\Option;
 use Illuminate\Support\Facades\Http;
-use GuzzleHttp\Client;
 
 class AppearanceController extends Controller
 {
@@ -26,7 +25,6 @@ class AppearanceController extends Controller
                 $urldata = json_decode($decryptedData, true);
 
                 if ($urldata) {
-
                     $shortestDistanceAndHub = $this->shortestDistanceAndHub($urldata); // get all destination from the database
                     if (!$shortestDistanceAndHub['shortestDistance'] && !$shortestDistanceAndHub['selectedHub']) {
                         $message = [

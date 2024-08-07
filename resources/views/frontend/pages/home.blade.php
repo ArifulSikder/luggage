@@ -55,40 +55,40 @@
                             <span>Small - 18-22 inches</span>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="decreaseValues('1')">-</button>
+                                    onclick="decreaseValue('1')">-</button>
                                 <span class="mx-2 counter" id="counter1">0</span>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="increaseValues('1')">+</button>
+                                    onclick="increaseValue('1')">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span>Medium - 24-26 inches</span>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="decreaseValues('2')">-</button>
+                                    onclick="decreaseValue('2')">-</button>
                                 <span class="mx-2 counter" id="counter2">0</span>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="increaseValues('2')">+</button>
+                                    onclick="increaseValue('2')">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span>Large - 28-32 inches</span>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="decreaseValues('3')">-</button>
+                                    onclick="decreaseValue('3')">-</button>
                                 <span class="mx-2 counter" id="counter3">0</span>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="increaseValues('3')">+</button>
+                                    onclick="increaseValue('3')">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span>Extra Large - 30-34 inches</span>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="decreaseValues('4')">-</button>
+                                    onclick="decreaseValue('4')">-</button>
                                 <span class="mx-2 counter" id="counter4">0</span>
                                 <button class="btn btn-sm btn-outline-secondary btn-circle"
-                                    onclick="increaseValues('4')">+</button>
+                                    onclick="increaseValue('4')">+</button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -275,108 +275,69 @@
                 floatingBox.style.display = floatingBox.style.display === 'none' ? 'block' : 'none';
             });
             $(function() {
-                // $("#check-in-date").datepicker();
-                // $("#check-out-date").datepicker();
-
                 $("#flexCheckDefault").change(function() {
                     $('.drop_up').addClass('d-none');
                     if ($(this).prop('checked')) {
                         $('.drop_up').removeClass('d-none');
                     }
                 });
-
-
             });
 
-            {{--  ??????????????????????????????????????    --}}
-
-
-            {{--  function getCoordinates() {
-                var locationName = document.getElementById("location_name").value;
-                if (locationName.length < 3) {
-                    return; // Wait until at least 3 characters are entered
+                    
+            function increaseValue(id) {
+                const inputElement = document.getElementById('counter' + id);
+                // const price = document.getElementById('price' + id).value;
+                let currentValue = parseInt(inputElement.innerHTML, 10);
+                if (isNaN(currentValue)) {
+                    currentValue = 0;
                 }
-                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + locationName)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        var content = "";
-                        if (data.length > 0) {
-                            var dataList = document.getElementById("location_suggestions");
-                            dataList.innerHTML = ""; // Clear any previous suggestions
-
-                            data.forEach((location, index) => {
-                                content += "<p class='pointer' onclick='selectOption(\"" + location.display_name +
-                                    "\", \"" + location.lat + "\", \"" + location.lon + "\")'>" + location
-                                    .display_name + "</p>";
-                                // dataList.innerHTML += content;
-                            });
-                            dataList.style.display = 'block';
-                            dataList.innerHTML = content;
-                        } else {
-                            dataList.innerHTML = content;
-                            dataList.style.display = 'none';
-                            document.getElementById("location_name").style.borderColor = "red";
-                            document.getElementById("location_name").focus();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
-            }  --}}
-            {{--  
-            function selectOption(name, lat, lon) {
-                document.getElementById("location_name").value = name;
-                document.getElementById("latvalue_pick_up").value = lat;
-                document.getElementById("lonvalue_pick_up").value = lon;
-                document.getElementById("location_suggestions").innerHTML = ""; // Clear suggestions after selection
-                document.getElementById("location_suggestions").style.display = 'none';
-            }  --}}
-            {{--  
-            function getCoordinatesDrop() {
-                var locationName = document.getElementById("location_name_drop").value;
-                if (locationName.length < 3) {
-                    return; // Wait until at least 3 characters are entered
+                currentValue++;
+                if (currentValue < 0) {
+                    currentValue = 0;
                 }
-                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + locationName)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        var content = "";
-                        if (data.length > 0) {
-                            var dataList = document.getElementById("location_suggestions");
-                            dataList.innerHTML = ""; // Clear any previous suggestions
-
-                            data.forEach((location, index) => {
-                                content += "<p class='pointer' onclick='selectOptionDrop(\"" + location
-                                    .display_name + "\", \"" + location.lat + "\", \"" + location.lon + "\")'>" +
-                                    location.display_name + "</p>";
-                                // dataList.innerHTML += content;
-                            });
-                            dataList.style.display = 'block';
-                            dataList.innerHTML = content;
-                        } else {
-                            dataList.innerHTML = content;
-                            dataList.style.display = 'none';
-                            document.getElementById("location_name_drop").style.borderColor = "red";
-                            document.getElementById("location_name_drop").focus();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
+                inputElement.innerHTML = currentValue;
+                getBagcountValue();
+            
+                // document.getElementById('bag-number').value = bagcontent;
             }
+            
+            function decreaseValue(id) {
+                const inputElement = document.getElementById('counter' + id);
+                let currentValue = parseInt(inputElement.innerHTML, 10);
+                if (isNaN(currentValue)) {
+                    currentValue = 0;
+                }
+                currentValue--;
+                if (currentValue < 0) {
+                    currentValue = 0;
+                }
+                inputElement.innerHTML = currentValue;
+                getBagcountValue();
+                // document.getElementById('bag-number').value = bagcontent;
+            }
+            
+            function getBagcountValue() {
+                const counters = [
+                    { label: 'Small', value: document.getElementById('counter1').innerHTML },
+                    { label: 'Medium', value: document.getElementById('counter2').innerHTML },
+                    { label: 'Large', value: document.getElementById('counter3').innerHTML },
+                    { label: 'Extra Large', value: document.getElementById('counter4').innerHTML },
+                ];
 
-            function selectOptionDrop(name, lat, lon) {
-                document.getElementById("location_name_drop").value = name;
-                document.getElementById("latvalue_drop_off").value = lat;
-                document.getElementById("lonvalue_drop_off").value = lon;
-                document.getElementById("location_suggestions").innerHTML = ""; // Clear suggestions after selection
-                document.getElementById("location_suggestions").style.display = 'none';
-            }  --}}
+                const bagContentArray = counters
+                    .filter(counter => parseInt(counter.value, 10) > 0)
+                    .map(counter => `${counter.label} - ${counter.value}`);
 
-
-
+                const bagContent = bagContentArray.join(', ');
+                document.getElementById('bag-number').value = bagContent;
+                console.log(bagContent); // For testing purposes, you can remove or replace this line with the desired action
+            }
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#bag-number, #toolbar').length) {
+                    $('#toolbar').hide();
+                }
+            });
+            
             function searchLocation1() {
                 $('#loader_text').addClass('d-none');
                 showLoader();
@@ -385,7 +346,7 @@
                 var checkInDate = $("#check-in-date").val();
                 var checkOutDate = $("#check-out-date").val();
                 var bagNumber = $("#bag-number").val();
-
+            
                 var data = {
                     pick_up_location_name: pick_up_location_name,
                     drop_off_location_name: drop_off_location_name,
@@ -393,44 +354,13 @@
                     checkOutDate: checkOutDate,
                     bagNumber: bagNumber
                 };
-
+            
                 var jsonData = JSON.stringify(data);
                 var encryptedData = encryptData(jsonData);
-
+            
                 window.location.href = "{{ url('details/data') }}/" + encodeURIComponent(encryptedData);
             }
-
-            $(document).ready(function() {
-                $('.count').prop('disabled', true);
-
-                $(document).on('click', '.plus', function() {
-                    var $input = $(this).closest('.qty').find('.count');
-                    $input.val(parseInt($input.val()) + 1);
-                });
-
-                $(document).on('click', '.minus', function() {
-                    var $input = $(this).closest('.qty').find('.count');
-                    $input.val(parseInt($input.val()) - 1);
-                    if ($input.val() == 0) {
-                        $input.val(1);
-                    }
-                });
-
-                $('#bag-number').on('click', function() {
-                    var offset = $(this).offset();
-                    $('#toolbar').css({
-                        top: offset.top + $(this).outerHeight(),
-                        left: offset.left,
-                        width: $(this).outerWidth()
-                    }).show();
-                });
-
-                $(document).on('click', function(event) {
-                    if (!$(event.target).closest('#bag-number, #toolbar').length) {
-                        $('#toolbar').hide();
-                    }
-                });
-            });
+            
         </script>
     @endpush
 @endsection

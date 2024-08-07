@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luggage Hub - Store Your Luggage</title>
 
-    <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('assets') }}/css/style.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 <body>
+    <input type="hidden" id="base_url" value="{{ url('/') }}">
     <div id="loader" class="loader">
         <div class="d-block">
             <h4 class="m-5 d-none" id="loader_text">Finding a pickup agent...</h4>
@@ -60,95 +62,90 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h3>Book Luggage</h3>
                             </div>
-                            <form action="{{ url('reserve') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="pick_up_location"
-                                    value="{{ $urldata['pick_up_location_name'] }}">
-                                <input type="hidden" name="drop_off_location"
-                                    value="{{ $urldata['drop_off_location_name'] }}">
-                                <div>
-                                    <div class="mb-3">
-                                        <label for="checkin-datetime" class="form-label">Check - In</label>
-                                        <input type="datetime-local" id="checkin-datetime" name="checkin_datetime"
-                                            class="form-control"
-                                            value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkInDate'])) : '' }}"
-                                            onchange="calculateTotalCost()">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="checkout-datetime" class="form-label">Check - Out</label>
-                                        <input type="datetime-local" id="checkout-datetime" name="checkout_datetime"
-                                            class="form-control"
-                                            value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkOutDate'])) : '' }}"
-                                            onchange="calculateTotalCost()">
-                                    </div>
 
-                                    <h4 class="mb-2">Luggages</h4>
-                                    <p class="text-muted mb-3" id="countluggage">{{ $hubInfo['totalBag'] }} luggages</p>
+                            <div>
+                                <div class="mb-3">
+                                    <label for="checkin-datetime" class="form-label">Check - In</label>
+                                    <input type="datetime-local" id="checkin-datetime" name="checkin_datetime"
+                                        class="form-control"
+                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkInDate'])) : '' }}"
+                                        onchange="calculateTotalCost()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkout-datetime" class="form-label">Check - Out</label>
+                                    <input type="datetime-local" id="checkout-datetime" name="checkout_datetime"
+                                        class="form-control"
+                                        value="{{ count($urldata) > 0 ? date('Y-m-d\TH:i', strtotime($urldata['checkOutDate'])) : '' }}"
+                                        onchange="calculateTotalCost()">
+                                </div>
 
-                                    <div class="luggage-item">
-                                        <span>Small - 18-22 inches</span>
-                                        <div class="counter-section">
-                                            <button type="button" onclick="decreaseValue('1')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                            <input type="text" id="counter1" name="counter1" min="1"
-                                                value="{{ $hubInfo['totals']['Small'] }}" class="unique-counter-input"
-                                                readonly>
-                                            <button type="button" onclick="increaseValue('1')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
-                                        </div>
-                                    </div>
+                                <h4 class="mb-2">Luggages</h4>
+                                <p class="text-muted mb-3" id="countluggage">{{ $hubInfo['totalBag'] }} luggages</p>
 
-                                    <div class="luggage-item">
-                                        <span>Medium - 24-26 inches</span>
-                                        <div class="counter-section">
-                                            <button type="button" onclick="decreaseValue('2')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                            <input type="text" id="counter2" name="counter2"
-                                                value="{{ $hubInfo['totals']['Medium'] }}" class="unique-counter-input"
-                                                readonly>
-                                            <button type="button" onclick="increaseValue('2')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
-                                        </div>
-                                    </div>
-                                    <div class="luggage-item">
-                                        <span>Large - 28-32 inches</span>
-                                        <div class="counter-section">
-                                            <button type="button" onclick="decreaseValue('3')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                            <input type="text" id="counter3" name="counter3"
-                                                value="{{ $hubInfo['totals']['Large'] }}"
-                                                class="unique-counter-input" readonly>
-                                            <button type="button" onclick="increaseValue('3')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="luggage-item">
-                                        <span>Extra Large - 30-34 inches</span>
-                                        <div class="counter-section">
-                                            <button type="button" onclick="decreaseValue('4')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">-</button>
-                                            <input type="text" id="counter4" name="counter4"
-                                                value="{{ $hubInfo['totals']['Extra Large'] }}"
-                                                class="unique-counter-input" readonly>
-                                            <button type="button" onclick="increaseValue('4')"
-                                                class="btn btn-outline-secondary btn-sm btn-circle">+</button>
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden" id="hub_id" name="hub_id"
-                                        value="{{ $hubDetails->hubPricing->hub_id }}">
-                                    <button type="submit" class="btn btn-primary w-100 mt-4 reserve"
-                                        onclick="StartBooking1()">Reserve</button>
-                                    <div class="text-center mt-2">
-                                        <div class="h5">
-                                            <span id="totalCost">${{  $hubInfo['totalPrice'] }} </span>+
-                                            {{ isset($option_details->option_value) ? $option_details->option_value : 0 }}%
-                                            Tax
-                                        </div>
+                                <div class="luggage-item">
+                                    <span>Small - 18-22 inches</span>
+                                    <div class="counter-section">
+                                        <button type="button" onclick="decreaseValue('1')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                        <input type="text" id="counter1" name="small" min="1"
+                                            value="{{ $hubInfo['totals']['Small'] }}" class="unique-counter-input"
+                                            readonly>
+                                        <button type="button" onclick="increaseValue('1')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
                                     </div>
                                 </div>
-                            </form>
+
+                                <div class="luggage-item">
+                                    <span>Medium - 24-26 inches</span>
+                                    <div class="counter-section">
+                                        <button type="button" onclick="decreaseValue('2')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                        <input type="text" id="counter2" name="medium"
+                                            value="{{ $hubInfo['totals']['Medium'] }}" class="unique-counter-input"
+                                            readonly>
+                                        <button type="button" onclick="increaseValue('2')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                    </div>
+                                </div>
+                                <div class="luggage-item">
+                                    <span>Large - 28-32 inches</span>
+                                    <div class="counter-section">
+                                        <button type="button" onclick="decreaseValue('3')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                        <input type="text" id="counter3" name="large"
+                                            value="{{ $hubInfo['totals']['Large'] }}" class="unique-counter-input"
+                                            readonly>
+                                        <button type="button" onclick="increaseValue('3')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="luggage-item">
+                                    <span>Extra Large - 30-34 inches</span>
+                                    <div class="counter-section">
+                                        <button type="button" onclick="decreaseValue('4')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">-</button>
+                                        <input type="text" id="counter4" name="extra_large"
+                                            value="{{ $hubInfo['totals']['Extra Large'] }}"
+                                            class="unique-counter-input" readonly>
+                                        <button type="button" onclick="increaseValue('4')"
+                                            class="btn btn-outline-secondary btn-sm btn-circle">+</button>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="hub_id" name="hub_id"
+                                    value="{{ $hubDetails->hubPricing->hub_id }}">
+                                <button type="submit" class="btn btn-primary w-100 mt-4 reserve" data-toggle="modal"
+                                    data-target="#staticBackdrop">Reserve</button>
+
+                                <div class="text-center mt-2">
+                                    <div class="h5">
+                                        <span id="totalCost">${{ $hubInfo['totalPrice'] }}</span> +
+                                        {{ isset($option_details->option_value) ? $option_details->option_value : 0 }}%
+                                        Tax
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,10 +153,9 @@
         </div>
     </div>
 
-
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -244,118 +240,201 @@
         </div>
     </div>
 
+
     @include('frontend.include.footer')
 
     <script src="{{ asset('frontend/js/jquery-3.5.1.slim.min.js') }}"></script>
     <script src="{{ asset('frontend/js/popper.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('assets') }}/js/custom.js"></script>
+    <script src="{{ asset('frontend/js/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}?v={{ time() }}"></script>
     <script>
-        document.querySelector('.bag-number').addEventListener('click', function(e) {
-            e.preventDefault();
-            const floatingBox = document.querySelector('.floating-box');
-            floatingBox.style.display = floatingBox.style.display === 'none' ? 'block' : 'none';
-            // bagcontent = floatingBox.style.display === 'none' ? '' : false;
+        $(document).ready(function() {
+            $('.reserve').click(function(e) {
+                e.preventDefault(); // Prevent form submission
+                Swal.fire({
+                    title: "Do you want to Reserve?",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: `No`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ url('check-login') }}",
+                            success: function(response) {
+                                if (response.logged_in) {
+                                    // User is logged in, proceed with reservation
+                                    proceedWithReservation();
+                                } else {
+                                    // User is not logged in, prompt to log in
+                                    Swal.fire({
+                                        title: 'Please log in to reserve',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Login',
+                                        cancelButtonText: 'Cancel'
+                                    }).then((loginResult) => {
+                                        if (loginResult.isConfirmed) {
+                                            // Store the intended URL in session storage
+                                            const currentUrl = window.location.href;
+                                            localStorage.setItem('intendedUrl', currentUrl);
+                                            window.location.href = "{{ route('login') }}";
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+            
+            function proceedWithReservation() {
+                const small = $('#counter1').val();
+                const medium = $('#counter2').val();
+                const large = $('#counter3').val();
+                const extraLarge = $('#counter4').val();
+                const hubId = $('#hub_id').val();
+                const check_in_date_time = $('#checkin-datetime').val();
+                const check_out_date_time = $('#checkout-datetime').val();
+            
+                const data = {
+                    hub_id: hubId,
+                    small: small,
+                    medium: medium,
+                    large: large,
+                    extra_large: extraLarge,
+                    check_in_date_time: check_in_date_time,
+                    check_out_date_time: check_out_date_time
+                };
+            
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('reserve') }}",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data.success === true) {
+                            $('#staticBackdrop').modal('show');
+                        }else {
+                            Swal.fire({
+                                title: 'Failed to reserve',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Try Again'
+                            });
+                        }
+                    }
+                });
+            }
+            
+
         });
         $(function() {
             $("#check-in-date").datepicker();
             $("#check-out-date").datepicker();
         });
 
-        function calculateTotalCost(premium = 0) {
-            const subTotal1 = parseFloat(document.getElementById('subTotal1').value) || 0;
-            const subTotal2 = parseFloat(document.getElementById('subTotal2').value) || 0;
-            const subTotal3 = parseFloat(document.getElementById('subTotal3').value) || 0;
-            const subTotal4 = parseFloat(document.getElementById('subTotal4').value) || 0;
-            const driving_price = parseFloat(document.getElementById('driving_price').value) || 0;
-            const totalCost = subTotal1 + subTotal2 + subTotal3 + subTotal4 + driving_price + parseFloat(premium);
+        function increaseValue(id) {
+            // Enable the reserve button
+            $('.reserve').prop('disabled', false);
+            const $inputElement = $('#counter' + id);
+            let currentValue = parseInt($inputElement.val(), 10);
 
-            const checkinDate = document.getElementById('checkin-datetime').value;
-            const checkoutDate = document.getElementById('checkout-datetime').value;
+            if (isNaN(currentValue)) {
+                currentValue = 0;
+            }
 
-            // Calculate date difference in days
-            const diffInMs = new Date(checkoutDate) - new Date(checkinDate);
-            const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+            // Increment the value
+            currentValue++;
+            $inputElement.val(currentValue);
 
-            // Calculate total cost including date difference
-            const totalCostWithDateDiff = totalCost * diffInDays;
-
-            // Update the displayed total cost
-            document.getElementById('totalCost').innerHTML = "$" + totalCostWithDateDiff.toFixed(2);
-            $('#total_cost').val(totalCostWithDateDiff.toFixed(2));
+            // Update the count of luggages
+            const $countLuggage = $('#countluggage');
+            const currentLuggageCount = parseInt($countLuggage.text(), 10);
+            $countLuggage.text((currentLuggageCount + 1) + " luggages");
+            calculateTotalCost();
         }
 
 
-        function StartBooking1() {
-            // Check if user is logged in
-            showLoader();
+
+        function decreaseValue(id) {
+            const inputElement = document.getElementById('counter' + id);
+            let currentValue = parseInt(inputElement.value, 10);
+
+            // Ensure the current value is a valid number
+            if (isNaN(currentValue)) {
+                currentValue = 1; // Set default to minimum value if current value is not a number
+            }
+
+            // Decrease the value only if it's greater than the minimum value
+            if (currentValue > 0) {
+                currentValue--;
+                inputElement.value = currentValue;
+
+                const countLuggageElement = document.getElementById('countluggage');
+                const newCountLuggage = parseInt(countLuggageElement.innerHTML) - 1;
+                countLuggageElement.innerHTML = newCountLuggage + " luggages";
+
+                if (newCountLuggage === 0) {
+                    $('.reserve').attr('disabled', true);
+                }
+
+            }
+            calculateTotalCost();
+        }
+
+        function calculateTotalCost() {
+            const small = $('#counter1').val();
+            const medium = $('#counter2').val();
+            const large = $('#counter3').val();
+            const extraLarge = $('#counter4').val();
+            const hubId = $('#hub_id').val();
+            const check_in_date_time = $('#checkin-datetime').val();
+            const check_out_date_time = $('#checkout-datetime').val();
+
+            const data = {
+                hub_id: hubId,
+                small: small,
+                medium: medium,
+                large: large,
+                extra_large: extraLarge,
+                check_in_date_time: check_in_date_time,
+                check_out_date_time: check_out_date_time
+            };
+
             $.ajax({
-                url: baseUrl + 'Hub/checkUserSession',
-                method: 'POST',
+                url: "{{ url('calculate-total-cost') }}",
+                type: 'POST',
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 success: function(response) {
-                    response = JSON.parse(response);
-                    console.log(response.loggedIn);
-                    if (response.loggedIn) {
-                        // User is logged in, proceed with booking
-                        let checkInDate = document.getElementById('checkin-date').value;
-                        let checkOutDate = document.getElementById('checkout-date').value;
-                        let smallBags = document.getElementById('counter1').value;
-                        let mediumBags = document.getElementById('counter2').value;
-                        let largeBags = document.getElementById('counter3').value;
-                        let extraLargeBags = document.getElementById('counter4').value;
-                        let hub_id = document.getElementById('hub_id').value;
-                        let premiumServices = [];
+                    const checkinDate = document.getElementById('checkin-datetime').value;
+                    const checkoutDate = document.getElementById('checkout-datetime').value;
 
-                        $('.unique-checkbox').each(function() {
-                            if ($(this).is(':checked')) {
-                                premiumServices.push($(this).val());
-                            }
-                        });
+                    // Calculate date difference in days
+                    const diffInMs = new Date(checkoutDate) - new Date(checkinDate);
+                    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-                        $.ajax({
-                            url: baseUrl + 'Hub/bookLuggage',
-                            method: 'POST',
-                            data: {
-                                checkInDate: checkInDate,
-                                checkOutDate: checkOutDate,
-                                smallBags: smallBags,
-                                mediumBags: mediumBags,
-                                largeBags: largeBags,
-                                extraLargeBags: extraLargeBags,
-                                premiumServices: premiumServices,
-                                hub_id: hub_id
-                            },
-                            success: function(response) {
-                                response = JSON.parse(response);
-                                console.log(response.success);
-                                if (response.success) {
-                                    alert("Your booking is successfully placed.")
-                                    window.location.href = baseUrl;
-                                } else {
-                                    alert('Booking failed, please try again.');
-                                }
-                            }
-                        });
-                    } else {
-                        // User not logged in, redirect to login page
-                        window.location.href = baseUrl + 'Userlogin';
-                    }
+                    // Calculate total cost including date difference
+                    const totalCostWithDateDiff = response.totalPrice * diffInDays;
+                    console.log(response.totalPrice);
+                    $('#totalCost').text('$' + response.totalPrice);
+                    $('#countluggage').text(response.totalBag + ' luggages');
+                },
+                error: function(xhr) {
+                    console.error('Error Status:', xhr.status);
+                    console.error('Error Response:', xhr.responseText);
+                    alert('An error occurred while processing your request. Please try again.');
                 }
             });
         }
-
-        {{--  function StartBooking1() {
-            $("#loader_text").removeClass('d-none');
-            showLoader1();
-            setTimeout(function() {
-                hideLoader();
-                $('#staticBackdrop').modal('show');
-                // window.location.href = baseUrl+"Hub/confirm_page/MQ==";
-            }, 2000);
-        }  --}}
 
         function goToDashbord() {
             window.location.href = "{{ url('customer-profile') }}"
@@ -370,6 +449,7 @@
             document.getElementById('loader').style.display = 'flex';
 
         }
+
     </script>
 </body>
 

@@ -2,7 +2,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('assets') }}/img/logo.png" alt="Luggage hub"></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('assets') }}/img/logo.png"
+                    alt="Luggage hub"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -18,8 +19,14 @@
                         @auth
                             <li class="nav-item"><a class="nav-link login" href="#">Hello !
                                     {{ Auth::user()->name }}</a></li>
-                            <li class="nav-item"><a class="btn btn-primary" href="{{ route('logout') }}">Logout
-                                    →</a></li>
+                            <li class="nav-item">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                <a class="btn btn-primary" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout
+                                    →</a>
+                            </li>
                         @else
                             <li class="nav-item"><a class="nav-link login" href="{{ route('login') }}">Login</a>
                             </li>

@@ -12,4 +12,11 @@ class Booking extends Model
 
     protected $guarded = [];
 
+    public function delivaryAgentHistory(){
+        return $this->hasOne(DelivaryAgentHistory::class, 'booking_id');
+    }
+
+    public function hubPridelivaryAgentHistoriescing(){
+        return $this->hasMany(DelivaryAgentHistory::class, 'booking_id');
+    }
 }

@@ -16,13 +16,14 @@
     <script defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBX157KWOUI_frIUhb2ghgyTuCOwgzgqVo"
         type="text/javascript"></script>
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('frontend.include.head')
 
     @stack('css')
 </head>
 
 <body>
+    <input type="hidden" id="base_url" value="{{ url('/') }}">
     <div id="loader" class="loader">
         <div class="spinner"></div>
     </div>
@@ -37,7 +38,6 @@
     <script src="{{ asset('frontend/js/jquery-3.5.1.slim.min.js') }}"></script>
     <script src="{{ asset('frontend/js/popper.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets') }}/js/custom.js"></script>

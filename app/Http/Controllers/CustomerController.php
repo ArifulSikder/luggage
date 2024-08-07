@@ -2,84 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommonResource;
 use App\Models\Booking;
 use App\Models\HubPricing;
-use App\Models\Option;
+use App\Models\MyHub;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\BaseController as BaseController;
+use App\Models\User;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
     public function index()
     {
-        $data['orders'] = Booking::whereUserId(Auth::id())->where('status', "Booked")->orderBy('id', 'desc')->get(); // all orders
+        $data['orders'] = Booking::whereUserId(Auth::id())->where('status', 'Booked')->orderBy('id', 'desc')->get(); // all orders
         return view('frontend.pages.customer-profile', $data);
+    }
+
+    public function calculateTotalCost(Request $request)
+    {
+        $hubPricing = HubPricing::find($request->input('hub_id'));
+        $requestData = $request->all();
+        $result = calculateBagTotals($requestData, $hubPricing);
+
+        return response()->json([
+            'totalPrice' => $result['totalPrice'],
+            'totalBag' => $result['totalBag'],
+        ]);
     }
 
     public function reserve(Request $request)
     {
-        // Retrieve form data
-        $pick_up_location = $request->input('pick_up_location');
-        $drop_off_location = $request->input('drop_off_location');
-        $checkInDate = $request->input('checkin_datetime');
-        $checkOutDate = $request->input('checkout_datetime');
-        $smallBags = $request->input('counter1');
-        $mediumBags = $request->input('counter2');
-        $largeBags = $request->input('counter3');
-        $extraLargeBags = $request->input('counter4');
-        $hub_id = $request->input('hub_id');
-        $driving_price = $request->input('driving_price');
+        try {
+            $myHub = MyHub::with('hubPricing')->find($request->input('hub_id'));
+            $hubPricing = $myHub->hubPricing;
+            $requestData = $request->all();
+            $result = calculateBagTotals($requestData, $hubPricing);
 
-        // Calculate total cost
-        $totalCost = $request->input('total_cost');
+            // Create booking entry in the database
+            $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT); //generate invoice number
 
-        // Create booking entry in the database
-        $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT); //generate invoice number
-        
-        Booking::create([
-            'invoice' => $invoiceNumber,
-            'user_id' => Auth::id(),
-            'hub_id' => $hub_id,
-            'pick_up_location' => $pick_up_location,
-            'drop_off_location' => $drop_off_location,
-            'booking_date' => Carbon::now(),
-            'check_in_date' => Carbon::parse($checkInDate),
-            'check_out_date' => Carbon::parse($checkOutDate),
-            'small_bags' => $smallBags,
-            'medium_bags' => $mediumBags,
-            'large_bags' => $largeBags,
-            'extra_large_bags' => $extraLargeBags,
-            'driving_price' => $driving_price,
-            'total_cost' => $totalCost,
-            'status' => "Booked"
-        ]);
-        
-        return redirect('/customer-dashboard')->with('success', 'Booking was successful!'); // redirect to the customer dashboard
-    }
+            $booking = Booking::create([
+                'invoice' => $invoiceNumber,
+                'user_id' => Auth::id(),
+                'hub_id' => $request->hub_id,
+                'pick_up_location' => $myHub->address,
+                'drop_off_location' => $myHub->address,
+                'booking_date' => Carbon::now(),
+                'check_in_date' => Carbon::parse($request->check_in_date_time),
+                'check_out_date' => Carbon::parse($request->check_out_date_time),
+                'small_bags' => $result['totals']['Small'],
+                'medium_bags' => $result['totals']['Medium'],
+                'large_bags' => $result['totals']['Large'],
+                'extra_large_bags' => $result['totals']['Extra Large'],
+                'driving_price' => distancePrice($hubPricing),
+                'total_cost' => $result['totalPrice'],
+                'status' => 'Booked',
+            ]);
 
-    public function getDailyPrice($hub_id, $size)
-    {
-        // Fetch the hub pricing data
-        $hubPricing = HubPricing::where('hub_id', $hub_id)->first();
+            $delivary_agents = User::whereUserType(3)->where('')->first();
 
-        // Check if any results are returned
-        if (!$hubPricing) {
-            throw new \Exception("No data found for hub_id: $hub_id");
-        }
+            return $this->sendResponse(new CommonResource($booking), 'Booking successful!');
+        } catch (\Throwable $th) {
+            Log::error('Error creating booking: ' . $th->getMessage(), ['stack' => $th->getTraceAsString()]);
 
-        // Determine the daily price based on size
-        switch ($size) {
-            case 'small':
-                return $hubPricing->daily_price_1;
-            case 'medium':
-                return $hubPricing->daily_price_2;
-            case 'large':
-                return $hubPricing->daily_price_3;
-            case 'extra_large':
-                return $hubPricing->daily_price_4;
-            default:
-                throw new \Exception("Invalid size: $size");
+            return $this->sendError('Failed to fetch Booking', $th->getMessage());
         }
     }
 }

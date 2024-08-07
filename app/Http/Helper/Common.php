@@ -78,9 +78,23 @@ if (!function_exists('calculateBagTotals')) {
 
         $totalPrice += distancePrice($hubPricing);
 
+        if (isset($requestData['check_in_date_time']) && isset($requestData['check_out_date_time'])) {
+            $checkInDate = $requestData['check_in_date_time'];
+            $checkOutDate = $requestData['check_out_date_time'];
+        } elseif (isset($requestData['checkInDate']) && isset($requestData['checkOutDate'])) {
+            $checkInDate = $requestData['checkInDate'];
+            $checkOutDate = $requestData['checkOutDate'];
+        } else {
+            // Handle the case when dates are not provided
+            throw new \Exception('Check-in and Check-out dates are required.');
+        }
+        
+        $dayCalculation = dayCalculation($checkInDate, $checkOutDate);
+        $finalTotalPrice = $totalPrice * $dayCalculation;
+
         return [
             'totals' => $totals,
-            'totalPrice' => $totalPrice,
+            'totalPrice' => $finalTotalPrice,
             'totalBag' => $totalBag,
         ];
     }
@@ -99,3 +113,14 @@ if (!function_exists('distancePrice')) {
     }
 }
 
+
+if (!function_exists('dayCalculation')) {
+    function dayCalculation($checkinDate, $checkoutDate)
+    {
+        $checkinDate = new DateTime($checkinDate);
+        $checkoutDate = new DateTime($checkoutDate);
+        $diffInDays = $checkoutDate->diff($checkinDate)->days;
+
+        return $diffInDays > 0 ? $diffInDays : 1;
+    }
+}
