@@ -1,16 +1,30 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DeliveryAgentController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\fontend\AppearanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+
+// ************************************************ Customer route ************************************************
+
 Route::get('/', [AppearanceController::class, "index"]);
 Route::get('/details/data/{data}', [AppearanceController::class, "hub_details"]);
 Route::get('/customer-dashboard', [CustomerController::class, "index"])->name('customer-dashboard');
 Route::post('/calculate-total-cost', [CustomerController::class, "calculateTotalCost"])->name('calculate-total-cost');
+
+
+// ************************************************ Delivery Agent route ************************************************
+Route::middleware('auth')->group(function () {
+    Route::get('/delivery-agent', [DeliveryAgentController::class, "index"])->name('delivery-agent');
+});
+
+
+
+
 Route::get('/check-login', function () {
     return response()->json(['logged_in' => Auth::check()]);
 });

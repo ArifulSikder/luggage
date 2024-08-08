@@ -16,7 +16,7 @@ class Booking extends Model
         return $this->hasOne(DelivaryAgentHistory::class, 'booking_id');
     }
 
-    public function hubPridelivaryAgentHistoriescing(){
+    public function deliveryAgentHistories(){
         return $this->hasMany(DelivaryAgentHistory::class, 'booking_id');
     }
 }

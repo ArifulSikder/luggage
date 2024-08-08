@@ -20,7 +20,7 @@
                 </div>
                 <div class="mx-auto my-6"
                     style="margin-left: auto; margin-right: auto; margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                    <img src="{{ file_exists(Auth::user()->profile_pic) ? asset(Auth::user()->profile_pic) : asset('assets/assets/img/avatars/3.png') }}" alt="Avatar Image"
+                    <img src="{{ Auth::user()->profile_pic ? asset(Auth::user()->profile_pic) : asset('assets/assets/img/avatars/3.png') }}" alt="Avatar Image"
                         class="rounded-circle w-px-100" style="width: 100px; height: 100px;">
                 </div>
                 <h5 class="mb-0 card-title">{{ Auth::user()->name }}</h5>

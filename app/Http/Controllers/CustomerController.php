@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\BaseController as BaseController;
 use App\Models\User;
+use App\Models\DelivaryAgentHistory;
 
 class CustomerController extends BaseController
 {
@@ -26,9 +27,9 @@ class CustomerController extends BaseController
         $hubPricing = HubPricing::find($request->input('hub_id'));
         $requestData = $request->all();
         $result = calculateBagTotals($requestData, $hubPricing);
-
+        
         return response()->json([
-            'totalPrice' => $result['totalPrice'],
+            'totalPrice' => round($result['totalPrice']),
             'totalBag' => $result['totalBag'],
         ]);
     }
@@ -62,7 +63,13 @@ class CustomerController extends BaseController
                 'status' => 'Booked',
             ]);
 
-            $delivary_agents = User::whereUserType(3)->where('')->first();
+            $delivary_agents = User::whereUserType(3)->first();
+
+            $deliveryAgent = DelivaryAgentHistory::create([
+                'booking_id' => $booking->id,
+                'delivery_agent_id' => $delivary_agents->id,
+                'date_time' => Carbon::now(),
+            ]);
 
             return $this->sendResponse(new CommonResource($booking), 'Booking successful!');
         } catch (\Throwable $th) {

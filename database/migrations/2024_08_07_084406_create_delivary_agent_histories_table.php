@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('delivary_agent_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained();
-            $table->integer(1)->default('0=did not accept; 1=accepted');
+            $table->foreignId('booking_id');
+            $table->foreignId('delivery_agent_id');
+            $table->integer('order_status')->default(0)->comment('0=did not accept; 1=accepted');
             $table->timestamp('date_time');
             $table->string('reason');
             $table->softDeletes();

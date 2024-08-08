@@ -26,10 +26,16 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
+        if (Auth::user()->user_type == 3) {
+            return redirect()->intended(route('delivery-agent'));
+        }
+        
         if (Auth::user()->user_type == 1) {
             $intendedUrl = $request->input('intended_url', route('customer-dashboard'));
             return redirect()->intended($intendedUrl);
         }
+
+
         $intendedUrl = $request->input('intended_url', route('dashboard'));
         return redirect()->intended($intendedUrl);
     }

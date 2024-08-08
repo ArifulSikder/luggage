@@ -16,6 +16,7 @@ class AppearanceController extends Controller
     }
     public function hub_details(Request $request, $dataUrl)
     {
+        session()->forget('no_space_hub_destinations'); // remove oll session of hub destination
         $encryptedData = $request->get('data') ?? $dataUrl; // encrypted data from request
 
         if ($encryptedData) {
@@ -104,7 +105,9 @@ class AppearanceController extends Controller
            
             if ($requestBags) {
                 foreach ($requestBags as $requestBag) {
-                    $capacityField = strtolower($requestBag['size']) . '_bags_capacity';
+                    $size = strtolower(str_replace(' ', '_', $requestBag['size']));
+                    $capacityField = $size . '_bags_capacity';
+                    
                     $selectedHub = $hubAddress
                         ->where('address', $shortestDestination)
                         ->where($capacityField, '>=', $requestBag['quantity'])

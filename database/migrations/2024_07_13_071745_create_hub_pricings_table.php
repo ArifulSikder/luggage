@@ -14,19 +14,29 @@ return new class extends Migration
         Schema::create('hub_pricings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('hub_id');
-            $table->decimal('hourly_price_1', 10,2)->nullable();
-            $table->decimal('daily_price_1', 10,2)->nullable();
-            $table->decimal('hourly_price_2', 10,2)->nullable();
-            $table->decimal('daily_price_2', 10,2)->nullable();
-            $table->decimal('hourly_price_3', 10,2)->nullable();
-            $table->decimal('daily_price_3', 10,2)->nullable();
-            $table->decimal('hourly_price_4', 10,2)->nullable();
-            $table->decimal('daily_price_4', 10,2)->nullable();
-            $table->decimal('premium_service_1', 10,2)->nullable();
-            $table->decimal('premium_service_2', 10,2)->nullable();
-            $table->decimal('premium_service_3', 10,2)->nullable();
+            $table->decimal('small_per_bag_hourly_price', 10,2)->nullable();
+            $table->decimal('small_per_bag_daily_price', 10,2)->nullable();
+            $table->decimal('small_per_bag_weekly_price', 10,2)->nullable();
+            $table->decimal('small_per_bag_monthly_price', 10,2)->nullable();
+            
+            $table->decimal('medium_per_bag_hourly_price', 10,2)->nullable();
+            $table->decimal('medium_per_bag_daily_price', 10,2)->nullable();
+            $table->decimal('medium_per_bag_weekly_price', 10,2)->nullable();
+            $table->decimal('medium_per_bag_monthly_price', 10,2)->nullable();
+            
+            $table->decimal('large_per_bag_hourly_price', 10,2)->nullable();
+            $table->decimal('large_per_bag_daily_price', 10,2)->nullable();
+            $table->decimal('large_per_bag_weekly_price', 10,2)->nullable();
+            $table->decimal('large_per_bag_monthly_price', 10,2)->nullable();
+            
+            $table->decimal('extra_large_per_bag_hourly_price', 10,2)->nullable();
+            $table->decimal('extra_large_per_bag_daily_price', 10,2)->nullable();
+            $table->decimal('extra_large_per_bag_weekly_price', 10,2)->nullable();
+            $table->decimal('extra_large_per_bag_monthly_price', 10,2)->nullable();
+
             $table->decimal('per_km_price', 10,2)->nullable();
             $table->foreignId('created_by');
+            $table->foreignId('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,7 +45,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): vodecimal
+    public function down(): void
     {
         Schema::dropIfExists('hub_pricings');
     }
