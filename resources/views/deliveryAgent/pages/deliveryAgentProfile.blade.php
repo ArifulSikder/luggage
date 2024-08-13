@@ -1,4 +1,4 @@
-@extends('frontend.layouts.main')
+@extends('deliveryAgent.main_delivery')
 
 @section('content')
     <div class="layout-page">
@@ -40,7 +40,9 @@
                         </ul>
                     </li>
                     <!-- / Style Switcher-->
-
+                    @php
+                        $notifications = auth()->user()->unreadNotifications;
+                    @endphp
 
                     <!-- Notification -->
                     <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
@@ -57,7 +59,7 @@
                                 <div class="dropdown-header d-flex align-items-center py-3">
                                     <h6 class="mb-0 me-auto">Notification</h6>
                                     <div class="d-flex align-items-center h6 mb-0">
-                                        <span class="badge bg-label-primary me-2">8 New</span>
+                                        <span class="badge bg-label-primary me-2">{{ count($notifications) }} New</span>
                                         <a href="javascript:void(0)"
                                             class="btn btn-text-secondary rounded-pill btn-icon dropdown-notifications-all"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read"><i
@@ -67,208 +69,34 @@
                             </li>
                             <li class="dropdown-notifications-list scrollable-container">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ asset('assets') }}/assets/img/avatars/1.png" alt
-                                                        class="rounded-circle" />
+                                    @forelse($notifications as $notification)
+                                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar">
+                                                        <img src="{{ file_exists(Auth::user()->profile_pic) ? asset(Auth::user()->profile_pic) : asset('assets/assets/img/avatars/3.png') }}"
+                                                            alt class="rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="small mb-1">{{ $notification->data['message'] }}</h6>
+                                                    <small class="mb-1 d-block text-body"> <a
+                                                            href="{{ $notification->data['url'] }}">{{ $notification->data['url'] }}</a></small>
+                                                    <small
+                                                        class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                </div>
+                                                <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                    <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                                            class="badge badge-dot"></span></a>
+                                                    <a href="javascript:void(0)"
+                                                        class="dropdown-notifications-archive"><span
+                                                            class="ti ti-x"></span></a>
                                                 </div>
                                             </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="small mb-1">Congratulation Lettie 🎉</h6>
-                                                <small class="mb-1 d-block text-body">Won the monthly best
-                                                    seller gold badge</small>
-                                                <small class="text-muted">1h ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <span class="avatar-initial rounded-circle bg-label-danger">CF</span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">Charles Franklin</h6>
-                                                <small class="mb-1 d-block text-body">Accepted your
-                                                    connection</small>
-                                                <small class="text-muted">12hr ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ asset('assets') }}/assets/img/avatars/2.png" alt
-                                                        class="rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">New Message ✉️</h6>
-                                                <small class="mb-1 d-block text-body">You have new message from
-                                                    Natalie</small>
-                                                <small class="text-muted">1h ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <span class="avatar-initial rounded-circle bg-label-success"><i
-                                                            class="ti ti-shopping-cart"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">Whoo! You have new order 🛒</h6>
-                                                <small class="mb-1 d-block text-body">ACME Inc. made new order
-                                                    $1,154</small>
-                                                <small class="text-muted">1 day ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ asset('assets') }}/assets/img/avatars/9.png" alt
-                                                        class="rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">Application has been approved 🚀</h6>
-                                                <small class="mb-1 d-block text-body">Your ABC project
-                                                    application has been approved.</small>
-                                                <small class="text-muted">2 days ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <span class="avatar-initial rounded-circle bg-label-success"><i
-                                                            class="ti ti-chart-pie"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">Monthly report is generated</h6>
-                                                <small class="mb-1 d-block text-body">July monthly financial
-                                                    report is generated </small>
-                                                <small class="text-muted">3 days ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ asset('assets') }}/assets/img/avatars/5.png" alt
-                                                        class="rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">Send connection request</h6>
-                                                <small class="mb-1 d-block text-body">Peter sent you connection
-                                                    request</small>
-                                                <small class="text-muted">4 days ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ asset('assets') }}/assets/img/avatars/6.png" alt
-                                                        class="rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">New message from Jane</h6>
-                                                <small class="mb-1 d-block text-body">Your have new message
-                                                    from Jane</small>
-                                                <small class="text-muted">5 days ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <span class="avatar-initial rounded-circle bg-label-warning"><i
-                                                            class="ti ti-alert-triangle"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="mb-1 small">CPU is running high</h6>
-                                                <small class="mb-1 d-block text-body">CPU Utilization Percent
-                                                    is currently at 88.63%,</small>
-                                                <small class="text-muted">5 days ago</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
-                                                        class="ti ti-x"></span></a>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    @empty
+                                        <li class="list-group-item">No new notifications</li>
+                                    @endforelse
                                 </ul>
                             </li>
                             <li class="border-top">
@@ -300,15 +128,15 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-                <!-- Ajax Sourced Server-side -->
+                <!-- Orders Card -->
                 <div class="card">
                     <h5 class="card-header">Orders</h5>
-                    <div class="card-datatable text-nowrap">
-                        <table class="datatables-ajax table">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>Inovoice</th>
-                                    <th>Pick Up location</th>
+                                    <th>Invoice</th>
+                                    <th>Pick Up Location</th>
                                     <th>Date</th>
                                     <th>Hub Location</th>
                                     <th>Driving Price</th>
@@ -317,12 +145,14 @@
                             </thead>
                             <tbody>
                                 @foreach ($orders as $order)
-                                    <td>{{ $order->invoice }}</td>
-                                    <td>{{ $order->pick_up_location }}</td>
-                                    <td>{{ $order->booking_date }}</td>
-                                    <td>{{ $order->pick_up_location }}</td>
-                                    <td>{{ $order->pick_up_location }}</td>
-                                    <td>Accepted</td>
+                                    <tr>
+                                        <td>{{ $order->invoice }}</td>
+                                        <td>{{ $order->pick_up_location }}</td>
+                                        <td>{{ $order->booking_date }}</td>
+                                        <td>{{ $order->pick_up_location }}</td>
+                                        <td>{{ $order->pick_up_location }}</td>
+                                        <td>Accepted</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -331,10 +161,10 @@
             </div>
             <!-- / Content -->
 
-
             <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
+
     </div>
 
 
@@ -417,9 +247,9 @@
                                         </tbody>
                                         <tbody>
                                             <!-- <tr>
-                                                <td>Arrived</td>
-                                                <td><i class="fa fa-check text-success"></i></td>
-                                            </tr> -->
+                                                            <td>Arrived</td>
+                                                            <td><i class="fa fa-check text-success"></i></td>
+                                                        </tr> -->
                                             <!-- </tbody> -->
                                     </table>
                                 </div>
@@ -433,4 +263,21 @@
             </div>
         </div>
     </div>
+    @push('js')
+        <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+        <script>
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+            var userId = '{{ auth()->id() }}'; 
+            console.log('User ID:', '{{ auth()->id() }}'); 
+            var pusher = new Pusher('72369215017d64bf635d', {
+                cluster: 'ap2'
+            });
+
+            var channel = pusher.subscribe('my-channel-'+userId);
+            channel.bind('my-event', function(data) {
+                alert(JSON.stringify(data));
+            });
+        </script>
+    @endpush
 @endsection

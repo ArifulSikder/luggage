@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luggage Hub - Store Your Luggage</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery-ui.css') }}">
@@ -279,9 +282,12 @@
                                     }).then((loginResult) => {
                                         if (loginResult.isConfirmed) {
                                             // Store the intended URL in session storage
-                                            const currentUrl = window.location.href;
-                                            localStorage.setItem('intendedUrl', currentUrl);
-                                            window.location.href = "{{ route('login') }}";
+                                            const currentUrl = window.location
+                                                .href;
+                                            localStorage.setItem('intendedUrl',
+                                                currentUrl);
+                                            window.location.href =
+                                                "{{ route('login') }}";
                                         }
                                     });
                                 }
@@ -290,7 +296,7 @@
                     }
                 });
             });
-            
+
             function proceedWithReservation() {
                 const small = $('#counter1').val();
                 const medium = $('#counter2').val();
@@ -299,7 +305,7 @@
                 const hubId = $('#hub_id').val();
                 const check_in_date_time = $('#checkin-datetime').val();
                 const check_out_date_time = $('#checkout-datetime').val();
-            
+
                 const data = {
                     hub_id: hubId,
                     small: small,
@@ -309,7 +315,7 @@
                     check_in_date_time: check_in_date_time,
                     check_out_date_time: check_out_date_time
                 };
-            
+
                 $.ajax({
                     type: "POST",
                     url: "{{ url('reserve') }}",
@@ -317,10 +323,10 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (data) {
-                        if(data.success === true) {
+                    success: function(data) {
+                        if (data.success === true) {
                             $('#staticBackdrop').modal('show');
-                        }else {
+                        } else {
                             Swal.fire({
                                 title: 'Failed to reserve',
                                 text: data.message,
@@ -331,7 +337,7 @@
                     }
                 });
             }
-            
+
 
         });
         $(function() {
@@ -449,7 +455,6 @@
             document.getElementById('loader').style.display = 'flex';
 
         }
-
     </script>
 </body>
 

@@ -7,9 +7,39 @@ use App\Http\Controllers\fontend\AppearanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NotificationEvent;
+use App\Models\User;
+use App\Notifications\MyNotification;
 
 
 // ************************************************ Customer route ************************************************
+
+Route::get('/test', function(){
+    $user = User::findOrfail(1);
+    // $pusher = new Pusher\Pusher(
+    //     '72369215017d64bf635d',
+    //     'de52ba767a9142c0dd38',
+    //     '1849185',
+    //     ['cluster' => 'ap2']
+    // );
+    
+    // $pusher->trigger('my-channel', 'my-event', ['message' => 'Test message']);
+    // Notify the delivery agent user if found
+    if ($user) {
+        $notificationData = (object) [
+            'message' => 'This is a test notification',
+            'url' => 'http://example.com',
+            'id'=> $user->id
+        ];
+        $user->notify(new MyNotification($notificationData));
+    }
+    return 'Event fired';
+});
+Route::get('/test2', function(){
+
+    event(new NotificationEvent('Hello Ariful'));
+    return 'Event fired';
+});
 
 Route::get('/', [AppearanceController::class, "index"]);
 Route::get('/details/data/{data}', [AppearanceController::class, "hub_details"]);

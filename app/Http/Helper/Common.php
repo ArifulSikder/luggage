@@ -78,13 +78,14 @@ if (!function_exists('calculateBagTotals')) {
         }
 
         $distanceInfo = distanceInfo($hubPricing);
-
+     
         return [
             'totals' => $totals,
             'bagPrice' => $totalPrice,
             'totalBag' => $totalBag,
             'distance' => $distanceInfo['distance'],
-            'totalPrice' => round($totalPrice + $distanceInfo['price']),
+            'driving_price' => $distanceInfo['price'],
+            'totalPrice' => $totalPrice + $distanceInfo['price'],
         ];
     }
 }

@@ -12,10 +12,10 @@ class DeliveryAgentController extends Controller
 {
     public function index()
     {
-        $data['orders'] = Booking::whereHas('deliveryAgentHistories', function($query){
+        $data['orders'] = Booking::where('status', 'Booked')->whereHas('deliveryAgentHistories', function($query){
             $query->where('delivery_agent_id', Auth::id());
-        })->where('status', 'Booked')->orderBy('id', 'desc')->get(); // all orders
-
+        })->orderBy('id', 'desc')->get(); // all orders
+        
         return view('deliveryAgent.pages.deliveryAgentProfile', $data);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Http\Resources\CommonResource;
 use App\Models\Booking;
 use App\Models\HubPricing;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\BaseController as BaseController;
 use App\Models\User;
 use App\Models\DelivaryAgentHistory;
+use App\Notifications\MyNotification;
 
 class CustomerController extends BaseController
 {
@@ -41,7 +43,7 @@ class CustomerController extends BaseController
             $hubPricing = $myHub->hubPricing;
             $requestData = $request->all();
             $result = calculateBagTotals($requestData, $hubPricing);
-
+            
             // Create booking entry in the database
             $invoiceNumber = '#' . str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT); //generate invoice number
 
@@ -58,7 +60,7 @@ class CustomerController extends BaseController
                 'medium_bags' => $result['totals']['Medium'],
                 'large_bags' => $result['totals']['Large'],
                 'extra_large_bags' => $result['totals']['Extra Large'],
-                'driving_price' => distancePrice($hubPricing),
+                'driving_price' => $result['driving_price'],
                 'total_cost' => $result['totalPrice'],
                 'status' => 'Booked',
             ]);
@@ -71,6 +73,11 @@ class CustomerController extends BaseController
                 'date_time' => Carbon::now(),
             ]);
 
+            // Notify the delivery agent user if found
+            if ($delivary_agents) {
+                $delivary_agents->notify(new MyNotification($deliveryAgent));
+            }
+            // event(new NotificationEvent($delivary_agents));
             return $this->sendResponse(new CommonResource($booking), 'Booking successful!');
         } catch (\Throwable $th) {
             Log::error('Error creating booking: ' . $th->getMessage(), ['stack' => $th->getTraceAsString()]);
